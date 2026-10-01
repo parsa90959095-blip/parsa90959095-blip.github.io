@@ -2,474 +2,853 @@
 <html lang="fa" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ماشین حساب کامل</title>
+<title>ماشین حساب</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            padding: 20px;
-            background: #eeeeee;
-            font-family: Arial, Tahoma, sans-serif;
-            color: #222;
-        }
+body {
+    margin: 0;
+    padding: 20px;
+    background: #eeeeee;
+    font-family: Arial, Tahoma, sans-serif;
+}
 
-        .calculator {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 22px;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-        }
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
 
-        h1 {
-            text-align: center;
-            font-size: 30px;
-            margin-top: 5px;
-            margin-bottom: 25px;
-        }
+h1 {
+    text-align: center;
+    font-size: 30px;
+}
 
-        h2 {
-            text-align: center;
-            font-size: 22px;
-            margin-top: 30px;
-        }
+h2 {
+    text-align: center;
+    font-size: 22px;
+}
 
-        /* نمایشگر */
+.display {
+    background: #111111;
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    direction: ltr;
+    text-align: left;
+    min-height: 100px;
+}
 
-        .display {
-            background: #111;
-            color: white;
-            border-radius: 15px;
-            padding: 18px;
-            min-height: 100px;
-            margin-bottom: 20px;
-            direction: ltr;
-            text-align: left;
-            overflow-wrap: anywhere;
-        }
+#expression {
+    color: #aaaaaa;
+    font-size: 20px;
+    min-height: 30px;
+}
 
-        #expression {
-            color: #aaaaaa;
-            font-size: 19px;
-            min-height: 28px;
-        }
+#result {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-        #result {
-            color: white;
-            font-size: 34px;
-            font-weight: bold;
-            margin-top: 8px;
-            min-height: 45px;
-        }
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
 
-        /* بخش عملیات */
+button {
+    min-height: 60px;
+    border: none;
+    border-radius: 12px;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .section {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #dddddd;
-            border-radius: 15px;
-        }
+button:active {
+    transform: scale(0.95);
+}
 
-        .section-title {
-            text-align: center;
-            font-size: 21px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+.number {
+    background: #eeeeee;
+}
 
-        /* دکمه‌ها */
+.operator {
+    background: #cfe2ff;
+}
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 9px;
-        }
+.special {
+    background: #dddddd;
+}
 
-        button {
-            border: none;
-            border-radius: 12px;
-            min-height: 62px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.equal {
+    background: #222222;
+    color: white;
+}
 
-        button:active {
-            transform: scale(0.95);
-        }
+.clear {
+    background: #ffcccc;
+}
 
-        .number {
-            background: #f1f1f1;
-        }
+.box {
+    margin-top: 25px;
+    padding: 15px;
+    border: 2px solid #dddddd;
+    border-radius: 15px;
+}
 
-        .operator {
-            background: #d5e6ff;
-        }
+label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
 
-        .special {
-            background: #e5e5e5;
-        }
+input {
+    width: 100%;
+    padding: 13px;
+    font-size: 20px;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    direction: ltr;
+}
 
-        .equals {
-            background: #222222;
-            color: white;
-        }
+.action {
+    width: 100%;
+    margin-top: 15px;
+    background: #222222;
+    color: white;
+}
 
-        .clear {
-            background: #ffcccc;
-        }
+.answer {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+    direction: ltr;
+}
 
-        /* ورودی‌های ویژه */
+.history-item {
+    background: #f1f1f1;
+    margin-top: 7px;
+    padding: 10px;
+    border-radius: 8px;
+    direction: ltr;
+    text-align: left;
+}
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
+.clear-history {
+    width: 100%;
+    margin-top: 10px;
+    background: #dddddd;
+}
 
-        label {
-            font-size: 19px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            font-size: 21px;
-            border: 2px solid #cccccc;
-            border-radius: 10px;
-            direction: ltr;
-            text-align: left;
-        }
-
-        .big-button {
-            width: 100%;
-            min-height: 60px;
-            background: #222;
-            color: white;
-            margin-top: 5px;
-        }
-
-        .answer-box {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f3f3f3;
-            border-radius: 10px;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            direction: ltr;
-            overflow-wrap: anywhere;
-        }
-
-        .error {
-            color: #c00000;
-        }
-
-        /* تاریخچه */
-
-        .history {
-            margin-top: 25px;
-        }
-
-        .history-list {
-            max-height: 220px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            padding: 12px;
-            margin-bottom: 7px;
-            background: #f2f2f2;
-            border-radius: 9px;
-            direction: ltr;
-            text-align: left;
-            font-size: 17px;
-        }
-
-        .clear-history {
-            width: 100%;
-            margin-top: 10px;
-            background: #eeeeee;
-            min-height: 50px;
-        }
-
-        @media (max-width: 380px) {
-
-            body {
-                padding: 10px;
-            }
-
-            .calculator {
-                padding: 14px;
-            }
-
-            button {
-                min-height: 55px;
-                font-size: 17px;
-            }
-
-            #result {
-                font-size: 28px;
-            }
-
-        }
-
-    </style>
-
+</style>
 </head>
 
 
 <body>
 
-<div class="calculator">
+<div class="container">
 
-    <h1>ماشین حساب کامل</h1>
-
-
-    <!-- نمایشگر -->
-
-    <div class="display">
-
-        <div id="expression"></div>
-
-        <div id="result">0</div>
-
-    </div>
+<h1>ماشین حساب</h1>
 
 
-    <!-- ماشین حساب اصلی -->
+<!-- نمایشگر -->
 
-    <div class="section">
+<div class="display">
 
-        <div class="section-title">
-            چهار عمل اصلی و قدر مطلق
-        </div>
+<div id="expression"></div>
 
-        <div class="buttons">
+<div id="result">0</div>
 
-            <button class="clear" onclick="clearAll()">
-                پاک کردن
-            </button>
-
-            <button class="special" onclick="backspace()">
-                حذف ←
-            </button>
-
-            <button class="special" onclick="absoluteValue()">
-                قدر مطلق
-            </button>
-
-            <button class="operator" onclick="addToExpression('/')">
-                ÷
-            </button>
+</div>
 
 
-            <button class="number" onclick="addToExpression('7')">
-                ۷
-            </button>
+<!-- چهار عمل اصلی -->
 
-            <button class="number" onclick="addToExpression('8')">
-                ۸
-            </button>
+<div class="box">
 
-            <button class="number" onclick="addToExpression('9')">
-                ۹
-            </button>
+<h2>چهار عمل اصلی و قدر مطلق</h2>
 
-            <button class="operator" onclick="addToExpression('*')">
-                ×
-            </button>
+<div class="buttons">
 
+<button class="clear" onclick="clearCalculator()">
+پاک کردن
+</button>
 
-            <button class="number" onclick="addToExpression('4')">
-                ۴
-            </button>
+<button class="special" onclick="deleteLast()">
+حذف
+</button>
 
-            <button class="number" onclick="addToExpression('5')">
-                ۵
-            </button>
+<button class="special" onclick="absoluteNumber()">
+قدر مطلق
+</button>
 
-            <button class="number" onclick="addToExpression('6')">
-                ۶
-            </button>
-
-            <button class="operator" onclick="addToExpression('-')">
-                −
-            </button>
+<button class="operator" onclick="add('/')">
+÷
+</button>
 
 
-            <button class="number" onclick="addToExpression('1')">
-                ۱
-            </button>
+<button class="number" onclick="add('7')">
+۷
+</button>
 
-            <button class="number" onclick="addToExpression('2')">
-                ۲
-            </button>
+<button class="number" onclick="add('8')">
+۸
+</button>
 
-            <button class="number" onclick="addToExpression('3')">
-                ۳
-            </button>
+<button class="number" onclick="add('9')">
+۹
+</button>
 
-            <button class="operator" onclick="addToExpression('+')">
-                +
-            </button>
+<button class="operator" onclick="add('*')">
+×
+</button>
 
 
-            <button class="number" onclick="addToExpression('0')">
-                ۰
-            </button>
+<button class="number" onclick="add('4')">
+۴
+</button>
 
-            <button class="number" onclick="addToExpression('.')">
-                .
-            </button>
+<button class="number" onclick="add('5')">
+۵
+</button>
 
-            <button class="special" onclick="addToExpression('(')">
-                (
-            </button>
+<button class="number" onclick="add('6')">
+۶
+</button>
 
-            <button class="special" onclick="addToExpression(')')">
+<button class="operator" onclick="add('-')">
+−
+</button>
+
+
+<button class="number" onclick="add('1')">
+۱
+</button>
+
+<button class="number" onclick="add('2')">
+۲
+</button>
+
+<button class="number" onclick="add('3')">
+۳
+</button>
+
+<button class="operator" onclick="add('+')">
++
+</button>
+
+
+<button class="number" onclick="add('0')">
+۰
+</button>
+
+<button class="number" onclick="add('.')">
+.
+</button>
+
+<button class="special" onclick="add('(')">
+(
+</button>
+
+<button class="special" onclick="add(')')">
+)
+</button>
+
+
+<button
+class="equal"
+style="grid-column: span 4;"
+onclick="calculate()">
+
+محاسبه
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- توان -->
+
+<div class="box">
+
+<h2>توان</h2>
+
+<label>
+عدد پایه
+</label>
+
+<input
+id="base"
+type="number"
+step="any"
+placeholder="مثلاً 5">
+
+
+<label>
+توان
+</label>
+
+<input
+id="power"
+type="number"
+step="any"
+placeholder="مثلاً 3">
+
+
+<button
+class="action"
+onclick="powerCalculate()">
+
+محاسبه توان
+
+</button>
+
+
+<div
+id="powerResult"
+class="answer">
+
+نتیجه اینجا نمایش داده می‌شود
+
+</div>
+
+</div>
+
+
+<!-- ب.م.م -->
+
+<div class="box">
+
+<h2>
+بزرگ‌ترین مقسوم‌علیه مشترک (ب.م.م)
+</h2>
+
+<label>
+عدد اول
+</label>
+
+<input
+id="gcdA"
+type="number"
+placeholder="مثلاً 24">
+
+
+<label>
+عدد دوم
+</label>
+
+<input
+id="gcdB"
+type="number"
+placeholder="مثلاً 36">
+
+
+<button
+class="action"
+onclick="gcdCalculate()">
+
+محاسبه ب.م.م
+
+</button>
+
+
+<div
+id="gcdResult"
+class="answer">
+
+نتیجه اینجا نمایش داده می‌شود
+
+</div>
+
+</div>
+
+
+<!-- ک.م.م -->
+
+<div class="box">
+
+<h2>
+کوچک‌ترین مضرب مشترک (ک.م.م)
+</h2>
+
+<label>
+عدد اول
+</label>
+
+<input
+id="lcmA"
+type="number"
+placeholder="مثلاً 12">
+
+
+<label>
+عدد دوم
+</label>
+
+<input
+id="lcmB"
+type="number"
+placeholder="مثلاً 18">
+
+
+<button
+class="action"
+onclick="lcmCalculate()">
+
+محاسبه ک.م.م
+
+</button>
+
+
+<div
+id="lcmResult"
+class="answer">
+
+نتیجه اینجا نمایش داده می‌شود
+
+</div>
+
+</div>
+
+
+<!-- تاریخچه -->
+
+<div class="box">
+
+<h2>
+تاریخچه محاسبات
+</h2>
+
+<div id="history">
+
+هنوز محاسبه‌ای انجام نشده است.
+
+</div>
+
+<button
+class="clear-history"
+onclick="clearHistory()">
+
+پاک کردن تاریخچه
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   متغیر اصلی ماشین حساب
+========================= */
+
+var expression = "";
+
+
+/* =========================
+   نمایش عبارت
+========================= */
+
+function updateDisplay() {
+
+    document.getElementById("expression").innerText = expression;
+
+}
+
+
+/* =========================
+   اضافه کردن عدد یا عملگر
+========================= */
+
+function add(value) {
+
+    expression = expression + value;
+
+    updateDisplay();
+
+}
+
+
+/* =========================
+   پاک کردن
+========================= */
+
+function clearCalculator() {
+
+    expression = "";
+
+    document.getElementById("expression").innerText = "";
+
+    document.getElementById("result").innerText = "0";
+
+}
+
+
+/* =========================
+   حذف آخرین کاراکتر
+========================= */
+
+function deleteLast() {
+
+    expression = expression.slice(0, -1);
+
+    updateDisplay();
+
+}
+
+
+/* =========================
+   محاسبه چهار عمل اصلی
+========================= */
+
+function calculate() {
+
+    if (expression === "") {
+        return;
+    }
+
+    try {
+
+        var answer = Function(
+            "return " + expression
+        )();
+
+        if (!isFinite(answer)) {
+
+            document.getElementById("result").innerText =
+                "خطا";
+
+            return;
+
+        }
+
+        document.getElementById("result").innerText =
+            answer;
+
+        addHistory(
+            expression + " = " + answer
+        );
+
+    }
+
+    catch (error) {
+
+        document.getElementById("result").innerText =
+            "خطا";
+
+    }
+
+}
+
+
+/* =========================
+   قدر مطلق
+========================= */
+
+function absoluteNumber() {
+
+    if (expression === "") {
+        return;
+    }
+
+    try {
+
+        var number = Function(
+            "return " + expression
+        )();
+
+        var answer = Math.abs(number);
+
+        document.getElementById("result").innerText =
+            answer;
+
+        addHistory(
+            "|" + expression + "| = " + answer
+        );
+
+    }
+
+    catch (error) {
+
+        document.getElementById("result").innerText =
+            "خطا";
+
+    }
+
+}
+
+
+/* =========================
+   توان
+========================= */
+
+function powerCalculate() {
+
+    var base =
+        document.getElementById("base").value;
+
+    var power =
+        document.getElementById("power").value;
+
+
+    if (base === "" || power === "") {
+
+        document.getElementById("powerResult").innerText =
+            "لطفاً هر دو عدد را وارد کنید.";
+
+        return;
+
+    }
+
+
+    var answer =
+        Math.pow(
+            Number(base),
+            Number(power)
+        );
+
+
+    document.getElementById("powerResult").innerText =
+        base + " ^ " + power + " = " + answer;
+
+
+    addHistory(
+        base + " ^ " + power + " = " + answer
+    );
+
+}
+
+
+/* =========================
+   ب.م.م
+========================= */
+
+function gcdCalculate() {
+
+    var a =
+        Math.abs(
+            Math.trunc(
+                Number(
+                    document.getElementById("gcdA").value
                 )
-            </button>
+            )
+        );
 
 
-            <button
-                class="equals"
-                style="grid-column: span 4;"
-                onclick="calculate()">
-                محاسبه =
-            </button>
-
-        </div>
-
-    </div>
+    var b =
+        Math.abs(
+            Math.trunc(
+                Number(
+                    document.getElementById("gcdB").value
+                )
+            )
+        );
 
 
-    <!-- توان -->
+    if (
+        document.getElementById("gcdA").value === "" ||
+        document.getElementById("gcdB").value === ""
+    ) {
 
-    <div class="section">
+        document.getElementById("gcdResult").innerText =
+            "لطفاً هر دو عدد را وارد کنید.";
 
-        <div class="section-title">
-            توان
-        </div>
+        return;
 
-        <div class="input-group">
-
-            <label for="base">
-                عدد پایه:
-            </label>
-
-            <input
-                id="base"
-                type="number"
-                step="any"
-                placeholder="مثلاً ۵">
-
-        </div>
+    }
 
 
-        <div class="input-group">
+    if (a === 0 && b === 0) {
 
-            <label for="power">
-                توان:
-            </label>
+        document.getElementById("gcdResult").innerText =
+            "تعریف نشده";
 
-            <input
-                id="power"
-                type="number"
-                step="any"
-                placeholder="مثلاً ۳">
+        return;
 
-        </div>
+    }
 
 
-        <button
-            class="big-button"
-            onclick="calculatePower()">
+    while (b !== 0) {
 
-            محاسبه توان
+        var temp = b;
 
-        </button>
+        b = a % b;
 
+        a = temp;
 
-        <div
-            id="powerAnswer"
-            class="answer-box">
-
-            نتیجه اینجا نمایش داده می‌شود
-
-        </div>
-
-    </div>
+    }
 
 
-    <!-- ب.م.م -->
-
-    <div class="section">
-
-        <div class="section-title">
-            بزرگ‌ترین مقسوم‌علیه مشترک (ب.م.م)
-        </div>
-
-        <div class="input-group">
-
-            <label for="gcd1">
-                عدد اول:
-            </label>
-
-            <input
-                id="gcd1"
-                type="number"
-                placeholder="مثلاً ۲۴">
-
-        </div>
+    document.getElementById("gcdResult").innerText =
+        "ب.م.م = " + a;
 
 
-        <div class="input-group">
+    addHistory(
+        "ب.م.م = " + a
+    );
 
-            <label for="gcd2">
-                عدد دوم:
-            </label>
-
-            <input
-                id="gcd2"
-                type="number"
-                placeholder="مثلاً ۳۶">
-
-        </div>
+}
 
 
-        <button
-            class="big-button"
-            onclick="calculateGCD()">
+/* =========================
+   ک.م.م
+========================= */
 
-            محاسبه ب.م.م
+function lcmCalculate() {
 
-        </button>
-
-
-        <div
-            id="gcdAnswer"
-            class="answer-box">
-
-            نتیجه اینجا نمایش داده می‌شود
-
-        </div>
-
-    </div>
+    var a =
+        Math.abs(
+            Math.trunc(
+                Number(
+                    document.getElementById("lcmA").value
+                )
+            )
+        );
 
 
-    <!-- ک.م.م -->
+    var b =
+        Math.abs(
+            Math.trunc(
+                Number(
+                    document.getElementById("lcmB").value
+                )
+            )
+        );
 
-    <div class="
+
+    if (
+        document.getElementById("lcmA").value === "" ||
+        document.getElementById("lcmB").value === ""
+    ) {
+
+        document.getElementById("lcmResult").innerText =
+            "لطفاً هر دو عدد را وارد کنید.";
+
+        return;
+
+    }
+
+
+    if (a === 0 || b === 0) {
+
+        document.getElementById("lcmResult").innerText =
+            "ک.م.م = 0";
+
+        return;
+
+    }
+
+
+    var x = a;
+
+    var y = b;
+
+
+    while (y !== 0) {
+
+        var temp = y;
+
+        y = x % y;
+
+        x = temp;
+
+    }
+
+
+    var gcd = x;
+
+
+    var lcm =
+        Math.abs(a * b) / gcd;
+
+
+    document.getElementById("lcmResult").innerText =
+        "ک.م.م = " + lcm;
+
+
+    addHistory(
+        "ک.م.م = " + lcm
+    );
+
+}
+
+
+/* =========================
+   تاریخچه
+========================= */
+
+function addHistory(text) {
+
+    var history =
+        document.getElementById("history");
+
+
+    if (
+        history.innerText.trim() ===
+        "هنوز محاسبه‌ای انجام نشده است."
+    ) {
+
+        history.innerHTML = "";
+
+    }
+
+
+    var item =
+        document.createElement("div");
+
+
+    item.className =
+        "history-item";
+
+
+    item.innerText =
+        text;
+
+
+    history.insertBefore(
+        item,
+        history.firstChild
+    );
+
+}
+
+
+/* =========================
+   پاک کردن تاریخچه
+========================= */
+
+function clearHistory() {
+
+    document.getElementById("history").innerText =
+        "هنوز محاسبه‌ای انجام نشده است.";
+
+}
+
+</script>
+
+</body>
+
+</html>
