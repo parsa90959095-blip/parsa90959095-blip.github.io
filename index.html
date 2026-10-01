@@ -1,22 +1,468 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>تست ماشین حساب</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ماشین حساب</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.box {
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px #bbb;
+}
+
+#display {
+    width: 100%;
+    height: 65px;
+    font-size: 30px;
+    text-align: left;
+    direction: ltr;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+button {
+    min-height: 55px;
+    font-size: 22px;
+    border: none;
+    border-radius: 10px;
+    background: #ddd;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.operator {
+    background: #bdbdbd;
+}
+
+.equal {
+    background: #777;
+    color: white;
+}
+
+.clear {
+    background: #999;
+    color: white;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.action {
+    width: 100%;
+    margin-top: 8px;
+    background: #ddd;
+}
+
+.result {
+    font-size: 22px;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.history {
+    text-align: right;
+    font-size: 18px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>تست ماشین حساب</h1>
+<h1>🧮 ماشین حساب</h1>
 
-<button onclick="test()">روی من بزن</button>
+<!-- ماشین حساب چهار عمل اصلی -->
+<div class="box">
 
-<p id="result">هنوز دکمه زده نشده</p>
+<h2>چهار عمل اصلی</h2>
+
+<input id="display" type="text" readonly>
+
+<div class="buttons">
+
+<button onclick="addNumber('7')">7</button>
+<button onclick="addNumber('8')">8</button>
+<button onclick="addNumber('9')">9</button>
+<button class="operator" onclick="addNumber('/')">÷</button>
+
+<button onclick="addNumber('4')">4</button>
+<button onclick="addNumber('5')">5</button>
+<button onclick="addNumber('6')">6</button>
+<button class="operator" onclick="addNumber('*')">×</button>
+
+<button onclick="addNumber('1')">1</button>
+<button onclick="addNumber('2')">2</button>
+<button onclick="addNumber('3')">3</button>
+<button class="operator" onclick="addNumber('-')">−</button>
+
+<button onclick="addNumber('0')">0</button>
+<button onclick="addNumber('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+<button class="operator" onclick="addNumber('+')">+</button>
+
+</div>
+
+<button class="clear action" onclick="clearDisplay()">پاک کردن</button>
+
+<div id="basicResult" class="result"></div>
+
+</div>
+
+
+<!-- قدرمطلق -->
+<div class="box">
+
+<h2>قدر مطلق</h2>
+
+<input id="absoluteInput" type="number" placeholder="عدد را وارد کنید">
+
+<button class="action" onclick="absoluteCalculate()">
+محاسبه قدر مطلق
+</button>
+
+<div id="absoluteResult" class="result"></div>
+
+</div>
+
+
+<!-- توان -->
+<div class="box">
+
+<h2>توان</h2>
+
+<input id="base" type="number" placeholder="پایه">
+
+<input id="exponent" type="number" placeholder="توان">
+
+<button class="action" onclick="powerCalculate()">
+محاسبه توان
+</button>
+
+<div id="powerResult" class="result"></div>
+
+</div>
+
+
+<!-- ب.م.م -->
+<div class="box">
+
+<h2>ب.م.م</h2>
+
+<input id="gcdA" type="number" placeholder="عدد اول">
+
+<input id="gcdB" type="number" placeholder="عدد دوم">
+
+<button class="action" onclick="gcdCalculate()">
+محاسبه ب.م.م
+</button>
+
+<div id="gcdResult" class="result"></div>
+
+</div>
+
+
+<!-- ک.م.م -->
+<div class="box">
+
+<h2>ک.م.م</h2>
+
+<input id="lcmA" type="number" placeholder="عدد اول">
+
+<input id="lcmB" type="number" placeholder="عدد دوم">
+
+<button class="action" onclick="lcmCalculate()">
+محاسبه ک.م.م
+</button>
+
+<div id="lcmResult" class="result"></div>
+
+</div>
+
+
+<!-- تاریخچه -->
+<div class="box">
+
+<h2>📜 تاریخچه</h2>
+
+<div id="history" class="history">
+هنوز محاسبه‌ای انجام نشده است.
+</div>
+
+<button class="clear action" onclick="clearHistory()">
+پاک کردن تاریخچه
+</button>
+
+</div>
+
 
 <script>
-function test() {
-    document.getElementById("result").innerText = "دکمه کار می‌کند! ✅";
+
+var historyList = [];
+
+
+/* چهار عمل اصلی */
+
+function addNumber(value) {
+    document.getElementById("display").value += value;
 }
+
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+    document.getElementById("basicResult").innerText = "";
+}
+
+
+function calculate() {
+
+    var expression = document.getElementById("display").value;
+
+    if (expression === "") {
+        return;
+    }
+
+    try {
+
+        var result = Function("return " + expression)();
+
+        document.getElementById("basicResult").innerText =
+            "نتیجه: " + result;
+
+        addHistory(expression + " = " + result);
+
+    } catch (error) {
+
+        document.getElementById("basicResult").innerText =
+            "عبارت وارد شده درست نیست.";
+
+    }
+}
+
+
+/* قدرمطلق */
+
+function absoluteCalculate() {
+
+    var number = Number(
+        document.getElementById("absoluteInput").value
+    );
+
+    if (isNaN(number)) {
+        document.getElementById("absoluteResult").innerText =
+            "لطفاً یک عدد وارد کنید.";
+        return;
+    }
+
+    var result = Math.abs(number);
+
+    document.getElementById("absoluteResult").innerText =
+        "نتیجه: " + result;
+
+    addHistory("|" + number + "| = " + result);
+}
+
+
+/* توان */
+
+function powerCalculate() {
+
+    var base = Number(
+        document.getElementById("base").value
+    );
+
+    var exponent = Number(
+        document.getElementById("exponent").value
+    );
+
+    if (isNaN(base) || isNaN(exponent)) {
+        document.getElementById("powerResult").innerText =
+            "لطفاً هر دو عدد را وارد کنید.";
+        return;
+    }
+
+    var result = Math.pow(base, exponent);
+
+    document.getElementById("powerResult").innerText =
+        base + " ^ " + exponent + " = " + result;
+
+    addHistory(
+        base + " ^ " + exponent + " = " + result
+    );
+}
+
+
+/* ب.م.م */
+
+function gcd(a, b) {
+
+    a = Math.abs(a);
+    b = Math.abs(b);
+
+    while (b !== 0) {
+
+        var temp = b;
+        b = a % b;
+        a = temp;
+
+    }
+
+    return a;
+}
+
+
+function gcdCalculate() {
+
+    var a = Number(
+        document.getElementById("gcdA").value
+    );
+
+    var b = Number(
+        document.getElementById("gcdB").value
+    );
+
+    if (!Number.isInteger(a) || !Number.isInteger(b)) {
+
+        document.getElementById("gcdResult").innerText =
+            "لطفاً دو عدد صحیح وارد کنید.";
+
+        return;
+    }
+
+    var result = gcd(a, b);
+
+    document.getElementById("gcdResult").innerText =
+        "ب.م.م = " + result;
+
+    addHistory(
+        "ب.م.م(" + a + ", " + b + ") = " + result
+    );
+}
+
+
+/* ک.م.م */
+
+function lcmCalculate() {
+
+    var a = Number(
+        document.getElementById("lcmA").value
+    );
+
+    var b = Number(
+        document.getElementById("lcmB").value
+    );
+
+    if (!Number.isInteger(a) || !Number.isInteger(b)) {
+
+        document.getElementById("lcmResult").innerText =
+            "لطفاً دو عدد صحیح وارد کنید.";
+
+        return;
+    }
+
+    if (a === 0 || b === 0) {
+
+        document.getElementById("lcmResult").innerText =
+            "ک.م.م = 0";
+
+        addHistory(
+            "ک.م.م(" + a + ", " + b + ") = 0"
+        );
+
+        return;
+    }
+
+    var result = Math.abs((a * b) / gcd(a, b));
+
+    document.getElementById("lcmResult").innerText =
+        "ک.م.م = " + result;
+
+    addHistory(
+        "ک.م.م(" + a + ", " + b + ") = " + result
+    );
+}
+
+
+/* تاریخچه */
+
+function addHistory(text) {
+
+    historyList.unshift(text);
+
+    if (historyList.length > 10) {
+        historyList.pop();
+    }
+
+    showHistory();
+}
+
+
+function showHistory() {
+
+    var box = document.getElementById("history");
+
+    if (historyList.length === 0) {
+
+        box.innerText =
+            "هنوز محاسبه‌ای انجام نشده است.";
+
+        return;
+    }
+
+    box.innerHTML = "";
+
+    for (var i = 0; i < historyList.length; i++) {
+
+        var item = document.createElement("div");
+
+        item.innerText =
+            (i + 1) + ". " + historyList[i];
+
+        box.appendChild(item);
+    }
+}
+
+
+function clearHistory() {
+
+    historyList = [];
+
+    showHistory();
+}
+
 </script>
 
 </body>
