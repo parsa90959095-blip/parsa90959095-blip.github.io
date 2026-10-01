@@ -4,1034 +4,896 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ماشین حساب حرفه‌ای</title>
+<title>ماشین حساب حرفه‌ای | پارسا غفاری</title>
 
 <style>
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-:root {
-    --green: #22c55e;
-    --green-dark: #15803d;
-    --yellow: #facc15;
-    --yellow-dark: #eab308;
-    --dark: #102016;
-    --dark2: #17251b;
-    --card: #ffffff;
-    --light: #f4fce9;
-    --text: #172117;
-    --gray: #667085;
-    --red: #ef4444;
-}
-
-/* =========================
-   صفحه اصلی
-========================= */
-
-body {
-    margin: 0;
-    min-height: 100vh;
-
+body{
     font-family:
         Tahoma,
         Arial,
         sans-serif;
 
-    color: var(--text);
+    min-height:100vh;
 
     background:
-        radial-gradient(
-            circle at top right,
-            #fef08a 0%,
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at bottom left,
-            #86efac 0%,
-            transparent 30%
-        ),
-        #f3fbe8;
+        radial-gradient(circle at top right,#dcfce7,transparent 35%),
+        radial-gradient(circle at bottom left,#fef08a,transparent 35%),
+        #f0fdf4;
 
-    padding: 20px;
+    color:#17220f;
+
+    padding:20px;
 }
 
-/* =========================
-   کانتینر
-========================= */
-
-.container {
-    width: 100%;
-    max-width: 900px;
-    margin: auto;
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
 }
 
-/* =========================
-   هدر
-========================= */
+/* معرفی */
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
+.intro{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    margin-bottom:20px;
 
-header h1 {
-    margin: 5px 0;
-
-    font-size: 31px;
-    font-weight: 900;
-
-    color: var(--green-dark);
-}
-
-header p {
-    margin: 7px 0;
-
-    color: var(--gray);
-    font-size: 14px;
-}
-
-/* =========================
-   کارت‌ها
-========================= */
-
-.card {
-    background: rgba(255,255,255,0.95);
-
-    border: 2px solid #dcfce7;
-
-    border-radius: 25px;
-
-    padding: 20px;
-
-    margin-bottom: 20px;
+    border:3px solid #22c55e;
 
     box-shadow:
-        0 15px 40px rgba(21,128,61,0.10);
+        0 10px 30px rgba(0,0,0,.08);
+
+    text-align:center;
 }
 
-/* =========================
-   نمایشگر
-========================= */
+.intro h1{
+    color:#15803d;
+    margin-bottom:15px;
+    font-size:30px;
+}
 
-.display {
-    background:
-        linear-gradient(
-            135deg,
-            #102016,
-            #18351f
-        );
+.intro p{
+    line-height:2;
+    font-size:16px;
+    margin:5px 0;
+}
 
-    border-radius: 20px;
+.price{
+    margin-top:15px;
 
-    min-height: 145px;
+    background:#facc15;
 
-    padding: 18px;
+    border-radius:15px;
 
-    margin-bottom: 15px;
+    padding:12px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    font-weight:bold;
+
+    color:#14532d;
+}
+
+/* کارت‌ها */
+
+.card{
+    background:white;
+
+    border-radius:25px;
+
+    padding:22px;
+
+    margin-bottom:20px;
 
     box-shadow:
-        inset 0 0 0 2px rgba(250,204,21,0.12);
+        0 10px 30px rgba(0,0,0,.08);
+
+    border:2px solid #bbf7d0;
 }
 
-.expression {
-    color: #bbf7d0;
+.card-title{
+    text-align:center;
 
-    font-size: 17px;
+    color:#15803d;
 
-    min-height: 30px;
+    font-size:22px;
 
-    word-break: break-all;
+    margin-bottom:18px;
 }
 
-.result {
-    color: #fef08a;
+/* نمایشگر */
 
-    font-size: 40px;
+.display{
+    background:#17220f;
 
-    font-weight: 900;
+    color:#fff;
 
-    margin-top: 8px;
+    border-radius:18px;
 
-    word-break: break-all;
+    min-height:105px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    overflow:hidden;
+
+    direction:ltr;
+
+    text-align:right;
 }
 
-/* =========================
-   صفحه کلید
-========================= */
+.expression{
+    font-size:18px;
+    color:#bbf7d0;
 
-.keypad {
-    display: grid;
+    min-height:28px;
+
+    word-break:break-all;
+}
+
+.result{
+    font-size:32px;
+    font-weight:bold;
+
+    margin-top:8px;
+
+    color:#facc15;
+
+    word-break:break-all;
+}
+
+/* دکمه‌ها */
+
+.buttons{
+    display:grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
-    gap: 10px;
+    gap:10px;
 }
 
-.key {
-    height: 65px;
+button{
+    border:none;
 
-    border: none;
+    border-radius:15px;
 
-    border-radius: 17px;
+    padding:16px 8px;
 
-    background: #f0fdf4;
+    font-size:18px;
 
-    color: #14532d;
+    font-family:inherit;
 
-    font-size: 21px;
+    cursor:pointer;
 
-    font-weight: 800;
+    background:#dcfce7;
 
-    cursor: pointer;
+    color:#14532d;
 
-    box-shadow:
-        0 4px 0 #bbf7d0;
+    font-weight:bold;
 
-    transition:
-        transform 0.1s,
-        box-shadow 0.1s,
-        background 0.1s;
+    transition:.15s;
 }
 
-.key:hover {
-    background: #dcfce7;
+button:hover{
+    transform:translateY(-2px);
 }
 
-.key:active {
-    transform: translateY(3px);
-
-    box-shadow:
-        0 1px 0 #bbf7d0;
+button:active{
+    transform:scale(.96);
 }
 
-/* دکمه عملیات */
-
-.operator {
-    background: #fef9c3;
-
-    color: #854d0e;
-
-    box-shadow:
-        0 4px 0 #fde68a;
+.operator{
+    background:#facc15;
+    color:#713f12;
 }
 
-.operator:hover {
-    background: #fef08a;
+.equal{
+    background:#22c55e;
+    color:white;
 }
 
-/* دکمه مساوی */
-
-.equal {
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #16a34a
-        );
-
-    color: white;
-
-    box-shadow:
-        0 4px 0 #15803d;
+.danger{
+    background:#fecaca;
+    color:#991b1b;
 }
 
-.equal:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #16a34a,
-            #15803d
-        );
+.special{
+    background:#bbf7d0;
+    color:#166534;
 }
 
-/* پاک کردن */
+/* فرم‌ها */
 
-.clear {
-    background: #fee2e2;
-
-    color: #b91c1c;
-
-    box-shadow:
-        0 4px 0 #fecaca;
-}
-
-/* =========================
-   عنوان بخش‌ها
-========================= */
-
-.section-title {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 10px;
-
-    margin-bottom: 15px;
-}
-
-.section-title h2 {
-    margin: 0;
-
-    font-size: 21px;
-
-    color: #166534;
-}
-
-.badge {
-    background: #fef9c3;
-
-    color: #854d0e;
-
-    padding: 6px 11px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-/* =========================
-   ورودی‌ها
-========================= */
-
-.grid {
-    display: grid;
+.input-grid{
+    display:grid;
 
     grid-template-columns:
         repeat(2,1fr);
 
-    gap: 12px;
+    gap:12px;
+
+    margin-bottom:15px;
 }
 
-.field label {
-    display: block;
+.input-box{
+    display:flex;
 
-    margin-bottom: 7px;
+    flex-direction:column;
 
-    color: var(--gray);
-
-    font-size: 14px;
+    gap:7px;
 }
 
-.field input {
-    width: 100%;
+.input-box label{
+    font-weight:bold;
 
-    padding: 14px;
-
-    border-radius: 14px;
-
-    border: 2px solid #dcfce7;
-
-    background: #f8fff3;
-
-    color: #172117;
-
-    outline: none;
-
-    font-size: 17px;
+    color:#166534;
 }
 
-.field input:focus {
-    border-color: var(--green);
+input,
+select{
+    width:100%;
 
-    box-shadow:
-        0 0 0 3px rgba(34,197,94,0.12);
+    padding:13px;
+
+    border-radius:12px;
+
+    border:2px solid #bbf7d0;
+
+    outline:none;
+
+    font-size:17px;
+
+    font-family:inherit;
+
+    background:#f0fdf4;
 }
 
-/* =========================
-   دکمه‌های بخش‌ها
-========================= */
-
-.actions {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-top: 13px;
+input:focus,
+select:focus{
+    border-color:#22c55e;
 }
 
-.action {
-    padding: 12px 17px;
-
-    border-radius: 14px;
-
-    border: 2px solid #dcfce7;
-
-    background: #f0fdf4;
-
-    color: #166534;
-
-    font-weight: bold;
-
-    cursor: pointer;
+.full{
+    grid-column:1/-1;
 }
 
-.action:hover {
-    background: #dcfce7;
+.action{
+    width:100%;
+
+    background:#22c55e;
+
+    color:white;
+
+    margin-top:5px;
 }
 
-.primary {
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #16a34a
-        );
+.answer{
+    background:#fef9c3;
 
-    border-color: #16a34a;
+    border:2px solid #facc15;
 
-    color: white;
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#713f12;
+
+    min-height:55px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 }
 
-/* =========================
-   خروجی
-========================= */
+/* کسر */
 
-.output {
-    margin-top: 13px;
-
-    padding: 15px;
-
-    min-height: 54px;
-
-    border-radius: 15px;
-
-    background: #f7fee7;
-
-    border: 2px solid #dcfce7;
-
-    color: #166534;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    word-break: break-word;
-}
-
-/* =========================
-   کسر
-========================= */
-
-.fraction-box {
-    display: grid;
+.fraction-row{
+    display:grid;
 
     grid-template-columns:
-        1fr 70px 1fr;
+        1fr auto 1fr;
 
-    gap: 10px;
+    gap:15px;
 
-    align-items: center;
+    align-items:center;
 }
 
-.fraction-input {
-    display: flex;
+.fraction-box{
+    background:#f0fdf4;
 
-    flex-direction: column;
+    border:2px solid #bbf7d0;
 
-    gap: 8px;
+    border-radius:18px;
+
+    padding:15px;
+
+    text-align:center;
 }
 
-.fraction-input input {
-    width: 100%;
+.fraction-label{
+    font-weight:bold;
 
-    padding: 13px;
+    color:#166534;
 
-    text-align: center;
-
-    background: #f8fff3;
-
-    color: #172117;
-
-    border: 2px solid #dcfce7;
-
-    border-radius: 13px;
-
-    font-size: 17px;
-
-    outline: none;
+    margin-bottom:10px;
 }
 
-.fraction-input input:focus {
-    border-color: var(--green);
+.mixed-number{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    direction:ltr;
 }
 
-.fraction-op {
-    width: 100%;
-
-    padding: 13px 5px;
-
-    border-radius: 13px;
-
-    background: #fef9c3;
-
-    color: #854d0e;
-
-    border: 2px solid #fde68a;
-
-    font-size: 18px;
-
-    font-weight: bold;
+.whole-input{
+    width:65px;
 }
 
-/* =========================
-   تاریخچه
-========================= */
+.fraction{
+    display:flex;
 
-.history {
-    max-height: 320px;
+    flex-direction:column;
 
-    overflow-y: auto;
+    width:70px;
 }
 
-.history-item {
-    display: flex;
+.fraction input{
+    text-align:center;
 
-    justify-content: space-between;
-
-    gap: 10px;
-
-    padding: 13px;
-
-    margin-bottom: 8px;
-
-    border-radius: 13px;
-
-    background: #f8fff3;
-
-    border: 1px solid #dcfce7;
+    padding:8px 4px;
 }
 
-.history-answer {
-    color: #15803d;
-
-    font-weight: 900;
+.fraction input:first-child{
+    border-radius:10px 10px 3px 3px;
 }
 
-/* =========================
-   پیام خطا
-========================= */
+.fraction input:last-child{
+    border-radius:3px 3px 10px 10px;
 
-#toast {
-    position: fixed;
-
-    bottom: 25px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%)
-        translateY(20px);
-
-    background: #172117;
-
-    color: white;
-
-    padding: 13px 20px;
-
-    border-radius: 14px;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: 0.25s;
-
-    z-index: 1000;
+    border-top:3px solid #15803d;
 }
 
-#toast.show {
-    opacity: 1;
+.frac-op{
+    width:65px;
 
-    transform:
-        translateX(-50%)
-        translateY(0);
+    font-size:25px;
+
+    background:#facc15;
+
+    color:#713f12;
 }
 
-/* =========================
-   فوتر
-========================= */
+/* تاریخچه */
 
-footer {
-    text-align: center;
+.history{
+    max-height:350px;
 
-    color: var(--gray);
+    overflow-y:auto;
 
-    font-size: 13px;
-
-    padding: 10px;
+    margin-top:10px;
 }
 
-/* =========================
-   موبایل
-========================= */
+.history-item{
+    background:#f0fdf4;
 
-@media(max-width:600px) {
+    border-right:5px solid #22c55e;
 
-    body {
-        padding: 10px;
+    border-radius:12px;
+
+    padding:12px;
+
+    margin-bottom:8px;
+
+    direction:ltr;
+
+    text-align:left;
+
+    word-break:break-all;
+}
+
+.empty{
+    text-align:center;
+
+    color:#777;
+
+    padding:20px;
+}
+
+/* Toast */
+
+.toast{
+    position:fixed;
+
+    bottom:20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:#17220f;
+
+    color:white;
+
+    padding:12px 20px;
+
+    border-radius:15px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.3s;
+
+    z-index:1000;
+}
+
+.toast.show{
+    opacity:1;
+}
+
+/* فوتر */
+
+footer{
+    text-align:center;
+
+    padding:20px;
+
+    color:#166534;
+
+    font-weight:bold;
+}
+
+/* موبایل */
+
+@media(max-width:600px){
+
+    body{
+        padding:10px;
     }
 
-    header h1 {
-        font-size: 25px;
+    .intro{
+        padding:18px;
     }
 
-    .card {
-        padding: 14px;
-
-        border-radius: 20px;
+    .intro h1{
+        font-size:24px;
     }
 
-    .key {
-        height: 57px;
-
-        font-size: 18px;
+    .card{
+        padding:15px;
+        border-radius:20px;
     }
 
-    .result {
-        font-size: 32px;
+    .buttons{
+        gap:7px;
     }
 
-    .grid {
-        grid-template-columns: 1fr;
+    button{
+        padding:14px 5px;
+        font-size:16px;
     }
 
-    .fraction-box {
-        grid-template-columns:
-            1fr 55px 1fr;
+    .input-grid{
+        grid-template-columns:1fr;
     }
 
+    .full{
+        grid-column:auto;
+    }
+
+    .fraction-row{
+        grid-template-columns:1fr;
+    }
+
+    .frac-op{
+        margin:auto;
+    }
+
+    .result{
+        font-size:26px;
+    }
 }
 
 </style>
 </head>
 
-
 <body>
-
 
 <div class="container">
 
+<!-- معرفی -->
 
-<header>
+<section class="intro">
 
-<h1>🧮 ماشین حساب حرفه‌ای</h1>
+<h1>👋 سلام!</h1>
 
 <p>
-جمع، تفریق، ضرب، تقسیم، کسر، درصد، توان، ب.م.م و ک.م.م
+من <strong>پارسا غفاری</strong> هستم و این اولین سایتی است
+که خودم طراحی و برنامه‌نویسی کرده‌ام.
 </p>
 
-</header>
+<p>
+این سایت را برای یادگیری و تمرین طراحی کرده‌ام
+و در آن یک ماشین حساب چندکاره ساخته‌ام.
+</p>
+
+<p>
+من این سایت را فقط چند ساعت است که ساخته‌ام
+و ممکن است در روزهای آینده مرتب در حال تغییر،
+بهتر شدن و پیشرفت آن باشم.
+</p>
+
+<div class="price">
+💻 سایت‌سازی در ۲ ساعت — فقط ۵۰٬۰۰۰ تومان
+</div>
+
+<p style="margin-top:12px;">
+تقدیم به پدر و مادرم ❤️
+</p>
+
+</section>
 
 
-<!-- =========================
-     ماشین حساب اصلی
-========================= -->
+<!-- ماشین حساب اصلی -->
 
 <section class="card">
 
+<h2 class="card-title">
+🧮 ماشین حساب چهار عمل اصلی
+</h2>
 
 <div class="display">
 
-<div id="expression"
-     class="expression">
-آماده محاسبه...
-</div>
+<div id="expression" class="expression"></div>
 
-<div id="result"
-     class="result">
+<div id="result" class="result">
 0
 </div>
 
 </div>
 
 
-<div class="keypad">
+<div class="buttons">
 
-
-<button
-class="key clear"
-onclick="clearAll()">
-AC
+<button class="danger" onclick="clearAll()">
+پاک کردن
 </button>
 
-
-<button
-class="key clear"
-onclick="backspace()">
+<button class="danger" onclick="backspace()">
 ⌫
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression('(')">
+<button class="special" onclick="add('(')">
 (
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression(')')">
+<button class="special" onclick="add(')')">
 )
 </button>
 
 
-<button
-class="key"
-onclick="addToExpression('7')">
+<button onclick="add('7')">
 7
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('8')">
+<button onclick="add('8')">
 8
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('9')">
+<button onclick="add('9')">
 9
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression('÷')">
+<button class="operator" onclick="add('/')">
 ÷
 </button>
 
 
-<button
-class="key"
-onclick="addToExpression('4')">
+<button onclick="add('4')">
 4
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('5')">
+<button onclick="add('5')">
 5
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('6')">
+<button onclick="add('6')">
 6
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression('×')">
+<button class="operator" onclick="add('*')">
 ×
 </button>
 
 
-<button
-class="key"
-onclick="addToExpression('1')">
+<button onclick="add('1')">
 1
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('2')">
+<button onclick="add('2')">
 2
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('3')">
+<button onclick="add('3')">
 3
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression('-')">
+<button class="operator" onclick="add('-')">
 −
 </button>
 
 
-<button
-class="key"
-onclick="addToExpression('0')">
+<button onclick="add('0')">
 0
 </button>
 
-
-<button
-class="key"
-onclick="addToExpression('.')">
+<button onclick="add('.')">
 .
 </button>
 
-
-<button
-class="key equal"
-onclick="calculate()">
+<button class="equal" onclick="calculate()">
 =
 </button>
 
-
-<button
-class="key operator"
-onclick="addToExpression('+')">
+<button class="operator" onclick="add('+')">
 +
 </button>
 
-
 </div>
 
 </section>
 
 
-
-<!-- =========================
-     درصد
-========================= -->
+<!-- درصد -->
 
 <section class="card">
 
+<h2 class="card-title">
+📊 درصد
+</h2>
 
-<div class="section-title">
+<div class="input-grid">
 
-<h2>📊 درصد پیشرفته</h2>
-
-<span class="badge">
-درصدگیری
-</span>
-
-</div>
-
-
-<div class="grid">
-
-
-<div class="field">
-
-<label>
-درصد
-</label>
+<div class="input-box">
+<label>چند درصد؟</label>
 
 <input
-id="percent"
-inputmode="decimal"
-placeholder="مثلاً 15">
-
-
+id="percentValue"
+type="number"
+placeholder="مثلاً 20">
 </div>
 
-
-<div class="field">
-
-<label>
-عدد پایه
-</label>
+<div class="input-box">
+<label>از عدد</label>
 
 <input
 id="percentBase"
-inputmode="decimal"
-placeholder="مثلاً 200">
-
+type="number"
+placeholder="مثلاً 500">
+</div>
 
 </div>
 
-
-</div>
-
-
-<div class="actions">
-
-
-<button
-class="action primary"
-onclick="calculatePercent()">
-
+<button class="action" onclick="percent()">
 محاسبه درصد
-
 </button>
 
-
-<button
-class="action"
-onclick="increasePercent()">
-
-افزایش درصدی
-
-</button>
-
-
-<button
-class="action"
-onclick="decreasePercent()">
-
-کاهش درصدی
-
-</button>
-
-
-</div>
-
-
-<div
-id="percentResult"
-class="output">
-
+<div id="percentResult" class="answer">
 نتیجه اینجا نمایش داده می‌شود
+</div>
+
+
+<hr style="
+margin:20px 0;
+border:none;
+border-top:2px dashed #bbf7d0;
+">
+
+
+<div class="input-grid">
+
+<div class="input-box">
+<label>عدد اصلی</label>
+
+<input
+id="changeBase"
+type="number"
+placeholder="مثلاً 500">
+</div>
+
+<div class="input-box">
+<label>درصد تغییر</label>
+
+<input
+id="changePercent"
+type="number"
+placeholder="مثلاً 20">
+</div>
 
 </div>
 
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+">
+
+<button class="action" onclick="increase()">
+افزایش درصدی
+</button>
+
+<button class="action" onclick="decrease()">
+کاهش درصدی
+</button>
+
+</div>
+
+<div id="changeResult" class="answer">
+نتیجه اینجا نمایش داده می‌شود
+</div>
 
 </section>
 
 
-
-<!-- =========================
-     کسر
-========================= -->
+<!-- کسر -->
 
 <section class="card">
 
+<h2 class="card-title">
+➗ محاسبه کسرها
+</h2>
 
-<div class="section-title">
+<p style="
+text-align:center;
+margin-bottom:18px;
+color:#166534;
+line-height:1.8;
+">
+هر کسر می‌تواند شامل <strong>عدد صحیح + صورت + مخرج</strong> باشد.
+</p>
 
-<h2>½ محاسبه کسرها</h2>
 
-<span class="badge">
-چهار عمل اصلی
-</span>
+<div class="fraction-row">
 
-</div>
 
+<!-- کسر اول -->
 
 <div class="fraction-box">
 
+<div class="fraction-label">
+کسر اول
+</div>
 
-<div class="fraction-input">
+<div class="mixed-number">
 
 <input
-id="n1"
-inputmode="numeric"
+id="whole1"
+class="whole-input"
+type="number"
+placeholder="صحیح">
+
+<div class="fraction">
+
+<input
+id="num1"
+type="number"
 placeholder="صورت">
 
 <input
-id="d1"
-inputmode="numeric"
+id="den1"
+type="number"
 placeholder="مخرج">
 
 </div>
 
+</div>
 
-<select
-id="fractionOperation"
-class="fraction-op">
+</div>
 
-<option value="+">
-＋
-</option>
 
-<option value="-">
-−
-</option>
+<!-- عملگر -->
 
-<option value="*">
-×
-</option>
+<select id="fractionOperation" class="frac-op">
 
-<option value="/">
-÷
-</option>
+<option value="+">+</option>
+<option value="-">−</option>
+<option value="*">×</option>
+<option value="/">÷</option>
 
 </select>
 
 
-<div class="fraction-input">
+<!-- کسر دوم -->
+
+<div class="fraction-box">
+
+<div class="fraction-label">
+کسر دوم
+</div>
+
+<div class="mixed-number">
 
 <input
-id="n2"
-inputmode="numeric"
+id="whole2"
+class="whole-input"
+type="number"
+placeholder="صحیح">
+
+<div class="fraction">
+
+<input
+id="num2"
+type="number"
 placeholder="صورت">
 
 <input
-id="d2"
-inputmode="numeric"
+id="den2"
+type="number"
 placeholder="مخرج">
 
 </div>
 
+</div>
+
+</div>
 
 </div>
 
 
-<div class="actions">
-
-<button
-class="action primary"
-onclick="calculateFraction()">
-
+<button class="action" onclick="fractionCalculate()">
 محاسبه کسر
-
 </button>
 
-</div>
-
-
-<div
-id="fractionResult"
-class="output">
-
+<div id="fractionResult" class="answer">
 نتیجه اینجا نمایش داده می‌شود
-
 </div>
 
+<button
+style="margin-top:10px;width:100%;"
+onclick="fractionClear()"
+class="danger">
+
+پاک کردن کسرها
+
+</button>
 
 </section>
 
 
-
-<!-- =========================
-     توان
-========================= -->
+<!-- توان -->
 
 <section class="card">
 
+<h2 class="card-title">
+⚡ محاسبه توان
+</h2>
 
-<div class="section-title">
+<div class="input-grid">
 
-<h2>⚡ توان</h2>
-
-<span class="badge">
-Power
-</span>
-
-</div>
-
-
-<div class="grid">
-
-
-<div class="field">
+<div class="input-box">
 
 <label>
 عدد پایه
@@ -1039,77 +901,48 @@ Power
 
 <input
 id="base"
-inputmode="decimal"
+type="number"
 placeholder="مثلاً 5">
 
 </div>
 
-
-<div class="field">
+<div class="input-box">
 
 <label>
 توان
 </label>
 
 <input
-id="power"
-inputmode="decimal"
+id="powerValue"
+type="number"
 placeholder="مثلاً 3">
 
 </div>
 
-
 </div>
 
-
-<div class="actions">
-
-<button
-class="action primary"
-onclick="calculatePower()">
-
+<button class="action" onclick="calculatePower()">
 محاسبه توان
-
 </button>
 
-</div>
-
-
-<div
-id="powerResult"
-class="output">
-
+<div id="powerResult" class="answer">
 نتیجه اینجا نمایش داده می‌شود
-
 </div>
-
 
 </section>
 
 
-
-<!-- =========================
-     ب م م / ک م م
-========================= -->
+<!-- ب.م.م و ک.م.م -->
 
 <section class="card">
 
+<h2 class="card-title">
+🔢 ب.م.م و ک.م.م
+</h2>
 
-<div class="section-title">
+<div class="input-grid">
 
-<h2>🔢 ب.م.م و ک.م.م</h2>
-
-<span class="badge">
-اعداد صحیح
-</span>
-
-</div>
-
-
-<div class="grid">
-
-
-<div class="field">
+<div class="input-box">
 
 <label>
 عدد اول
@@ -1117,13 +950,12 @@ class="output">
 
 <input
 id="number1"
-inputmode="numeric"
+type="number"
 placeholder="مثلاً 24">
 
 </div>
 
-
-<div class="field">
+<div class="input-box">
 
 <label>
 عدد دوم
@@ -1131,531 +963,416 @@ placeholder="مثلاً 24">
 
 <input
 id="number2"
-inputmode="numeric"
+type="number"
 placeholder="مثلاً 36">
 
 </div>
 
-
 </div>
 
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+">
 
-<div class="actions">
-
-
-<button
-class="action primary"
-onclick="calculateGCD()">
-
+<button class="action" onclick="calculateGCD()">
 محاسبه ب.م.م
-
 </button>
 
-
-<button
-class="action"
-onclick="calculateLCM()">
-
+<button class="action" onclick="calculateLCM()">
 محاسبه ک.م.م
-
 </button>
 
-
 </div>
 
-
-<div
-id="gcdLcmResult"
-class="output">
-
+<div id="gcdLcmResult" class="answer">
 نتیجه اینجا نمایش داده می‌شود
-
 </div>
-
 
 </section>
 
 
-
-<!-- =========================
-     تاریخچه
-========================= -->
+<!-- تاریخچه -->
 
 <section class="card">
 
-
-<div class="section-title">
-
-<h2>
+<h2 class="card-title">
 🕘 تاریخچه محاسبات
 </h2>
 
+<div id="history" class="history">
+
+<div class="empty">
+هنوز محاسبه‌ای انجام نشده است.
+</div>
+
+</div>
 
 <button
-class="action"
+class="danger"
+style="width:100%;margin-top:10px;"
 onclick="clearHistory()">
 
-پاک کردن
+پاک کردن تاریخچه
 
 </button>
-
-
-</div>
-
-
-<div
-id="history"
-class="history">
-</div>
-
 
 </section>
 
 
 <footer>
-
-ماشین حساب حرفه‌ای
-
+ماشین حساب حرفه‌ای — ساخته شده توسط پارسا غفاری ❤️
 </footer>
-
 
 </div>
 
 
-<div id="toast"></div>
-
+<div id="toast" class="toast">
+انجام شد
+</div>
 
 
 <script>
 
-
-/* =================================
-   متغیر اصلی
-================================= */
+/* =========================
+   ماشین حساب اصلی
+========================= */
 
 let expression = "";
 
+const expressionElement =
+document.getElementById("expression");
+
+const resultElement =
+document.getElementById("result");
 
 
-/* =================================
-   تبدیل اعداد فارسی به انگلیسی
-================================= */
+function formatNumber(number){
 
-function normalizeNumber(value) {
-
-    return String(value)
-        .replace(/[۰-۹]/g, function(digit) {
-
-            return "۰۱۲۳۴۵۶۷۸۹"
-                .indexOf(digit);
-
-        })
-        .replace(/٫/g, ".")
-
-        .replace(/٬/g, "")
-
-        .trim();
-
-}
-
-
-
-/* =================================
-   فرمت عدد
-================================= */
-
-function formatNumber(number) {
-
-    if (!Number.isFinite(number)) {
-
-        return "خطا";
-
-    }
-
-    if (Math.abs(number) < 0.000000000001) {
-
-        number = 0;
-
+    if(!Number.isFinite(number)){
+        return "نتیجه نامعتبر است";
     }
 
     return Number(
         number.toFixed(12)
-    ).toString();
-
+    ).toLocaleString("en-US");
 }
 
 
-
-/* =================================
-   ماشین حساب اصلی
-================================= */
-
-function addToExpression(value) {
+function add(value){
 
     expression += value;
 
-    document.getElementById(
-        "expression"
-    ).textContent = expression;
-
-    document.getElementById(
-        "result"
-    ).textContent = expression || "0";
+    expressionElement.textContent =
+        expression;
 
 }
 
 
-
-function clearAll() {
+function clearAll(){
 
     expression = "";
 
-    document.getElementById(
-        "expression"
-    ).textContent =
-        "آماده محاسبه...";
+    expressionElement.textContent = "";
 
-    document.getElementById(
-        "result"
-    ).textContent =
-        "0";
+    resultElement.textContent = "0";
 
 }
 
 
-
-function backspace() {
+function backspace(){
 
     expression =
         expression.slice(0,-1);
 
-    document.getElementById(
-        "expression"
-    ).textContent =
-        expression ||
-        "آماده محاسبه...";
-
-    document.getElementById(
-        "result"
-    ).textContent =
-        expression || "0";
+    expressionElement.textContent =
+        expression;
 
 }
 
 
+function calculate(){
 
-/* =================================
-   محاسبه چهار عمل اصلی
-================================= */
+    if(!expression.trim()){
 
-function calculate() {
+        toast("لطفاً یک عبارت وارد کنید");
 
-    try {
+        return;
+    }
 
-        if (!expression) {
+    try{
 
-            return;
+        const prepared =
+            expression.replace(/×/g,"*")
+                      .replace(/÷/g,"/");
 
-        }
+        if(!/^[0-9+\-*/().\s]+$/.test(prepared)){
 
-
-        let prepared =
-            normalizeNumber(expression)
-            .replace(/×/g,"*")
-            .replace(/÷/g,"/");
-
-
-        /*
-          فقط اجازه اعداد و
-          چهار عمل اصلی و پرانتز
-        */
-
-        if (
-            !/^[0-9+\-*/().\s]+$/.test(
-                prepared
-            )
-        ) {
-
-            throw new Error(
-                "عبارت نامعتبر است"
-            );
+            throw new Error();
 
         }
 
-
-        /*
-          جلوگیری از تقسیم بر صفر
-        */
-
-        if (
-            /\/\s*0(?:\D|$)/.test(
-                prepared
-            )
-        ) {
-
-            throw new Error(
-                "تقسیم بر صفر ممکن نیست"
-            );
-
-        }
-
-
-        /*
-          انجام محاسبه
-        */
-
-        let answer =
+        const answer =
             Function(
                 '"use strict"; return (' +
                 prepared +
                 ')'
             )();
 
-
-        if (
+        if(
+            typeof answer !== "number" ||
             !Number.isFinite(answer)
-        ) {
+        ){
 
-            throw new Error(
-                "نتیجه نامعتبر است"
-            );
+            throw new Error();
 
         }
 
-
-        answer =
+        resultElement.textContent =
             formatNumber(answer);
 
-
-        document.getElementById(
-            "result"
-        ).textContent =
-            answer;
-
-
         addHistory(
-            expression,
-            answer
+            expression + " = " + formatNumber(answer)
         );
 
-    }
+    }catch(error){
 
-    catch(error) {
-
-        document.getElementById(
-            "result"
-        ).textContent =
+        resultElement.textContent =
             "خطا";
 
-        showToast(
-            error.message
-        );
+        toast("عبارت واردشده صحیح نیست");
 
     }
 
 }
 
 
-
-/* =================================
-   دریافت عدد از input
-================================= */
-
-function getNumber(id) {
-
-    let value =
-        Number(
-            normalizeNumber(
-                document.getElementById(id).value
-            )
-        );
-
-
-    if (!Number.isFinite(value)) {
-
-        throw new Error(
-            "لطفاً عدد را درست وارد کنید"
-        );
-
-    }
-
-
-    return value;
-
-}
-
-
-
-/* =================================
+/* =========================
    درصد
-================================= */
+========================= */
 
-function calculatePercent() {
+function percent(){
 
-    try {
-
-        let percent =
-            getNumber("percent");
-
-        let base =
-            getNumber("percentBase");
-
-
-        let answer =
-            base * percent / 100;
-
-
-        answer =
-            formatNumber(answer);
-
-
-        document.getElementById(
-            "percentResult"
-        ).textContent =
-            answer;
-
-
-        addHistory(
-            percent +
-            "% از " +
-            base,
-
-            answer
+    const value =
+        Number(
+            document.getElementById(
+                "percentValue"
+            ).value
         );
+
+    const base =
+        Number(
+            document.getElementById(
+                "percentBase"
+            ).value
+        );
+
+    if(
+        !Number.isFinite(value) ||
+        !Number.isFinite(base)
+    ){
+
+        toast("لطفاً هر دو عدد را وارد کنید");
+
+        return;
 
     }
 
-    catch(error) {
+    const answer =
+        base * value / 100;
 
-        showToast(
-            error.message
-        );
+    document.getElementById(
+        "percentResult"
+    ).textContent =
+        formatNumber(answer);
 
-    }
+    addHistory(
+        value + "% از " +
+        base +
+        " = " +
+        formatNumber(answer)
+    );
 
 }
 
 
+function increase(){
 
-function increasePercent() {
-
-    try {
-
-        let percent =
-            getNumber("percent");
-
-        let base =
-            getNumber("percentBase");
-
-
-        let answer =
-            base *
-            (1 + percent / 100);
-
-
-        answer =
-            formatNumber(answer);
-
-
-        document.getElementById(
-            "percentResult"
-        ).textContent =
-            answer;
-
-
-        addHistory(
-            base +
-            " با افزایش " +
-            percent +
-            "%",
-
-            answer
+    const base =
+        Number(
+            document.getElementById(
+                "changeBase"
+            ).value
         );
+
+    const percentValue =
+        Number(
+            document.getElementById(
+                "changePercent"
+            ).value
+        );
+
+    if(
+        !Number.isFinite(base) ||
+        !Number.isFinite(percentValue)
+    ){
+
+        toast("لطفاً هر دو عدد را وارد کنید");
+
+        return;
 
     }
 
-    catch(error) {
+    const answer =
+        base * (1 + percentValue / 100);
 
-        showToast(
-            error.message
-        );
+    document.getElementById(
+        "changeResult"
+    ).textContent =
+        formatNumber(answer);
 
-    }
+    addHistory(
+        base +
+        " با افزایش " +
+        percentValue +
+        "% = " +
+        formatNumber(answer)
+    );
 
 }
 
 
+function decrease(){
 
-function decreasePercent() {
-
-    try {
-
-        let percent =
-            getNumber("percent");
-
-        let base =
-            getNumber("percentBase");
-
-
-        let answer =
-            base *
-            (1 - percent / 100);
-
-
-        answer =
-            formatNumber(answer);
-
-
-        document.getElementById(
-            "percentResult"
-        ).textContent =
-            answer;
-
-
-        addHistory(
-            base +
-            " با کاهش " +
-            percent +
-            "%",
-
-            answer
+    const base =
+        Number(
+            document.getElementById(
+                "changeBase"
+            ).value
         );
+
+    const percentValue =
+        Number(
+            document.getElementById(
+                "changePercent"
+            ).value
+        );
+
+    if(
+        !Number.isFinite(base) ||
+        !Number.isFinite(percentValue)
+    ){
+
+        toast("لطفاً هر دو عدد را وارد کنید");
+
+        return;
 
     }
 
-    catch(error) {
+    const answer =
+        base * (1 - percentValue / 100);
 
-        showToast(
-            error.message
-        );
+    document.getElementById(
+        "changeResult"
+    ).textContent =
+        formatNumber(answer);
 
-    }
+    addHistory(
+        base +
+        " با کاهش " +
+        percentValue +
+        "% = " +
+        formatNumber(answer)
+    );
 
 }
 
 
+/* =========================
+   کسرها
+========================= */
 
-/* =================================
-   ب.م.م
-================================= */
+function readFraction(
+    wholeId,
+    numId,
+    denId
+){
 
-function gcd(a,b) {
-
-    a =
-        Math.abs(
-            Math.trunc(a)
+    let whole =
+        Number(
+            document.getElementById(
+                wholeId
+            ).value
         );
 
-    b =
-        Math.abs(
-            Math.trunc(b)
+    let num =
+        Number(
+            document.getElementById(
+                numId
+            ).value
         );
 
+    let den =
+        Number(
+            document.getElementById(
+                denId
+            ).value
+        );
 
-    while (b !== 0) {
+    if(
+        !Number.isFinite(whole)
+    ){
+        whole = 0;
+    }
 
-        let temp =
-            a % b;
+    if(
+        !Number.isFinite(num)
+    ){
+        num = 0;
+    }
+
+    if(
+        !Number.isFinite(den) ||
+        den === 0
+    ){
+
+        den = 1;
+
+    }
+
+    let numerator;
+
+    if(whole < 0){
+
+        numerator =
+            whole * den -
+            Math.abs(num);
+
+    }else{
+
+        numerator =
+            whole * den +
+            num;
+
+    }
+
+    return {
+        numerator:numerator,
+        denominator:den
+    };
+
+}
+
+
+function gcd(a,b){
+
+    a = Math.abs(a);
+    b = Math.abs(b);
+
+    while(b !== 0){
+
+        const temp = a % b;
 
         a = b;
 
@@ -1663,790 +1380,659 @@ function gcd(a,b) {
 
     }
 
-
     return a;
-
 }
 
 
-
-/* =================================
-   ک.م.م
-================================= */
-
-function lcm(a,b) {
-
-    if (
-        a === 0 ||
-        b === 0
-    ) {
-
-        return 0;
-
-    }
-
-
-    return Math.abs(
-        (a / gcd(a,b)) * b
-    );
-
-}
-
-
-
-/* =================================
-   ساده کردن کسر
-================================= */
-
-function simplifyFraction(
+function simplify(
     numerator,
     denominator
-) {
+){
 
-    if (
-        denominator === 0
-    ) {
+    if(denominator < 0){
 
-        throw new Error(
-            "مخرج نمی‌تواند صفر باشد"
-        );
+        numerator *= -1;
+
+        denominator *= -1;
 
     }
 
-
-    if (
-        denominator < 0
-    ) {
-
-        numerator =
-            -numerator;
-
-        denominator =
-            -denominator;
-
-    }
-
-
-    let divisor =
+    const divisor =
         gcd(
             numerator,
             denominator
         );
 
+    return {
 
-    return [
+        numerator:
+            numerator / divisor,
 
-        numerator / divisor,
+        denominator:
+            denominator / divisor
 
-        denominator / divisor
-
-    ];
+    };
 
 }
 
 
-
-/* =================================
-   نمایش کسر
-================================= */
-
-function fractionText(
+function toMixed(
     numerator,
     denominator
-) {
+){
 
-    let result =
-        simplifyFraction(
+    const simple =
+        simplify(
             numerator,
             denominator
         );
 
+    numerator =
+        simple.numerator;
 
-    if (
-        result[1] === 1
-    ) {
+    denominator =
+        simple.denominator;
+
+
+    const whole =
+        numerator >= 0
+            ? Math.floor(
+                numerator / denominator
+            )
+            : Math.ceil(
+                numerator / denominator
+            );
+
+
+    let remainder =
+        numerator -
+        whole * denominator;
+
+
+    if(
+        remainder === 0
+    ){
+
+        return {
+            whole:whole,
+            numerator:0,
+            denominator:1
+        };
+
+    }
+
+
+    return {
+
+        whole:whole,
+
+        numerator:Math.abs(remainder),
+
+        denominator:denominator
+
+    };
+
+}
+
+
+function fractionText(
+    fraction
+){
+
+    const mixed =
+        toMixed(
+            fraction.numerator,
+            fraction.denominator
+        );
+
+    if(
+        mixed.numerator === 0
+    ){
 
         return String(
-            result[0]
+            mixed.whole
         );
 
     }
 
+    if(
+        mixed.whole === 0
+    ){
+
+        return (
+            mixed.numerator +
+            "/" +
+            mixed.denominator
+        );
+
+    }
 
     return (
-        result[0] +
-        " / " +
-        result[1]
+        mixed.whole +
+        " " +
+        mixed.numerator +
+        "/" +
+        mixed.denominator
     );
 
 }
 
 
+function fractionCalculate(){
 
-/* =================================
-   چهار عمل اصلی کسر
-================================= */
+    const f1 =
+        readFraction(
+            "whole1",
+            "num1",
+            "den1"
+        );
 
-function calculateFraction() {
+    const f2 =
+        readFraction(
+            "whole2",
+            "num2",
+            "den2"
+        );
 
-    try {
-
-        let n1 =
-            Number(
-                normalizeNumber(
-                    document.getElementById(
-                        "n1"
-                    ).value
-                )
-            );
-
-
-        let d1 =
-            Number(
-                normalizeNumber(
-                    document.getElementById(
-                        "d1"
-                    ).value
-                )
-            );
-
-
-        let n2 =
-            Number(
-                normalizeNumber(
-                    document.getElementById(
-                        "n2"
-                    ).value
-                )
-            );
-
-
-        let d2 =
-            Number(
-                normalizeNumber(
-                    document.getElementById(
-                        "d2"
-                    ).value
-                )
-            );
-
-
-        if (
-            !Number.isInteger(n1) ||
-            !Number.isInteger(d1) ||
-            !Number.isInteger(n2) ||
-            !Number.isInteger(d2)
-        ) {
-
-            throw new Error(
-                "صورت و مخرج را با عدد صحیح وارد کنید"
-            );
-
-        }
-
-
-        if (
-            d1 === 0 ||
-            d2 === 0
-        ) {
-
-            throw new Error(
-                "مخرج نمی‌تواند صفر باشد"
-            );
-
-        }
-
-
-        let operation =
-            document.getElementById(
-                "fractionOperation"
-            ).value;
-
-
-        let numerator;
-
-        let denominator;
-
-
-
-        /* جمع */
-
-        if (
-            operation === "+"
-        ) {
-
-            numerator =
-                n1*d2 +
-                n2*d1;
-
-            denominator =
-                d1*d2;
-
-        }
-
-
-
-        /* تفریق */
-
-        else if (
-            operation === "-"
-        ) {
-
-            numerator =
-                n1*d2 -
-                n2*d1;
-
-            denominator =
-                d1*d2;
-
-        }
-
-
-
-        /* ضرب */
-
-        else if (
-            operation === "*"
-        ) {
-
-            numerator =
-                n1*n2;
-
-            denominator =
-                d1*d2;
-
-        }
-
-
-
-        /* تقسیم */
-
-        else if (
-            operation === "/"
-        ) {
-
-            if (
-                n2 === 0
-            ) {
-
-                throw new Error(
-                    "تقسیم بر صفر ممکن نیست"
-                );
-
-            }
-
-
-            numerator =
-                n1*d2;
-
-            denominator =
-                d1*n2;
-
-        }
-
-
-
-        let answer =
-            fractionText(
-                numerator,
-                denominator
-            );
-
-
+    const operation =
         document.getElementById(
-            "fractionResult"
-        ).textContent =
-            answer;
+            "fractionOperation"
+        ).value;
 
 
-        addHistory(
-            fractionText(n1,d1) +
-            " " +
-            operation +
-            " " +
-            fractionText(n2,d2),
+    if(
+        f1.denominator === 0 ||
+        f2.denominator === 0
+    ){
 
-            answer
-        );
-
-    }
-
-    catch(error) {
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-
-/* =================================
-   توان
-================================= */
-
-function calculatePower() {
-
-    try {
-
-        let base =
-            getNumber("base");
-
-        let power =
-            getNumber("power");
-
-
-        let answer =
-            Math.pow(
-                base,
-                power
-            );
-
-
-        if (
-            !Number.isFinite(answer)
-        ) {
-
-            throw new Error(
-                "نتیجه بیش از حد بزرگ است"
-            );
-
-        }
-
-
-        answer =
-            formatNumber(answer);
-
-
-        document.getElementById(
-            "powerResult"
-        ).textContent =
-            answer;
-
-
-        addHistory(
-            base +
-            " ^ " +
-            power,
-
-            answer
-        );
-
-    }
-
-    catch(error) {
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-
-/* =================================
-   ب.م.م
-================================= */
-
-function calculateGCD() {
-
-    try {
-
-        let a =
-            getNumber("number1");
-
-        let b =
-            getNumber("number2");
-
-
-        if (
-            !Number.isInteger(a) ||
-            !Number.isInteger(b)
-        ) {
-
-            throw new Error(
-                "لطفاً عدد صحیح وارد کنید"
-            );
-
-        }
-
-
-        let answer =
-            gcd(a,b);
-
-
-        document.getElementById(
-            "gcdLcmResult"
-        ).textContent =
-            "ب.م.م = " +
-            answer;
-
-
-        addHistory(
-            "ب.م.م(" +
-            a +
-            ", " +
-            b +
-            ")",
-
-            answer
-        );
-
-    }
-
-    catch(error) {
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-
-/* =================================
-   ک.م.م
-================================= */
-
-function calculateLCM() {
-
-    try {
-
-        let a =
-            getNumber("number1");
-
-        let b =
-            getNumber("number2");
-
-
-        if (
-            !Number.isInteger(a) ||
-            !Number.isInteger(b)
-        ) {
-
-            throw new Error(
-                "لطفاً عدد صحیح وارد کنید"
-            );
-
-        }
-
-
-        let answer =
-            lcm(a,b);
-
-
-        document.getElementById(
-            "gcdLcmResult"
-        ).textContent =
-            "ک.م.م = " +
-            answer;
-
-
-        addHistory(
-            "ک.م.م(" +
-            a +
-            ", " +
-            b +
-            ")",
-
-            answer
-        );
-
-    }
-
-    catch(error) {
-
-        showToast(
-            error.message
-        );
-
-    }
-
-}
-
-
-
-/* =================================
-   تاریخچه
-================================= */
-
-function addHistory(
-    question,
-    answer
-) {
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            ) || "[]"
-        );
-
-
-    history.unshift({
-
-        question:
-            question,
-
-        answer:
-            answer
-
-    });
-
-
-    history =
-        history.slice(
-            0,
-            30
-        );
-
-
-    localStorage.setItem(
-        "calculatorHistory",
-
-        JSON.stringify(
-            history
-        )
-    );
-
-
-    showHistory();
-
-}
-
-
-
-/* =================================
-   نمایش تاریخچه
-================================= */
-
-function showHistory() {
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            ) || "[]"
-        );
-
-
-    let box =
-        document.getElementById(
-            "history"
-        );
-
-
-    if (
-        history.length === 0
-    ) {
-
-        box.innerHTML =
-            '<div class="output">' +
-            'هنوز محاسبه‌ای انجام نشده است.' +
-            '</div>';
+        toast("مخرج نمی‌تواند صفر باشد");
 
         return;
 
     }
 
 
-    box.innerHTML = "";
+    let numerator;
+    let denominator;
 
 
-    history.forEach(
-        function(item) {
+    if(operation === "+"){
 
-            let div =
-                document.createElement(
-                    "div"
-                );
+        numerator =
+            f1.numerator * f2.denominator +
+            f2.numerator * f1.denominator;
 
+        denominator =
+            f1.denominator *
+            f2.denominator;
 
-            div.className =
-                "history-item";
-
-
-            let question =
-                document.createElement(
-                    "span"
-                );
-
-            question.textContent =
-                item.question;
+    }
 
 
-            let answer =
-                document.createElement(
-                    "span"
-                );
+    else if(operation === "-"){
 
-            answer.className =
-                "history-answer";
+        numerator =
+            f1.numerator * f2.denominator -
+            f2.numerator * f1.denominator;
 
-            answer.textContent =
-                item.answer;
+        denominator =
+            f1.denominator *
+            f2.denominator;
 
-
-            div.appendChild(
-                question
-            );
-
-            div.appendChild(
-                answer
-            );
+    }
 
 
-            box.appendChild(
-                div
-            );
+    else if(operation === "*"){
+
+        numerator =
+            f1.numerator *
+            f2.numerator;
+
+        denominator =
+            f1.denominator *
+            f2.denominator;
+
+    }
+
+
+    else if(operation === "/"){
+
+        if(f2.numerator === 0){
+
+            toast("تقسیم بر صفر ممکن نیست");
+
+            return;
 
         }
+
+        numerator =
+            f1.numerator *
+            f2.denominator;
+
+        denominator =
+            f1.denominator *
+            f2.numerator;
+
+    }
+
+
+    const result =
+        simplify(
+            numerator,
+            denominator
+        );
+
+
+    const text =
+        fractionText(result);
+
+
+    document.getElementById(
+        "fractionResult"
+    ).textContent =
+        text;
+
+
+    addHistory(
+        fractionText(f1) +
+        " " +
+        operation +
+        " " +
+        fractionText(f2) +
+        " = " +
+        text
     );
 
 }
 
 
+function fractionClear(){
 
-/* =================================
-   پاک کردن تاریخچه
-================================= */
+    [
+        "whole1",
+        "num1",
+        "den1",
+        "whole2",
+        "num2",
+        "den2"
+    ].forEach(id => {
 
-function clearHistory() {
+        document.getElementById(id).value = "";
 
-    localStorage.removeItem(
-        "calculatorHistory"
+    });
+
+
+    document.getElementById(
+        "fractionResult"
+    ).textContent =
+        "نتیجه اینجا نمایش داده می‌شود";
+
+}
+
+
+/* =========================
+   توان
+========================= */
+
+function calculatePower(){
+
+    const base =
+        Number(
+            document.getElementById(
+                "base"
+            ).value
+        );
+
+    const exponent =
+        Number(
+            document.getElementById(
+                "powerValue"
+            ).value
+        );
+
+
+    if(
+        !Number.isFinite(base) ||
+        !Number.isFinite(exponent)
+    ){
+
+        toast("لطفاً پایه و توان را وارد کنید");
+
+        return;
+
+    }
+
+
+    const answer =
+        Math.pow(
+            base,
+            exponent
+        );
+
+
+    if(
+        !Number.isFinite(answer)
+    ){
+
+        toast("نتیجه بسیار بزرگ یا نامعتبر است");
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "powerResult"
+    ).textContent =
+        formatNumber(answer);
+
+
+    addHistory(
+        base +
+        " ^ " +
+        exponent +
+        " = " +
+        formatNumber(answer)
+    );
+
+}
+
+
+/* =========================
+   ب.م.م
+========================= */
+
+function calculateGCD(){
+
+    const a =
+        Number(
+            document.getElementById(
+                "number1"
+            ).value
+        );
+
+    const b =
+        Number(
+            document.getElementById(
+                "number2"
+            ).value
+        );
+
+
+    if(
+        !Number.isInteger(a) ||
+        !Number.isInteger(b)
+    ){
+
+        toast("برای ب.م.م عدد صحیح وارد کنید");
+
+        return;
+
+    }
+
+
+    const answer =
+        gcd(a,b);
+
+
+    document.getElementById(
+        "gcdLcmResult"
+    ).textContent =
+        "ب.م.م = " +
+        answer;
+
+
+    addHistory(
+        "ب.م.م(" +
+        a +
+        ", " +
+        b +
+        ") = " +
+        answer
+    );
+
+}
+
+
+/* =========================
+   ک.م.م
+========================= */
+
+function calculateLCM(){
+
+    const a =
+        Number(
+            document.getElementById(
+                "number1"
+            ).value
+        );
+
+    const b =
+        Number(
+            document.getElementById(
+                "number2"
+            ).value
+        );
+
+
+    if(
+        !Number.isInteger(a) ||
+        !Number.isInteger(b)
+    ){
+
+        toast("برای ک.م.م عدد صحیح وارد کنید");
+
+        return;
+
+    }
+
+
+    if(a === 0 || b === 0){
+
+        document.getElementById(
+            "gcdLcmResult"
+        ).textContent =
+            "ک.م.م = 0";
+
+        return;
+
+    }
+
+
+    const answer =
+        Math.abs(
+            a * b
+        ) /
+        gcd(a,b);
+
+
+    document.getElementById(
+        "gcdLcmResult"
+    ).textContent =
+        "ک.م.م = " +
+        answer;
+
+
+    addHistory(
+        "ک.م.م(" +
+        a +
+        ", " +
+        b +
+        ") = " +
+        answer
+    );
+
+}
+
+
+/* =========================
+   تاریخچه
+========================= */
+
+function addHistory(text){
+
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "calculatorHistory"
+            ) || "[]"
+        );
+
+
+    history.unshift(text);
+
+
+    if(history.length > 50){
+
+        history =
+            history.slice(0,50);
+
+    }
+
+
+    localStorage.setItem(
+        "calculatorHistory",
+        JSON.stringify(history)
     );
 
 
     showHistory();
 
+}
 
-    showToast(
-        "تاریخچه پاک شد"
-    );
+
+function showHistory(){
+
+    const container =
+        document.getElementById(
+            "history"
+        );
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "calculatorHistory"
+            ) || "[]"
+        );
+
+
+    if(history.length === 0){
+
+        container.innerHTML =
+            '<div class="empty">هنوز محاسبه‌ای انجام نشده است.</div>';
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        history
+        .map(
+            item =>
+            `<div class="history-item">${item}</div>`
+        )
+        .join("");
 
 }
 
 
+function clearHistory(){
 
-/* =================================
+    localStorage.removeItem(
+        "calculatorHistory"
+    );
+
+    showHistory();
+
+    toast("تاریخچه پاک شد");
+
+}
+
+
+/* =========================
    پیام
-================================= */
+========================= */
 
-function showToast(
-    message
-) {
+function toast(message){
 
-    let toast =
+    const element =
         document.getElementById(
             "toast"
         );
 
 
-    toast.textContent =
+    element.textContent =
         message;
 
 
-    toast.classList.add(
+    element.classList.add(
         "show"
     );
 
 
     setTimeout(
-        function() {
+        () => {
 
-            toast.classList.remove(
+            element.classList.remove(
                 "show"
             );
 
         },
-        2000
+        1800
     );
 
 }
 
 
-
-/* =================================
-   کیبورد کامپیوتر
-================================= */
+/* =========================
+   کیبورد
+========================= */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(event){
+
+        const key =
+            event.key;
 
 
-        if (
-            event.key === "Enter"
-        ) {
+        if(
+            /^[0-9]$/.test(key) ||
+            ["+","-","*","/","(",")","."].includes(key)
+        ){
+
+            add(key);
+
+            event.preventDefault();
+
+        }
+
+
+        else if(key === "Enter"){
 
             calculate();
 
-            return;
+            event.preventDefault();
 
         }
 
 
-        if (
-            event.key === "Backspace"
-        ) {
+        else if(key === "Backspace"){
 
             backspace();
 
-            return;
+            event.preventDefault();
 
         }
 
 
-        if (
-            event.key === "Escape"
-        ) {
+        else if(key === "Escape"){
 
             clearAll();
 
-            return;
-
-        }
-
-
-        if (
-            /[0-9+\-*/().]/.test(
-                event.key
-            )
-        ) {
-
-
-            let value =
-                event.key;
-
-
-            if (
-                value === "*"
-            ) {
-
-                value = "×";
-
-            }
-
-
-            if (
-                value === "/"
-            ) {
-
-                value = "÷";
-
-            }
-
-
-            addToExpression(
-                value
-            );
+            event.preventDefault();
 
         }
 
@@ -2454,9 +2040,7 @@ document.addEventListener(
 );
 
 
-/* =================================
-   شروع سایت
-================================= */
+/* شروع */
 
 showHistory();
 
