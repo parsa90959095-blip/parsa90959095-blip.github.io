@@ -1,701 +1,276 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ماشین حساب و ترجمه‌گر | پارسا غفاری</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ماشین حساب و ترجمه‌گر پارسا</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --green:#22c55e;
-    --darkgreen:#15803d;
-    --lightgreen:#dcfce7;
-    --yellow:#facc15;
-    --darkyellow:#713f12;
-    --bg:#f0fdf4;
-    --card:#ffffff;
-    --text:#17220f;
-    --border:#bbf7d0;
-    --dark:#17220f;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-    font-family:Tahoma,Arial,sans-serif;
-    background:
-        radial-gradient(circle at top right,#dcfce7,transparent 35%),
-        radial-gradient(circle at bottom left,#fef08a,transparent 35%),
-        var(--bg);
-    color:var(--text);
-    padding:12px;
-    min-height:100vh;
-    transition:.3s;
+font-family:Tahoma,Arial,sans-serif;
+background:radial-gradient(circle at top right,#dcfce7,transparent 35%),radial-gradient(circle at bottom left,#fef08a,transparent 35%),#f0fdf4;
+color:#17220f;padding:10px;transition:.3s
 }
-
-body.dark{
-    --bg:#0b1b12;
-    --card:#12251a;
-    --text:#ecfdf5;
-    --border:#166534;
-
-    background:
-        radial-gradient(circle at top right,#14532d,transparent 35%),
-        radial-gradient(circle at bottom left,#713f12,transparent 35%),
-        #0b1b12;
+body.dark{background:#101810;color:#eee}
+.container{max-width:950px;margin:auto}
+.intro,.card,.mode-card{
+background:#fff;border:2px solid #bbf7d0;border-radius:24px;padding:20px;
+margin-bottom:18px;box-shadow:0 10px 30px #0001
 }
-
-.container{
-    max-width:900px;
-    margin:auto;
+body.dark .intro,body.dark .card,body.dark .mode-card{
+background:#192319;border-color:#355c3a
 }
-
-/* =========================
-   صفحه اصلی
-========================= */
-
-.home{
-    min-height:calc(100vh - 30px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.intro{
-    background:var(--card);
-    border:3px solid var(--green);
-    border-radius:25px;
-    padding:25px;
-    text-align:center;
-    margin-bottom:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-.intro h1{
-    color:var(--darkgreen);
-    margin-bottom:15px;
-}
-
-body.dark .intro h1,
-body.dark .card-title{
-    color:#86efac;
-}
-
-.intro p{
-    line-height:2;
-    margin:5px;
-}
-
-.price{
-    background:var(--yellow);
-    color:var(--darkyellow);
-    font-weight:bold;
-    padding:12px;
-    border-radius:15px;
-    margin-top:15px;
-}
-
-.mode-title{
-    text-align:center;
-    margin:15px 0;
-    color:var(--darkgreen);
-}
-
-body.dark .mode-title{
-    color:#86efac;
-}
-
-.mode-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.mode-button{
-    min-height:150px;
-    font-size:25px;
-    border-radius:25px;
-    border:3px solid var(--green);
-    background:var(--card);
-    color:var(--darkgreen);
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-body.dark .mode-button{
-    color:#86efac;
-}
-
-.mode-button:hover{
-    transform:translateY(-3px);
-}
-
-/* =========================
-   نوار بالا
-========================= */
-
-.topbar{
-    display:flex;
-    gap:8px;
-    margin-bottom:15px;
-    flex-wrap:wrap;
-}
-
-.topbar button{
-    flex:1;
-    min-width:120px;
-}
-
-/* =========================
-   کارت
-========================= */
-
-.card{
-    background:var(--card);
-    border:2px solid var(--border);
-    border-radius:25px;
-    padding:20px;
-    margin-bottom:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.07);
-}
-
-.card-title{
-    text-align:center;
-    color:var(--darkgreen);
-    margin-bottom:18px;
-    font-size:22px;
-}
-
-/* =========================
-   دکمه‌ها
-========================= */
-
+.intro{text-align:center;border:3px solid #22c55e}
+.intro h1{color:#15803d;margin-bottom:12px}
+body.dark .intro h1,body.dark .card-title{color:#86efac}
+.intro p{line-height:2;margin:5px}
+.price{background:#facc15;color:#713f12;font-weight:bold;padding:12px;border-radius:14px;margin-top:12px}
+.topbar{display:flex;gap:8px;margin-bottom:18px}
+button,select,textarea{font-family:inherit}
 button{
-    border:none;
-    border-radius:14px;
-    padding:15px 5px;
-    font-family:inherit;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    background:var(--lightgreen);
-    color:#14532d;
-    transition:.15s;
+border:0;border-radius:14px;padding:13px 7px;font-size:17px;font-weight:bold;
+cursor:pointer;background:#dcfce7;color:#14532d;transition:.15s
 }
-
-button:active{
-    transform:scale(.95);
-}
-
-.operator{
-    background:var(--yellow);
-    color:var(--darkyellow);
-}
-
-.equal{
-    background:var(--green);
-    color:white;
-}
-
-.danger{
-    background:#fecaca;
-    color:#991b1b;
-}
-
-.special{
-    background:#bbf7d0;
-    color:#166534;
-}
-
-.action{
-    width:100%;
-    background:var(--green);
-    color:white;
-    margin-top:10px;
-}
-
-.home-btn{
-    background:var(--yellow);
-    color:var(--darkyellow);
-}
-
-.theme-btn{
-    background:#17220f;
-    color:white;
-}
-
-body.dark .theme-btn{
-    background:#facc15;
-    color:#713f12;
-}
-
-/* =========================
-   ماشین حساب
-========================= */
-
+button:active{transform:scale(.96)}
+.mode{background:#bbf7d0;color:#166534;border:2px solid #22c55e}
+.mode.active{background:#22c55e;color:#fff}
+.night{background:#17220f;color:#fff}
+body.dark .night{background:#facc15;color:#713f12}
+.card-title{text-align:center;color:#15803d;margin-bottom:16px;font-size:22px}
+.hidden{display:none!important}
+.home-title{text-align:center;color:#15803d;font-size:27px;margin-bottom:8px}
+body.dark .home-title{color:#86efac}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.mode-card{text-align:center;cursor:pointer;border:3px solid #22c55e;transition:.2s}
+.mode-card:hover{transform:translateY(-3px)}
+.mode-icon{font-size:55px;margin-bottom:10px}
+.mode-card h2{color:#15803d;margin-bottom:8px}
+body.dark .mode-card h2{color:#86efac}
+.mode-card p{line-height:1.9;color:#555}
+body.dark .mode-card p{color:#ccc}
+.home-buttons{display:flex;gap:8px;margin-bottom:18px}
+.home-btn{flex:1;background:#22c55e;color:#fff}
 .display{
-    background:#17220f;
-    color:white;
-    border-radius:18px;
-    padding:15px;
-    min-height:105px;
-    margin-bottom:15px;
-    direction:ltr;
-    text-align:right;
-    overflow:hidden;
+background:#17220f;color:#fff;border-radius:18px;padding:14px;min-height:100px;
+margin-bottom:14px;direction:ltr;text-align:right;overflow:hidden
 }
-
-.expression{
-    color:#bbf7d0;
-    min-height:28px;
-    font-size:18px;
-    word-break:break-all;
-}
-
-.result{
-    color:#facc15;
-    font-size:32px;
-    font-weight:bold;
-    margin-top:8px;
-    word-break:break-all;
-}
-
-.buttons{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:9px;
-}
-
-/* =========================
-   ورودی سفارشی
-========================= */
-
-.custom-input{
-    background:var(--bg);
-    border:3px solid var(--green);
-    border-radius:15px;
-    padding:14px;
-    min-height:55px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-    direction:ltr;
-    word-break:break-all;
-    margin-bottom:10px;
-}
-
-.number-pad{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    margin-top:12px;
-}
-
-.number-pad button{
-    min-height:55px;
-}
-
+.expression{color:#bbf7d0;min-height:25px;word-break:break-all}
+.result{color:#facc15;font-size:30px;font-weight:bold;margin-top:7px;word-break:break-all}
+.buttons,.number-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.operator{background:#facc15;color:#713f12}
+.equal,.action{background:#22c55e;color:#fff}
+.danger{background:#fecaca;color:#991b1b}
+.special{background:#bbf7d0;color:#166534}
 .answer{
-    background:#fef9c3;
-    border:2px solid var(--yellow);
-    border-radius:15px;
-    padding:15px;
-    margin-top:15px;
-    text-align:center;
-    font-size:20px;
-    font-weight:bold;
-    color:#713f12;
-    min-height:55px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+background:#fef9c3;border:2px solid #facc15;border-radius:14px;padding:13px;
+margin-top:12px;text-align:center;font-weight:bold;color:#713f12;
+min-height:52px;display:flex;align-items:center;justify-content:center
 }
-
-body.dark .answer{
-    background:#3b3210;
-    color:#fef08a;
+body.dark .answer{background:#3b3512;color:#ffe58a}
+.custom-input{
+background:#f0fdf4;border:3px solid #22c55e;border-radius:14px;padding:12px;
+min-height:52px;text-align:center;font-size:21px;font-weight:bold;
+direction:ltr;word-break:break-all;margin-bottom:9px
 }
-
-/* =========================
-   انتخابگر
-========================= */
-
+body.dark .custom-input{background:#101810;color:#fff}
+.number-pad button{min-height:52px}
 select{
-    width:100%;
-    padding:14px;
-    border:2px solid var(--border);
-    border-radius:14px;
-    background:var(--bg);
-    color:var(--text);
-    font-family:inherit;
-    font-size:20px;
-    text-align:center;
-    font-weight:bold;
+width:100%;padding:13px;border:2px solid #bbf7d0;border-radius:13px;
+background:#f0fdf4;font-size:18px;font-weight:bold;text-align:center
 }
-
-/* =========================
-   کسر
-========================= */
-
-.fraction-row{
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    gap:12px;
-    align-items:center;
-}
-
-.fraction-box{
-    background:var(--bg);
-    border:2px solid var(--border);
-    border-radius:18px;
-    padding:15px;
-    text-align:center;
-}
-
-.fraction-label{
-    color:var(--darkgreen);
-    font-weight:bold;
-    margin-bottom:12px;
-}
-
-body.dark .fraction-label{
-    color:#86efac;
-}
-
-/* =========================
-   تاریخچه
-========================= */
-
-.history{
-    max-height:350px;
-    overflow-y:auto;
-}
-
+body.dark select{background:#101810;color:#fff}
+.fraction-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.fraction-box{background:#f0fdf4;border:2px solid #bbf7d0;border-radius:17px;padding:12px;text-align:center}
+.fraction-label{color:#166534;font-weight:bold;margin-bottom:10px}
+body.dark .fraction-box{background:#101810}
+.history{max-height:300px;overflow:auto}
 .history-item{
-    background:var(--bg);
-    border-right:5px solid var(--green);
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:8px;
-    direction:ltr;
-    text-align:left;
-    word-break:break-all;
+background:#f0fdf4;border-right:5px solid #22c55e;border-radius:10px;
+padding:10px;margin-bottom:7px;direction:ltr;text-align:left
 }
-
-.empty{
-    text-align:center;
-    color:#777;
-    padding:20px;
-}
-
-/* =========================
-   ترجمه‌گر
-========================= */
-
-.translator-box{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-.language-row{
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    gap:10px;
-    align-items:center;
-}
-
-.swap-btn{
-    width:55px;
-    height:55px;
-    padding:5px;
-    background:var(--yellow);
-    color:var(--darkyellow);
-    border-radius:50%;
-}
-
-.translate-text{
-    width:100%;
-    min-height:170px;
-    resize:vertical;
-    border:3px solid var(--green);
-    border-radius:18px;
-    padding:15px;
-    font-family:inherit;
-    font-size:19px;
-    background:var(--bg);
-    color:var(--text);
-    outline:none;
-    direction:auto;
-}
-
-.translate-result{
-    min-height:170px;
-    background:var(--bg);
-    border:3px solid var(--yellow);
-    border-radius:18px;
-    padding:15px;
-    font-size:21px;
-    line-height:2;
-    direction:auto;
-    white-space:pre-wrap;
-    word-break:break-word;
-}
-
-.translate-actions{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-}
-
-.mic-button{
-    background:#fecaca;
-    color:#991b1b;
-}
-
-.speak-button{
-    background:#bbf7d0;
-    color:#166534;
-}
-
-.copy-button{
-    background:#dbeafe;
-    color:#1e40af;
-}
-
-.translator-info{
-    text-align:center;
-    color:#777;
-    line-height:1.8;
-    margin-top:10px;
-    font-size:14px;
-}
-
-/* =========================
-   فوتر
-========================= */
-
-footer{
-    text-align:center;
-    color:#166534;
-    font-weight:bold;
-    padding:20px;
-}
-
-body.dark footer{
-    color:#86efac;
-}
-
-/* =========================
-   Toast
-========================= */
-
+body.dark .history-item{background:#101810}
+.empty{text-align:center;color:#777;padding:18px}
+footer{text-align:center;color:#166534;font-weight:bold;padding:18px}
 .toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#17220f;
-    color:white;
-    padding:12px 20px;
-    border-radius:15px;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:1000;
-    max-width:90%;
-    text-align:center;
+position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+background:#17220f;color:#fff;padding:11px 18px;border-radius:14px;
+opacity:0;pointer-events:none;transition:.3s;z-index:999
 }
+.toast.show{opacity:1}
 
-.toast.show{
-    opacity:1;
+.langs{display:grid;grid-template-columns:1fr 55px 1fr;gap:8px;align-items:center}
+.swap{background:#facc15;color:#713f12}
+textarea{
+width:100%;min-height:170px;resize:vertical;border:3px solid #22c55e;
+border-radius:16px;padding:15px;font-size:20px;line-height:1.8;
+outline:none;background:#f0fdf4;color:#17220f
 }
-
-/* =========================
-   صفحات
-========================= */
-
-.page{
-    display:none;
+body.dark textarea{background:#101810;color:#fff}
+.voice-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.trans-result{
+min-height:170px;background:#17220f;color:#fff;border-radius:16px;padding:15px;
+font-size:20px;line-height:1.8;direction:auto;word-break:break-word
 }
-
-.page.active{
-    display:block;
+.trans-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:9px}
+.word-box{
+background:#f0fdf4;border:2px solid #bbf7d0;border-radius:15px;
+padding:14px;margin-top:12px
 }
+body.dark .word-box{background:#101810}
+.pronounce{background:#22c55e;color:#fff}
+.small{font-size:13px;color:#666;margin-top:8px;text-align:center;line-height:1.7}
+body.dark .small{color:#bbb}
 
-/* =========================
-   موبایل
-========================= */
-
-@media(max-width:600px){
-
-    body{
-        padding:8px;
-    }
-
-    .card{
-        padding:14px;
-    }
-
-    .intro{
-        padding:18px;
-    }
-
-    .intro h1{
-        font-size:24px;
-    }
-
-    .mode-buttons{
-        grid-template-columns:1fr;
-    }
-
-    .mode-button{
-        min-height:120px;
-    }
-
-    button{
-        font-size:16px;
-        padding:13px 4px;
-    }
-
-    .fraction-row{
-        grid-template-columns:1fr;
-    }
-
-    .language-row{
-        grid-template-columns:1fr;
-    }
-
-    .swap-btn{
-        margin:auto;
-        transform:rotate(90deg);
-    }
-
-    .translate-actions{
-        grid-template-columns:1fr;
-    }
-
+.dictionary-card{
+margin-top:16px;background:#f8fff9;border:2px solid #86efac;
+border-radius:18px;padding:16px
 }
+body.dark .dictionary-card{background:#101810;border-color:#355c3a}
+.word-title{
+font-size:30px;font-weight:bold;color:#15803d;
+direction:ltr;text-align:left
+}
+body.dark .word-title{color:#86efac}
+.part{
+display:inline-block;background:#facc15;color:#713f12;
+padding:5px 10px;border-radius:20px;margin:7px 0;font-weight:bold
+}
+.meaning{
+background:#fff;border-right:5px solid #22c55e;
+border-radius:13px;padding:13px;margin-top:10px
+}
+body.dark .meaning{background:#192319}
+.meaning-title{font-weight:bold;color:#15803d;font-size:18px}
+body.dark .meaning-title{color:#86efac}
+.definition-en{
+direction:ltr;text-align:left;font-size:16px;margin-top:7px;line-height:1.8
+}
+.definition-fa{margin-top:7px;line-height:1.9}
+.example{
+background:#f0fdf4;border-radius:10px;padding:10px;margin-top:9px;
+direction:ltr;text-align:left;line-height:1.8
+}
+body.dark .example{background:#101810}
+.example-fa{direction:rtl;text-align:right;margin-top:5px}
+.related{
+display:flex;flex-wrap:wrap;gap:7px;margin-top:10px
+}
+.related span{
+background:#dcfce7;padding:7px 10px;border-radius:12px;
+font-weight:bold;color:#166534
+}
+body.dark .related span{background:#263c29;color:#bbf7d0}
+.info-grid{
+display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px
+}
+.info-item{
+background:#f0fdf4;border-radius:12px;padding:10px;line-height:1.8
+}
+body.dark .info-item{background:#101810}
+.learning-buttons{
+display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px
+}
+.favorite{background:#fef08a;color:#713f12}
+.flashcard{
+display:none;background:#17220f;color:#fff;border-radius:18px;
+padding:20px;text-align:center;margin-top:14px
+}
+.flashcard-word{font-size:32px;color:#facc15;margin-bottom:10px}
+.flashcard-answer{font-size:22px;line-height:1.8}
+.translation-history{
+max-height:300px;overflow:auto;margin-top:10px
+}
+.translation-item{
+background:#f0fdf4;border-right:5px solid #22c55e;
+border-radius:12px;padding:11px;margin-bottom:7px
+}
+body.dark .translation-item{background:#101810}
+.rating-stars{
+display:flex;justify-content:center;gap:7px;direction:ltr;
+margin:12px 0
+}
+.star{
+font-size:38px;color:#bbb;cursor:pointer;transition:.15s
+}
+.star.selected{color:#facc15}
+.rating-text{text-align:center;font-weight:bold;margin-bottom:10px}
+.rating-comment{
+width:100%;min-height:120px;border:2px solid #22c55e;
+border-radius:14px;padding:12px;font-size:17px;background:#f0fdf4
+}
+body.dark .rating-comment{background:#101810;color:#fff}
+.rating-result{text-align:center;margin-top:10px;font-weight:bold}
+.rating-list{
+margin-top:15px;max-height:320px;overflow:auto
+}
+.public-rating{
+background:#f0fdf4;border-radius:13px;padding:11px;margin-bottom:8px
+}
+body.dark .public-rating{background:#101810}
+.public-stars{color:#facc15;direction:ltr;text-align:right}
 
+@media(max-width:700px){
+.mode-grid{grid-template-columns:1fr}
+.fraction-row{grid-template-columns:1fr}
+.langs{grid-template-columns:1fr 50px 1fr}
+button{font-size:15px;padding:12px 4px}
+.trans-actions{grid-template-columns:1fr 1fr}
+.voice-row{grid-template-columns:1fr 1fr}
+.learning-buttons{grid-template-columns:1fr 1fr}
+.info-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<!-- ==================================================
-     صفحه انتخاب حالت
-================================================== -->
-
-<div id="homePage" class="page active">
-
-<div class="home">
-
 <section class="intro">
-
 <h1>👋 سلام!</h1>
-
-<p>
-من <strong>پارسا غفاری</strong> هستم و این اولین سایتی است
-که خودم طراحی و برنامه‌نویسی کرده‌ام.
-</p>
-
-<p>
-این سایت را برای یادگیری و تمرین طراحی کرده‌ام
-و در آن یک ماشین حساب چندکاره و یک ترجمه‌گر آنلاین ساخته‌ام.
-</p>
-
-<p>
-من این سایت را فقط چند ساعت است که ساخته‌ام
-و ممکن است در روزهای آینده مرتب در حال تغییر،
-بهتر شدن و پیشرفت آن باشم.
-</p>
-
-<div class="price">
-💻 سایت‌سازی در ۲ ساعت — فقط ۵۰٬۰۰۰ تومان
-</div>
-
-<p>
-تقدیم به پدر و مادرم ❤️
-</p>
-
+<p>من <strong>پارسا غفاری</strong> هستم و این اولین سایتی است که خودم طراحی و برنامه‌نویسی کرده‌ام.</p>
+<p>این سایت را برای یادگیری و تمرین طراحی کرده‌ام و در آن یک ماشین حساب چندکاره و یک ترجمه‌گر آنلاین ساخته‌ام.</p>
+<p>من این سایت را فقط چند ساعت است که ساخته‌ام و ممکن است در روزهای آینده مرتب در حال تغییر، بهتر شدن و پیشرفت آن باشم.</p>
+<div class="price">💻 سایت‌سازی در ۲ ساعت — فقط ۵۰٬۰۰۰ تومان</div>
+<p>تقدیم به پدر و مادرم ❤️</p>
 </section>
 
-<h2 class="mode-title">
-یکی از حالت‌ها را انتخاب کنید
-</h2>
-
-<div class="mode-buttons">
-
-<button class="mode-button" onclick="openPage('calculatorPage')">
-🧮<br>
-ماشین‌حساب
-</button>
-
-<button class="mode-button" onclick="openPage('translatorPage')">
-🌐<br>
-ترجمه‌گر آنلاین
-</button>
-
-</div>
-
-<div class="topbar" style="margin-top:15px;">
-
-<button class="theme-btn" onclick="toggleTheme()">
-🌙 حالت شب / روز
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ==================================================
-     صفحه ماشین حساب
-================================================== -->
-
-<div id="calculatorPage" class="page">
-
 <div class="topbar">
-
-<button class="home-btn" onclick="openPage('homePage')">
-🏠 صفحه اصلی
-</button>
-
-<button class="theme-btn" onclick="toggleTheme()">
-🌙 شب / روز
-</button>
-
+<button class="night" onclick="toggleDark()">🌙 حالت شب / روز</button>
 </div>
 
+<section id="homeScreen">
+<div class="card">
+<h2 class="home-title">انتخاب کنید با کدام بخش کار کنید 👇</h2>
+<div class="mode-grid">
+<div class="mode-card" onclick="openMode('calc')">
+<div class="mode-icon">🧮</div>
+<h2>ماشین‌حساب</h2>
+<p>محاسبات، درصد، کسر، توان، ب.م.م، ک.م.م و تاریخچه</p>
+</div>
+<div class="mode-card" onclick="openMode('trans')">
+<div class="mode-icon">🌐</div>
+<h2>ترجمه‌گر هوشمند</h2>
+<p>ترجمه، فرهنگ لغت، معنی‌های مختلف، مثال، تلفظ و یادگیری زبان</p>
+</div>
+</div>
+</div>
+</section>
 
-<!-- ماشین حساب اصلی -->
+<main id="calculatorMode" class="hidden">
+
+<div class="home-buttons">
+<button class="home-btn" onclick="goHome()">🏠 صفحه اصلی</button>
+</div>
 
 <section class="card">
-
-<h2 class="card-title">
-🧮 ماشین حساب چهار عمل اصلی
-</h2>
-
+<h2 class="card-title">🧮 ماشین حساب چهار عمل اصلی</h2>
 <div class="display">
-
 <div id="expression" class="expression"></div>
-
 <div id="result" class="result">0</div>
-
 </div>
 
 <div class="buttons">
-
 <button class="danger" onclick="clearMain()">پاک کردن</button>
 <button class="danger" onclick="backspaceMain()">⌫</button>
 <button class="special" onclick="addMain('(')">(</button>
@@ -720,22 +295,14 @@ body.dark footer{
 <button onclick="addMain('.')">.</button>
 <button class="equal" onclick="calculateMain()">=</button>
 <button class="operator" onclick="addMain('+')">+</button>
-
 </div>
-
 </section>
 
-
-<!-- درصد -->
-
 <section class="card">
-
 <h2 class="card-title">📊 درصد</h2>
-
 <div id="percentInput" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="percentAdd('7')">7</button>
 <button onclick="percentAdd('8')">8</button>
 <button onclick="percentAdd('9')">9</button>
@@ -749,29 +316,22 @@ body.dark footer{
 <button onclick="percentAdd('1')">1</button>
 <button onclick="percentAdd('2')">2</button>
 <button onclick="percentAdd('3')">3</button>
-<button class="operator" onclick="percentAdd('.')">.</button>
+<button onclick="percentAdd('.')">.</button>
 
 <button onclick="percentAdd('0')">0</button>
 <button onclick="percentSelect('base')">از عدد</button>
 <button onclick="percentSelect('value')">درصد</button>
 <button class="equal" onclick="percentCalculate()">=</button>
-
 </div>
 
-<div id="percentInfo" class="answer">
-ابتدا «از عدد» را بزنید
-</div>
+<div id="percentInfo" class="answer">ابتدا «از عدد» را بزنید</div>
+<div id="percentResult" class="answer">نتیجه اینجا نمایش داده می‌شود</div>
 
-<div id="percentResult" class="answer">
-نتیجه اینجا نمایش داده می‌شود
-</div>
-
-<hr style="margin:20px 0;border:none;border-top:2px dashed #bbf7d0;">
+<hr style="margin:18px 0;border:0;border-top:2px dashed #bbf7d0">
 
 <div id="changeInput" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="changeAdd('7')">7</button>
 <button onclick="changeAdd('8')">8</button>
 <button onclick="changeAdd('9')">9</button>
@@ -791,56 +351,28 @@ body.dark footer{
 <button onclick="changeSelect('base')">عدد اصلی</button>
 <button onclick="changeSelect('percent')">درصد</button>
 <button class="equal" onclick="changeCalculate()">=</button>
-
 </div>
 
-<div id="changeInfo" class="answer">
-ابتدا «عدد اصلی» را وارد کنید
+<div id="changeInfo" class="answer">ابتدا «عدد اصلی» را وارد کنید</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<button class="action" onclick="changeMode='increase';changeInfo()">افزایش</button>
+<button class="action" onclick="changeMode='decrease';changeInfo()">کاهش</button>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
-
-<button class="action"
-onclick="changeMode='increase';changeInfo()">
-افزایش
-</button>
-
-<button class="action"
-onclick="changeMode='decrease';changeInfo()">
-کاهش
-</button>
-
-</div>
-
-<div id="changeResult" class="answer">
-نتیجه اینجا نمایش داده می‌شود
-</div>
-
+<div id="changeResult" class="answer">نتیجه اینجا نمایش داده می‌شود</div>
 </section>
 
-
-<!-- کسر -->
-
 <section class="card">
-
-<h2 class="card-title">
-➗ ماشین حساب کسر
-</h2>
+<h2 class="card-title">➗ ماشین حساب کسر</h2>
 
 <div class="fraction-row">
 
 <div class="fraction-box">
-
-<div class="fraction-label">
-کسر اول
-</div>
-
-<div id="fraction1Display" class="custom-input">
-0
-</div>
+<div class="fraction-label">کسر اول</div>
+<div id="fraction1Display" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="fractionAdd('1','7')">7</button>
 <button onclick="fractionAdd('1','8')">8</button>
 <button onclick="fractionAdd('1','9')">9</button>
@@ -860,36 +392,23 @@ onclick="changeMode='decrease';changeInfo()">
 <button onclick="fractionPart('1','whole')">صحیح</button>
 <button onclick="fractionPart('1','num')">صورت</button>
 <button onclick="fractionPart('1','den')">مخرج</button>
-
 </div>
-
 </div>
 
 <div>
-
 <select id="fractionOperation">
-
 <option value="+">+</option>
 <option value="-">−</option>
 <option value="*">×</option>
 <option value="/">÷</option>
-
 </select>
-
 </div>
 
 <div class="fraction-box">
-
-<div class="fraction-label">
-کسر دوم
-</div>
-
-<div id="fraction2Display" class="custom-input">
-0
-</div>
+<div class="fraction-label">کسر دوم</div>
+<div id="fraction2Display" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="fractionAdd('2','7')">7</button>
 <button onclick="fractionAdd('2','8')">8</button>
 <button onclick="fractionAdd('2','9')">9</button>
@@ -909,38 +428,19 @@ onclick="changeMode='decrease';changeInfo()">
 <button onclick="fractionPart('2','whole')">صحیح</button>
 <button onclick="fractionPart('2','num')">صورت</button>
 <button onclick="fractionPart('2','den')">مخرج</button>
-
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-<button class="action" onclick="fractionCalculate()">
-محاسبه کسر
-</button>
-
-<div id="fractionResult" class="answer">
-نتیجه اینجا نمایش داده می‌شود
-</div>
-
+<button class="action" style="width:100%;margin-top:10px" onclick="fractionCalculate()">محاسبه کسر</button>
+<div id="fractionResult" class="answer">نتیجه اینجا نمایش داده می‌شود</div>
 </section>
 
-
-<!-- توان -->
-
 <section class="card">
-
-<h2 class="card-title">
-⚡ محاسبه توان
-</h2>
-
-<div id="powerInput" class="custom-input">
-0
-</div>
+<h2 class="card-title">⚡ محاسبه توان</h2>
+<div id="powerInput" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="powerAdd('7')">7</button>
 <button onclick="powerAdd('8')">8</button>
 <button onclick="powerAdd('9')">9</button>
@@ -960,34 +460,17 @@ onclick="changeMode='decrease';changeInfo()">
 <button onclick="powerSelect('base')">پایه</button>
 <button onclick="powerSelect('exponent')">توان</button>
 <button class="equal" onclick="powerCalculate()">=</button>
-
 </div>
 
-<div id="powerInfo" class="answer">
-ابتدا «پایه» را وارد کنید
-</div>
-
-<div id="powerResult" class="answer">
-نتیجه اینجا نمایش داده می‌شود
-</div>
-
+<div id="powerInfo" class="answer">ابتدا «پایه» را وارد کنید</div>
+<div id="powerResult" class="answer">نتیجه اینجا نمایش داده می‌شود</div>
 </section>
 
-
-<!-- ب.م.م و ک.م.م -->
-
 <section class="card">
-
-<h2 class="card-title">
-🔢 ب.م.م و ک.م.م
-</h2>
-
-<div id="gcdInput" class="custom-input">
-0
-</div>
+<h2 class="card-title">🔢 ب.م.م و ک.م.م</h2>
+<div id="gcdInput" class="custom-input">0</div>
 
 <div class="number-pad">
-
 <button onclick="gcdAdd('7')">7</button>
 <button onclick="gcdAdd('8')">8</button>
 <button onclick="gcdAdd('9')">9</button>
@@ -1007,1904 +490,1388 @@ onclick="changeMode='decrease';changeInfo()">
 <button onclick="gcdSelect('first')">عدد اول</button>
 <button onclick="gcdSelect('second')">عدد دوم</button>
 <button class="equal" onclick="calculateGcdLcm()">=</button>
-
 </div>
 
-<div id="gcdInfo" class="answer">
-ابتدا «عدد اول» را وارد کنید
+<div id="gcdInfo" class="answer">ابتدا «عدد اول» را وارد کنید</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<button class="action" onclick="gcdMode='gcd';gcdInfo()">ب.م.م</button>
+<button class="action" onclick="gcdMode='lcm';gcdInfo()">ک.م.م</button>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
-
-<button class="action"
-onclick="gcdMode='gcd';gcdInfo()">
-ب.م.م
-</button>
-
-<button class="action"
-onclick="gcdMode='lcm';gcdInfo()">
-ک.م.م
-</button>
-
-</div>
-
-<div id="gcdResult" class="answer">
-نتیجه اینجا نمایش داده می‌شود
-</div>
-
+<div id="gcdResult" class="answer">نتیجه اینجا نمایش داده می‌شود</div>
 </section>
 
-
-<!-- تاریخچه -->
-
 <section class="card">
-
-<h2 class="card-title">
-🕘 تاریخچه محاسبات
-</h2>
-
+<h2 class="card-title">🕘 تاریخچه محاسبات</h2>
 <div id="history" class="history">
-
-<div class="empty">
-هنوز محاسبه‌ای انجام نشده است.
+<div class="empty">هنوز محاسبه‌ای انجام نشده است.</div>
 </div>
-
-</div>
-
-<button
-class="danger"
-style="width:100%;margin-top:10px;"
-onclick="clearHistory()">
-
-پاک کردن تاریخچه
-
-</button>
-
+<button class="danger" style="width:100%;margin-top:8px" onclick="clearHistory()">پاک کردن تاریخچه</button>
 </section>
 
-<footer>
-ماشین حساب حرفه‌ای — ساخته شده توسط پارسا غفاری ❤️
-</footer>
+</main>
 
+<main id="translatorMode" class="hidden">
+
+<div class="home-buttons">
+<button class="home-btn" onclick="goHome()">🏠 صفحه اصلی</button>
 </div>
-
-
-<!-- ==================================================
-     صفحه ترجمه‌گر
-================================================== -->
-
-<div id="translatorPage" class="page">
-
-<div class="topbar">
-
-<button class="home-btn" onclick="openPage('homePage')">
-🏠 صفحه اصلی
-</button>
-
-<button class="theme-btn" onclick="toggleTheme()">
-🌙 شب / روز
-</button>
-
-</div>
-
 
 <section class="card">
+<h2 class="card-title">🌍 ترجمه‌گر آنلاین هوشمند</h2>
 
-<h2 class="card-title">
-🌐 ترجمه‌گر آنلاین
-</h2>
-
-<div class="language-row">
-
-<select id="sourceLanguage">
-
+<div class="langs">
+<select id="fromLang">
 <option value="fa">🇮🇷 فارسی</option>
-<option value="en" selected>🇺🇸 انگلیسی</option>
-<option value="tr">🇹🇷 ترکی</option>
-<option value="az">🇦🇿 آذری</option>
-<option value="ar">🇸🇦 عربی</option>
-<option value="de">🇩🇪 آلمانی</option>
-<option value="fr">🇫🇷 فرانسوی</option>
-<option value="es">🇪🇸 اسپانیایی</option>
-<option value="it">🇮🇹 ایتالیایی</option>
-<option value="ru">🇷🇺 روسی</option>
-
-</select>
-
-<button class="swap-btn" onclick="swapLanguages()">
-⇄
-</button>
-
-<select id="targetLanguage">
-
-<option value="fa" selected>🇮🇷 فارسی</option>
 <option value="en">🇺🇸 انگلیسی</option>
-<option value="tr">🇹🇷 ترکی</option>
-<option value="az">🇦🇿 آذری</option>
-<option value="ar">🇸🇦 عربی</option>
 <option value="de">🇩🇪 آلمانی</option>
 <option value="fr">🇫🇷 فرانسوی</option>
 <option value="es">🇪🇸 اسپانیایی</option>
-<option value="it">🇮🇹 ایتالیایی</option>
+<option value="tr">🇹🇷 ترکی</option>
 <option value="ru">🇷🇺 روسی</option>
-
+<option value="ar">🇸🇦 عربی</option>
+<option value="it">🇮🇹 ایتالیایی</option>
+<option value="az">🇦🇿 آذری</option>
+<option value="pt">🇵🇹 پرتغالی</option>
+<option value="nl">🇳🇱 هلندی</option>
+<option value="pl">🇵🇱 لهستانی</option>
 </select>
 
+<button class="swap" onclick="swapLangs()">⇄</button>
+
+<select id="toLang">
+<option value="en">🇺🇸 انگلیسی</option>
+<option value="fa">🇮🇷 فارسی</option>
+<option value="de">🇩🇪 آلمانی</option>
+<option value="fr">🇫🇷 فرانسوی</option>
+<option value="es">🇪🇸 اسپانیایی</option>
+<option value="tr">🇹🇷 ترکی</option>
+<option value="ru">🇷🇺 روسی</option>
+<option value="ar">🇸🇦 عربی</option>
+<option value="it">🇮🇹 ایتالیایی</option>
+<option value="az">🇦🇿 آذری</option>
+<option value="pt">🇵🇹 پرتغالی</option>
+<option value="nl">🇳🇱 هلندی</option>
+<option value="pl">🇵🇱 لهستانی</option>
+</select>
 </div>
 
+<br>
+
+<textarea id="sourceText" placeholder="کلمه یا جمله را اینجا بنویسید..."></textarea>
+
+<div class="voice-row">
+<button class="special" onclick="startSpeech()">🎙️ گفتن با صدا</button>
+<button class="special" onclick="clearTranslation()">🗑️ پاک کردن</button>
+</div>
+
+<button class="action" style="width:100%;margin-top:9px" onclick="translateOnline()">
+🌐 ترجمه آنلاین
+</button>
+
+<div id="translationResult" class="trans-result" style="margin-top:12px">
+ترجمه اینجا نمایش داده می‌شود.
+</div>
+
+<div class="trans-actions">
+<button onclick="copyTranslation()">📋 کپی</button>
+<button onclick="speakTranslation()">🔊 تلفظ</button>
+<button onclick="listenSource()">🔊 خواندن متن</button>
+<button onclick="lookupWord()">📖 فرهنگ لغت</button>
+</div>
+
+<div class="word-box">
+<strong>🗣️ تلفظ ترجمه</strong>
+<div id="pronunciationText" style="font-size:25px;margin:8px">—</div>
+<button class="pronounce" onclick="speakTranslation()">▶️ پخش تلفظ</button>
+</div>
+
+<div id="dictionaryArea"></div>
+
+<div class="flashcard" id="flashcard">
+<div class="flashcard-word" id="flashcardWord">—</div>
+<div class="flashcard-answer" id="flashcardAnswer">—</div>
+<button style="margin-top:12px" onclick="flipFlashcard()">🔄 نمایش معنی</button>
+</div>
+
+<p class="small">
+برای کلمات انگلیسی، بخش فرهنگ لغت می‌تواند معنی‌های مختلف، نوع کلمه، تعریف انگلیسی،
+معنی فارسی، مثال، جمله و اطلاعات آموزشی بیشتری نمایش دهد.
+</p>
+</section>
+
+<section class="card">
+<h2 class="card-title">⭐ لغات موردعلاقه</h2>
+<div id="favoritesList" class="translation-history">
+<div class="empty">هنوز لغتی ذخیره نشده است.</div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="card-title">🕘 تاریخچه ترجمه‌ها</h2>
+<div id="translationHistory" class="translation-history">
+<div class="empty">هنوز ترجمه‌ای ثبت نشده است.</div>
+</div>
+<button class="danger" style="width:100%;margin-top:8px" onclick="clearTranslationHistory()">
+پاک کردن تاریخچه ترجمه
+</button>
+</section>
+
+</main>
+
+<section class="card">
+<h2 class="card-title">⭐ نظردهی و امتیازدهی</h2>
+
+<p style="text-align:center;line-height:2">
+اگر از سایت استفاده کردی، خوشحال می‌شوم نظرت را بنویسی و به سایت امتیاز بدهی ❤️
+</p>
+
+<div class="rating-stars" id="ratingStars">
+<span class="star" data-rating="1" onclick="setRating(1)">★</span>
+<span class="star" data-rating="2" onclick="setRating(2)">★</span>
+<span class="star" data-rating="3" onclick="setRating(3)">★</span>
+<span class="star" data-rating="4" onclick="setRating(4)">★</span>
+<span class="star" data-rating="5" onclick="setRating(5)">★</span>
+</div>
+
+<div id="ratingText" class="rating-text">امتیاز خود را انتخاب کنید</div>
 
 <textarea
-id="translateInput"
-class="translate-text"
-placeholder="متن خود را اینجا بنویسید..."></textarea>
+id="commentInput"
+class="rating-comment"
+placeholder="نظرت درباره سایت را بنویس..."
+></textarea>
 
-
-<div class="translate-actions">
-
-<button class="mic-button" onclick="startVoiceInput()">
-🎙️ صحبت کردن
+<button class="action" style="width:100%;margin-top:9px" onclick="saveFeedback()">
+📤 ارسال امتیاز و نظر
 </button>
 
-<button class="danger" onclick="clearTranslator()">
-🗑️ پاک کردن
-</button>
-
-<button class="equal" onclick="translateText()">
-🌐 ترجمه
-</button>
-
-</div>
-
-
-<div id="translateResult" class="translate-result">
-ترجمه اینجا نمایش داده می‌شود...
-</div>
-
-
-<div class="translate-actions">
-
-<button class="speak-button" onclick="speakTranslation()">
-🔊 تلفظ
-</button>
-
-<button class="copy-button" onclick="copyTranslation()">
-📋 کپی
-</button>
-
-<button onclick="useResultAsInput()">
-↩️ استفاده دوباره
-</button>
-
-</div>
-
-
-<div id="translatorStatus" class="translator-info">
-برای ترجمه، متن را وارد کنید و روی «🌐 ترجمه» بزنید.
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2 class="card-title">
-💡 راهنمای ترجمه‌گر
-</h2>
-
-<p style="line-height:2;text-align:center;">
-مثلاً اگر زبان مبدأ فارسی و مقصد انگلیسی باشد،
-می‌توانید بنویسید:
-<strong>سیب</strong>
-و نتیجه:
-<strong>Apple</strong>
-دریافت کنید.
-</p>
-
-<p style="line-height:2;text-align:center;margin-top:10px;">
-سپس با دکمه 🔊 می‌توانید تلفظ نتیجه را بشنوید.
-</p>
-
+<div id="feedbackResult" class="rating-result"></div>
+<div id="publicRatings" class="rating-list"></div>
 </section>
 
 <footer>
-ترجمه‌گر آنلاین — ساخته شده توسط پارسا غفاری ❤️
+ماشین حساب حرفه‌ای و ترجمه‌گر هوشمند — ساخته شده توسط پارسا غفاری ❤️
 </footer>
 
 </div>
-
-</div>
-
 
 <div id="toast" class="toast"></div>
 
-
 <script>
-
-/* ==================================================
-   عمومی
-================================================== */
+function toast(m){
+let t=document.getElementById('toast');
+t.textContent=m;
+t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),2200)
+}
 
 function formatNumber(n){
-
-    if(!Number.isFinite(n)){
-        return "نتیجه نامعتبر";
-    }
-
-    return Number(
-        n.toFixed(12)
-    ).toLocaleString("en-US");
-
+return Number.isFinite(n)?Number(n.toFixed(12)).toLocaleString('en-US'):'نتیجه نامعتبر'
 }
 
-
-function toast(message){
-
-    const t =
-        document.getElementById("toast");
-
-    t.textContent = message;
-
-    t.classList.add("show");
-
-    setTimeout(function(){
-        t.classList.remove("show");
-    },1800);
-
+function openMode(m){
+document.getElementById('homeScreen').classList.add('hidden');
+document.getElementById('calculatorMode').classList.toggle('hidden',m!=='calc');
+document.getElementById('translatorMode').classList.toggle('hidden',m!=='trans');
+window.scrollTo({top:0,behavior:'smooth'})
 }
 
-
-/* ==================================================
-   تغییر صفحه
-================================================== */
-
-function openPage(pageId){
-
-    document.querySelectorAll(".page")
-        .forEach(function(page){
-            page.classList.remove("active");
-        });
-
-    document.getElementById(pageId)
-        .classList.add("active");
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
+function goHome(){
+document.getElementById('homeScreen').classList.remove('hidden');
+document.getElementById('calculatorMode').classList.add('hidden');
+document.getElementById('translatorMode').classList.add('hidden');
+window.scrollTo({top:0,behavior:'smooth'})
 }
 
-
-/* ==================================================
-   حالت شب و روز
-================================================== */
-
-function toggleTheme(){
-
-    document.body.classList.toggle("dark");
-
-    localStorage.setItem(
-        "calculatorTheme",
-        document.body.classList.contains("dark")
-        ? "dark"
-        : "light"
-    );
-
+function toggleDark(){
+document.body.classList.toggle('dark');
+localStorage.setItem('darkMode',document.body.classList.contains('dark'))
 }
 
-
-if(
-    localStorage.getItem("calculatorTheme")
-    ===
-    "dark"
-){
-    document.body.classList.add("dark");
+if(localStorage.getItem('darkMode')==='true'){
+document.body.classList.add('dark')
 }
 
+/* ================= ماشین حساب اصلی ================= */
 
-/* ==================================================
-   ماشین حساب اصلی
-================================================== */
+let mainExpression='';
 
-let mainExpression = "";
-
-function addMain(value){
-
-    mainExpression += value;
-
-    document.getElementById(
-        "expression"
-    ).textContent = mainExpression;
-
+function addMain(v){
+mainExpression+=v;
+document.getElementById('expression').textContent=mainExpression
 }
-
 
 function clearMain(){
-
-    mainExpression = "";
-
-    document.getElementById(
-        "expression"
-    ).textContent = "";
-
-    document.getElementById(
-        "result"
-    ).textContent = "0";
-
+mainExpression='';
+document.getElementById('expression').textContent='';
+document.getElementById('result').textContent='0'
 }
-
 
 function backspaceMain(){
-
-    mainExpression =
-        mainExpression.slice(0,-1);
-
-    document.getElementById(
-        "expression"
-    ).textContent = mainExpression;
-
+mainExpression=mainExpression.slice(0,-1);
+document.getElementById('expression').textContent=mainExpression
 }
-
 
 function calculateMain(){
+if(!mainExpression)return toast('لطفاً یک عبارت وارد کنید');
 
-    if(!mainExpression){
+try{
+if(!/^[0-9+\-*/().\s]+$/.test(mainExpression))throw 0;
 
-        toast("لطفاً یک عبارت وارد کنید");
-        return;
+let a=Function('"use strict";return ('+mainExpression+')')();
 
-    }
+if(!Number.isFinite(a))throw 0;
 
-    try{
+let f=formatNumber(a);
+document.getElementById('result').textContent=f;
+addHistory(mainExpression+' = '+f)
 
-        const exp = mainExpression;
-
-        if(
-            !/^[0-9+\-*/().\s]+$/.test(exp)
-        ){
-            throw new Error();
-        }
-
-        const answer =
-            Function(
-                '"use strict";return (' +
-                exp +
-                ')'
-            )();
-
-        if(!Number.isFinite(answer)){
-            throw new Error();
-        }
-
-        const formatted =
-            formatNumber(answer);
-
-        document.getElementById(
-            "result"
-        ).textContent = formatted;
-
-        addHistory(
-            exp + " = " + formatted
-        );
-
-    }catch(e){
-
-        document.getElementById(
-            "result"
-        ).textContent = "خطا";
-
-        toast("عبارت صحیح نیست");
-
-    }
-
+}catch(e){
+document.getElementById('result').textContent='خطا';
+toast('عبارت صحیح نیست')
+}
 }
 
+/* ================= درصد ================= */
 
-/* ==================================================
-   درصد
-================================================== */
-
-let percentValue = "";
-let percentBase = "";
-let percentCurrent = "base";
-
+let percentValue='',percentBase='',percentCurrent='base';
 
 function percentAdd(n){
-
-    if(percentCurrent === "base"){
-
-        percentBase += n;
-
-    }else{
-
-        percentValue += n;
-
-    }
-
-    percentSelect(percentCurrent);
-
+if(percentCurrent==='base')percentBase+=n;
+else percentValue+=n;
+percentSelect(percentCurrent)
 }
 
+function percentSelect(t){
+percentCurrent=t;
+document.getElementById('percentInput').textContent=
+t==='base'?(percentBase||'0'):(percentValue||'0');
 
-function percentSelect(type){
-
-    percentCurrent = type;
-
-    document.getElementById(
-        "percentInfo"
-    ).textContent =
-        type === "base"
-        ? "در حال وارد کردن عدد اصلی هستید"
-        : "در حال وارد کردن درصد هستید";
-
-    document.getElementById(
-        "percentInput"
-    ).textContent =
-        type === "base"
-        ? percentBase || "0"
-        : percentValue || "0";
-
+document.getElementById('percentInfo').textContent=
+t==='base'?'در حال وارد کردن عدد اصلی هستید':'در حال وارد کردن درصد هستید'
 }
-
 
 function percentBack(){
+if(percentCurrent==='base')
+percentBase=percentBase.slice(0,-1);
+else
+percentValue=percentValue.slice(0,-1);
 
-    if(percentCurrent === "base"){
-        percentBase =
-            percentBase.slice(0,-1);
-    }else{
-        percentValue =
-            percentValue.slice(0,-1);
-    }
-
-    percentSelect(percentCurrent);
-
+percentSelect(percentCurrent)
 }
-
 
 function percentClear(){
-
-    percentValue = "";
-    percentBase = "";
-
-    document.getElementById(
-        "percentInput"
-    ).textContent = "0";
-
+percentValue='';
+percentBase='';
+percentSelect('base');
+document.getElementById('percentResult').textContent='نتیجه اینجا نمایش داده می‌شود'
 }
-
 
 function percentCalculate(){
+let p=Number(percentValue),b=Number(percentBase);
 
-    const p = Number(percentValue);
-    const b = Number(percentBase);
+if(!Number.isFinite(p)||!Number.isFinite(b))
+return toast('هر دو عدد را وارد کنید');
 
-    if(
-        !Number.isFinite(p) ||
-        !Number.isFinite(b)
-    ){
+let a=b*p/100;
 
-        toast("هر دو عدد را وارد کنید");
-        return;
-
-    }
-
-    const answer = b * p / 100;
-
-    document.getElementById(
-        "percentResult"
-    ).textContent =
-        formatNumber(answer);
-
-    addHistory(
-        p + "% از " +
-        b + " = " +
-        formatNumber(answer)
-    );
-
+document.getElementById('percentResult').textContent=formatNumber(a);
+addHistory(p+'% از '+b+' = '+formatNumber(a))
 }
 
+/* ================= درصد افزایش / کاهش ================= */
 
-/* ==================================================
-   افزایش و کاهش درصد
-================================================== */
-
-let changeBase = "";
-let changePercent = "";
-let changeCurrent = "base";
-let changeMode = "increase";
-
+let changeBase='',changePercent='',changeCurrent='base',changeMode='increase';
 
 function changeAdd(n){
-
-    if(changeCurrent === "base"){
-        changeBase += n;
-    }else{
-        changePercent += n;
-    }
-
-    changeInfo();
-
+if(changeCurrent==='base')changeBase+=n;
+else changePercent+=n;
+changeInfo()
 }
 
-
-function changeSelect(type){
-
-    changeCurrent = type;
-    changeInfo();
-
+function changeSelect(t){
+changeCurrent=t;
+changeInfo()
 }
-
 
 function changeInfo(){
+document.getElementById('changeInput').textContent=
+changeCurrent==='base'?(changeBase||'0'):(changePercent||'0');
 
-    document.getElementById(
-        "changeInfo"
-    ).textContent =
-        changeCurrent === "base"
-        ? "در حال وارد کردن عدد اصلی هستید"
-        : "در حال وارد کردن درصد هستید";
-
-    document.getElementById(
-        "changeInput"
-    ).textContent =
-        changeCurrent === "base"
-        ? changeBase || "0"
-        : changePercent || "0";
-
+document.getElementById('changeInfo').textContent=
+changeCurrent==='base'
+?'در حال وارد کردن عدد اصلی هستید'
+:'در حال وارد کردن درصد هستید'
 }
-
 
 function changeBack(){
-
-    if(changeCurrent === "base"){
-        changeBase =
-            changeBase.slice(0,-1);
-    }else{
-        changePercent =
-            changePercent.slice(0,-1);
-    }
-
-    changeInfo();
-
+if(changeCurrent==='base')
+changeBase=changeBase.slice(0,-1);
+else
+changePercent=changePercent.slice(0,-1);
+changeInfo()
 }
-
 
 function changeClear(){
-
-    changeBase = "";
-    changePercent = "";
-
-    changeInfo();
-
+changeBase='';
+changePercent='';
+changeInfo()
 }
-
 
 function changeCalculate(){
+let b=Number(changeBase),p=Number(changePercent);
 
-    const base = Number(changeBase);
-    const p = Number(changePercent);
+if(!Number.isFinite(b)||!Number.isFinite(p))
+return toast('هر دو عدد را وارد کنید');
 
-    if(
-        !Number.isFinite(base) ||
-        !Number.isFinite(p)
-    ){
+let a=changeMode==='increase'
+?b*(1+p/100)
+:b*(1-p/100);
 
-        toast("هر دو عدد را وارد کنید");
-        return;
+document.getElementById('changeResult').textContent=formatNumber(a);
 
-    }
-
-    let answer;
-
-    if(changeMode === "increase"){
-
-        answer = base * (1 + p/100);
-
-    }else{
-
-        answer = base * (1 - p/100);
-
-    }
-
-    document.getElementById(
-        "changeResult"
-    ).textContent =
-        formatNumber(answer);
-
-    addHistory(
-        base +
-        (changeMode === "increase"
-            ? " + "
-            : " - ") +
-        p +
-        "% = " +
-        formatNumber(answer)
-    );
-
+addHistory(
+b+(changeMode==='increase'?' + ':' - ')+
+p+'% = '+formatNumber(a)
+)
 }
 
+/* ================= کسر ================= */
 
-/* ==================================================
-   کسرها
-================================================== */
-
-const fractions = {
-
-    1:{
-        whole:"",
-        num:"",
-        den:"",
-        current:"whole"
-    },
-
-    2:{
-        whole:"",
-        num:"",
-        den:"",
-        current:"whole"
-    }
-
+const fractions={
+1:{whole:'',num:'',den:'',current:'whole'},
+2:{whole:'',num:'',den:'',current:'whole'}
 };
 
-
-function fractionPart(which,part){
-
-    fractions[which].current = part;
-
-    updateFractionDisplay(which);
-
+function fractionPart(w,p){
+fractions[w].current=p;
+updateFractionDisplay(w)
 }
 
-
-function fractionAdd(which,n){
-
-    fractions[which][
-        fractions[which].current
-    ] += n;
-
-    updateFractionDisplay(which);
-
+function fractionAdd(w,n){
+fractions[w][fractions[w].current]+=n;
+updateFractionDisplay(w)
 }
 
-
-function fractionBack(which){
-
-    const f = fractions[which];
-
-    f[f.current] =
-        f[f.current].slice(0,-1);
-
-    updateFractionDisplay(which);
-
+function fractionBack(w){
+let f=fractions[w];
+f[f.current]=f[f.current].slice(0,-1);
+updateFractionDisplay(w)
 }
 
-
-function fractionClearPart(which){
-
-    fractions[which].whole = "";
-    fractions[which].num = "";
-    fractions[which].den = "";
-
-    updateFractionDisplay(which);
-
+function fractionClearPart(w){
+fractions[w].whole='';
+fractions[w].num='';
+fractions[w].den='';
+updateFractionDisplay(w)
 }
 
+function fractionNegative(w){
+let f=fractions[w],k=f.current;
 
-function fractionNegative(which){
+if(k==='den')
+return toast('مخرج را منفی نکنید');
 
-    const f = fractions[which];
-    const key = f.current;
+f[k]=f[k].startsWith('-')
+?f[k].slice(1)
+:'-'+f[k];
 
-    if(key === "den"){
-
-        toast("مخرج را منفی نکنید");
-        return;
-
-    }
-
-    if(f[key].startsWith("-")){
-
-        f[key] =
-            f[key].slice(1);
-
-    }else{
-
-        f[key] =
-            "-" + f[key];
-
-    }
-
-    updateFractionDisplay(which);
-
+updateFractionDisplay(w)
 }
 
+function updateFractionDisplay(w){
+let f=fractions[w];
+let x=f.whole?(f.whole+' '):'';
 
-function updateFractionDisplay(which){
+if(f.num||f.den)
+x+=(f.num||'0')+'/'+(f.den||'1');
 
-    const f = fractions[which];
-
-    let text = "";
-
-    if(f.whole){
-        text += f.whole + " ";
-    }
-
-    if(f.num || f.den){
-
-        text +=
-            (f.num || "0") +
-            "/" +
-            (f.den || "1");
-
-    }
-
-    if(!text){
-        text = "0";
-    }
-
-    document.getElementById(
-        "fraction" +
-        which +
-        "Display"
-    ).textContent = text;
-
+document.getElementById('fraction'+w+'Display').textContent=x||'0'
 }
-
 
 function fractionToImproper(f){
+let d=Number(f.den||1);
 
-    let whole =
-        Number(f.whole || 0);
+if(d===0)return null;
 
-    let num =
-        Number(f.num || 0);
+let w=Number(f.whole||0);
+let n=Number(f.num||0);
 
-    let den =
-        Number(f.den || 1);
-
-    if(den === 0){
-        return null;
-    }
-
-    let numerator;
-
-    if(whole < 0){
-
-        numerator =
-            whole * den -
-            Math.abs(num);
-
-    }else{
-
-        numerator =
-            whole * den +
-            num;
-
-    }
-
-    return {
-        n:numerator,
-        d:den
-    };
-
+return{
+n:w<0?w*d-Math.abs(n):w*d+n,
+d
 }
-
+}
 
 function fractionGcd(a,b){
+a=Math.abs(a);
+b=Math.abs(b);
 
-    a = Math.abs(a);
-    b = Math.abs(b);
-
-    while(b){
-
-        let t = a % b;
-
-        a = b;
-        b = t;
-
-    }
-
-    return a || 1;
-
+while(b){
+let t=a%b;
+a=b;
+b=t
 }
 
-
-function fractionSimplify(n,d){
-
-    if(d < 0){
-
-        n = -n;
-        d = -d;
-
-    }
-
-    const g =
-        fractionGcd(n,d);
-
-    return {
-        n:n/g,
-        d:d/g
-    };
-
+return a||1
 }
 
-
-function fractionToText(n,d){
-
-    const s =
-        fractionSimplify(n,d);
-
-    n = s.n;
-    d = s.d;
-
-    if(n === 0){
-        return "0";
-    }
-
-    const whole =
-        n > 0
-        ? Math.floor(n/d)
-        : Math.ceil(n/d);
-
-    const remainder =
-        n - whole*d;
-
-    if(remainder === 0){
-        return String(whole);
-    }
-
-    if(whole === 0){
-        return n + "/" + d;
-    }
-
-    return (
-        whole +
-        " " +
-        Math.abs(remainder) +
-        "/" +
-        d
-    );
-
+function fractionText(n,d){
+if(d<0){
+n=-n;
+d=-d
 }
 
+let g=fractionGcd(n,d);
+n/=g;
+d/=g;
+
+if(!n)return'0';
+
+if(n%d===0)return''+(n/d);
+
+let w=n>0?Math.floor(n/d):Math.ceil(n/d);
+let r=n-w*d;
+
+if(!w)return n+'/'+d;
+
+return w+' '+Math.abs(r)+'/'+d
+}
 
 function fractionCalculate(){
+let a=fractionToImproper(fractions[1]);
+let b=fractionToImproper(fractions[2]);
 
-    const a =
-        fractionToImproper(
-            fractions[1]
-        );
+if(!a||!b)
+return toast('مخرج نمی‌تواند صفر باشد');
 
-    const b =
-        fractionToImproper(
-            fractions[2]
-        );
+let op=document.getElementById('fractionOperation').value;
+let n,d;
 
-    if(!a || !b){
-
-        toast("مخرج نمی‌تواند صفر باشد");
-        return;
-
-    }
-
-    const op =
-        document.getElementById(
-            "fractionOperation"
-        ).value;
-
-    let n,d;
-
-    if(op === "+"){
-
-        n = a.n*b.d + b.n*a.d;
-        d = a.d*b.d;
-
-    }
-
-    else if(op === "-"){
-
-        n = a.n*b.d - b.n*a.d;
-        d = a.d*b.d;
-
-    }
-
-    else if(op === "*"){
-
-        n = a.n*b.n;
-        d = a.d*b.d;
-
-    }
-
-    else{
-
-        if(b.n === 0){
-
-            toast("تقسیم بر صفر ممکن نیست");
-            return;
-
-        }
-
-        n = a.n*b.d;
-        d = a.d*b.n;
-
-    }
-
-    const answer =
-        fractionToText(n,d);
-
-    document.getElementById(
-        "fractionResult"
-    ).textContent = answer;
-
-    addHistory(
-        fractionToText(a.n,a.d) +
-        " " +
-        op +
-        " " +
-        fractionToText(b.n,b.d) +
-        " = " +
-        answer
-    );
-
+if(op==='+'){
+n=a.n*b.d+b.n*a.d;
+d=a.d*b.d
+}
+else if(op==='-'){
+n=a.n*b.d-b.n*a.d;
+d=a.d*b.d
+}
+else if(op==='*'){
+n=a.n*b.n;
+d=a.d*b.d
+}
+else{
+if(!b.n)return toast('تقسیم بر صفر ممکن نیست');
+n=a.n*b.d;
+d=a.d*b.n
 }
 
+let x=fractionText(n,d);
 
-/* ==================================================
-   توان
-================================================== */
+document.getElementById('fractionResult').textContent=x;
 
-let powerBase = "";
-let powerExponent = "";
-let powerCurrent = "base";
+addHistory(
+fractionText(a.n,a.d)+' '+op+' '+
+fractionText(b.n,b.d)+' = '+x
+)
+}
 
+/* ================= توان ================= */
+
+let powerBase='',powerExponent='',powerCurrent='base';
 
 function powerAdd(n){
-
-    if(powerCurrent === "base"){
-        powerBase += n;
-    }else{
-        powerExponent += n;
-    }
-
-    powerInfo();
-
+if(powerCurrent==='base')powerBase+=n;
+else powerExponent+=n;
+powerInfo()
 }
 
-
-function powerSelect(type){
-
-    powerCurrent = type;
-    powerInfo();
-
+function powerSelect(t){
+powerCurrent=t;
+powerInfo()
 }
-
 
 function powerInfo(){
+document.getElementById('powerInput').textContent=
+powerCurrent==='base'?(powerBase||'0'):(powerExponent||'0');
 
-    document.getElementById(
-        "powerInfo"
-    ).textContent =
-        powerCurrent === "base"
-        ? "در حال وارد کردن پایه هستید"
-        : "در حال وارد کردن توان هستید";
-
-    document.getElementById(
-        "powerInput"
-    ).textContent =
-        powerCurrent === "base"
-        ? powerBase || "0"
-        : powerExponent || "0";
-
+document.getElementById('powerInfo').textContent=
+powerCurrent==='base'
+?'در حال وارد کردن پایه هستید'
+:'در حال وارد کردن توان هستید'
 }
-
 
 function powerBack(){
+if(powerCurrent==='base')
+powerBase=powerBase.slice(0,-1);
+else
+powerExponent=powerExponent.slice(0,-1);
 
-    if(powerCurrent === "base"){
-        powerBase =
-            powerBase.slice(0,-1);
-    }else{
-        powerExponent =
-            powerExponent.slice(0,-1);
-    }
-
-    powerInfo();
-
+powerInfo()
 }
-
 
 function powerClear(){
-
-    powerBase = "";
-    powerExponent = "";
-
-    powerInfo();
-
+powerBase='';
+powerExponent='';
+powerInfo()
 }
-
 
 function powerCalculate(){
+let b=Number(powerBase),e=Number(powerExponent);
 
-    const base = Number(powerBase);
-    const exponent = Number(powerExponent);
+if(!Number.isFinite(b)||!Number.isFinite(e))
+return toast('پایه و توان را وارد کنید');
 
-    if(
-        !Number.isFinite(base) ||
-        !Number.isFinite(exponent)
-    ){
+let a=Math.pow(b,e);
 
-        toast("پایه و توان را وارد کنید");
-        return;
+if(!Number.isFinite(a))
+return toast('نتیجه نامعتبر است');
 
-    }
-
-    const answer =
-        Math.pow(base,exponent);
-
-    if(!Number.isFinite(answer)){
-
-        toast("نتیجه نامعتبر است");
-        return;
-
-    }
-
-    document.getElementById(
-        "powerResult"
-    ).textContent =
-        formatNumber(answer);
-
-    addHistory(
-        base +
-        " ^ " +
-        exponent +
-        " = " +
-        formatNumber(answer)
-    );
-
+document.getElementById('powerResult').textContent=formatNumber(a);
+addHistory(b+' ^ '+e+' = '+formatNumber(a))
 }
 
+/* ================= ب.م.م / ک.م.م ================= */
 
-/* ==================================================
-   ب.م.م و ک.م.م
-================================================== */
-
-let gcdFirst = "";
-let gcdSecond = "";
-let gcdCurrent = "first";
-let gcdMode = "gcd";
-
+let gcdFirst='',gcdSecond='',gcdCurrent='first',gcdMode='gcd';
 
 function gcdAdd(n){
-
-    if(gcdCurrent === "first"){
-        gcdFirst += n;
-    }else{
-        gcdSecond += n;
-    }
-
-    gcdInfo();
-
+if(gcdCurrent==='first')gcdFirst+=n;
+else gcdSecond+=n;
+gcdInfo()
 }
 
-
-function gcdSelect(type){
-
-    gcdCurrent = type;
-    gcdInfo();
-
+function gcdSelect(t){
+gcdCurrent=t;
+gcdInfo()
 }
-
 
 function gcdBack(){
+if(gcdCurrent==='first')
+gcdFirst=gcdFirst.slice(0,-1);
+else
+gcdSecond=gcdSecond.slice(0,-1);
 
-    if(gcdCurrent === "first"){
-        gcdFirst =
-            gcdFirst.slice(0,-1);
-    }else{
-        gcdSecond =
-            gcdSecond.slice(0,-1);
-    }
-
-    gcdInfo();
-
+gcdInfo()
 }
-
 
 function gcdClear(){
-
-    gcdFirst = "";
-    gcdSecond = "";
-
-    gcdInfo();
-
+gcdFirst='';
+gcdSecond='';
+gcdInfo()
 }
-
 
 function gcdNegative(){
+if(gcdCurrent==='first')
+gcdFirst=gcdFirst.startsWith('-')?gcdFirst.slice(1):'-'+gcdFirst;
+else
+gcdSecond=gcdSecond.startsWith('-')?gcdSecond.slice(1):'-'+gcdSecond;
 
-    if(gcdCurrent === "first"){
-
-        gcdFirst =
-            gcdFirst.startsWith("-")
-            ? gcdFirst.slice(1)
-            : "-" + gcdFirst;
-
-    }else{
-
-        gcdSecond =
-            gcdSecond.startsWith("-")
-            ? gcdSecond.slice(1)
-            : "-" + gcdSecond;
-
-    }
-
-    gcdInfo();
-
+gcdInfo()
 }
-
 
 function gcdInfo(){
+document.getElementById('gcdInput').textContent=
+gcdCurrent==='first'?(gcdFirst||'0'):(gcdSecond||'0');
 
-    document.getElementById(
-        "gcdInfo"
-    ).textContent =
-        gcdCurrent === "first"
-        ? "در حال وارد کردن عدد اول هستید"
-        : "در حال وارد کردن عدد دوم هستید";
-
-    document.getElementById(
-        "gcdInput"
-    ).textContent =
-        gcdCurrent === "first"
-        ? gcdFirst || "0"
-        : gcdSecond || "0";
-
+document.getElementById('gcdInfo').textContent=
+gcdCurrent==='first'
+?'در حال وارد کردن عدد اول هستید'
+:'در حال وارد کردن عدد دوم هستید'
 }
-
 
 function mathGcd(a,b){
+a=Math.abs(a);
+b=Math.abs(b);
 
-    a = Math.abs(a);
-    b = Math.abs(b);
-
-    while(b){
-
-        let t = a % b;
-
-        a = b;
-        b = t;
-
-    }
-
-    return a;
-
+while(b){
+let t=a%b;
+a=b;
+b=t
 }
 
+return a
+}
 
 function calculateGcdLcm(){
+let a=Number(gcdFirst),b=Number(gcdSecond);
 
-    const a = Number(gcdFirst);
-    const b = Number(gcdSecond);
+if(!Number.isInteger(a)||!Number.isInteger(b))
+return toast('دو عدد صحیح وارد کنید');
 
-    if(
-        !Number.isInteger(a) ||
-        !Number.isInteger(b)
-    ){
+let x=gcdMode==='gcd'
+?mathGcd(a,b)
+:(a===0||b===0?0:Math.abs(a*b)/mathGcd(a,b));
 
-        toast("دو عدد صحیح وارد کنید");
-        return;
+document.getElementById('gcdResult').textContent=
+(gcdMode==='gcd'?'ب.م.م = ':'ک.م.م = ')+x;
 
-    }
-
-    let answer;
-
-    if(gcdMode === "gcd"){
-
-        answer = mathGcd(a,b);
-
-        document.getElementById(
-            "gcdResult"
-        ).textContent =
-            "ب.م.م = " + answer;
-
-        addHistory(
-            "ب.م.م(" +
-            a + "," + b +
-            ") = " + answer
-        );
-
-    }else{
-
-        if(a === 0 || b === 0){
-
-            answer = 0;
-
-        }else{
-
-            answer =
-                Math.abs(a*b) /
-                mathGcd(a,b);
-
-        }
-
-        document.getElementById(
-            "gcdResult"
-        ).textContent =
-            "ک.م.م = " + answer;
-
-        addHistory(
-            "ک.م.م(" +
-            a + "," + b +
-            ") = " + answer
-        );
-
-    }
-
+addHistory(
+(gcdMode==='gcd'?'ب.م.م':'ک.م.م')+
+'('+a+','+b+') = '+x
+)
 }
 
-
-/* ==================================================
-   تاریخچه
-================================================== */
-
-function addHistory(text){
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            ) || "[]"
-        );
-
-    history.unshift(text);
-
-    history =
-        history.slice(0,50);
-
-    localStorage.setItem(
-        "calculatorHistory",
-        JSON.stringify(history)
-    );
-
-    showHistory();
-
-}
-
-
-function showHistory(){
-
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            ) || "[]"
-        );
-
-    const box =
-        document.getElementById("history");
-
-    if(!box) return;
-
-    if(history.length === 0){
-
-        box.innerHTML =
-            '<div class="empty">هنوز محاسبه‌ای انجام نشده است.</div>';
-
-        return;
-
-    }
-
-    box.innerHTML =
-        history.map(function(x){
-
-            const safe =
-                String(x)
-                .replace(/</g,"&lt;")
-                .replace(/>/g,"&gt;");
-
-            return (
-                '<div class="history-item">' +
-                safe +
-                '</div>'
-            );
-
-        }).join("");
-
-}
-
-
-function clearHistory(){
-
-    localStorage.removeItem(
-        "calculatorHistory"
-    );
-
-    showHistory();
-
-    toast("تاریخچه پاک شد");
-
-}
-
-
-/* ==================================================
-   ترجمه‌گر آنلاین
-================================================== */
-
-let lastTranslation = "";
-
-
-/*
-   این تابع متن را به صورت آنلاین
-   از سرویس MyMemory Translation API
-   دریافت می‌کند.
-*/
-
-async function translateText(){
-
-    const text =
-        document.getElementById(
-            "translateInput"
-        ).value.trim();
-
-    const source =
-        document.getElementById(
-            "sourceLanguage"
-        ).value;
-
-    const target =
-        document.getElementById(
-            "targetLanguage"
-        ).value;
-
-    const resultBox =
-        document.getElementById(
-            "translateResult"
-        );
-
-    const status =
-        document.getElementById(
-            "translatorStatus"
-        );
-
-
-    if(!text){
-
-        toast("اول متن را وارد کنید");
-        return;
-
-    }
-
-
-    if(source === target){
-
-        resultBox.textContent = text;
-        lastTranslation = text;
-
-        status.textContent =
-            "زبان مبدأ و مقصد یکسان هستند.";
-
-        return;
-
-    }
-
-
-    resultBox.textContent =
-        "⏳ در حال ترجمه...";
-
-    status.textContent =
-        "در حال اتصال به سرویس ترجمه آنلاین...";
-
-
-    try{
-
-        const url =
-            "https://api.mymemory.translated.net/get" +
-            "?q=" +
-            encodeURIComponent(text) +
-            "&langpair=" +
-            encodeURIComponent(
-                source + "|" + target
-            );
-
-
-        const response =
-            await fetch(url);
-
-
-        if(!response.ok){
-            throw new Error();
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if(
-            !data.responseData ||
-            !data.responseData.translatedText
-        ){
-
-            throw new Error();
-
-        }
-
-
-        lastTranslation =
-            data.responseData.translatedText;
-
-
-        resultBox.textContent =
-            lastTranslation;
-
-
-        status.textContent =
-            "✅ ترجمه با موفقیت انجام شد.";
-
-
-    }catch(error){
-
-        resultBox.textContent =
-            "ترجمه انجام نشد.";
-
-        status.textContent =
-            "❌ اتصال به سرویس ترجمه برقرار نشد. اینترنت را بررسی کنید.";
-
-        toast("خطا در ترجمه آنلاین");
-
-    }
-
-}
-
-
-/* ==================================================
-   جابه‌جایی زبان‌ها
-================================================== */
-
-function swapLanguages(){
-
-    const source =
-        document.getElementById(
-            "sourceLanguage"
-        );
-
-    const target =
-        document.getElementById(
-            "targetLanguage"
-        );
-
-    const oldSource =
-        source.value;
-
-    source.value =
-        target.value;
-
-    target.value =
-        oldSource;
-
-
-    const input =
-        document.getElementById(
-            "translateInput"
-        );
-
-    const result =
-        document.getElementById(
-            "translateResult"
-        );
-
-    const oldText =
-        input.value;
-
-    input.value =
-        result.textContent !==
-        "ترجمه اینجا نمایش داده می‌شود..."
-        ? result.textContent
-        : oldText;
-
-    result.textContent =
-        "ترجمه اینجا نمایش داده می‌شود...";
-
-}
-
-
-/* ==================================================
-   کپی ترجمه
-================================================== */
-
-async function copyTranslation(){
-
-    const text =
-        document.getElementById(
-            "translateResult"
-        ).textContent;
-
-
-    if(
-        !text ||
-        text === "ترجمه اینجا نمایش داده می‌شود..."
-    ){
-
-        toast("هنوز ترجمه‌ای وجود ندارد");
-        return;
-
-    }
-
-
-    try{
-
-        await navigator.clipboard.writeText(text);
-
-        toast("ترجمه کپی شد ✅");
-
-    }catch(e){
-
-        toast("کپی کردن انجام نشد");
-
-    }
-
-}
-
-
-/* ==================================================
-   تلفظ ترجمه
-================================================== */
-
-function speakTranslation(){
-
-    const text =
-        document.getElementById(
-            "translateResult"
-        ).textContent.trim();
-
-
-    if(
-        !text ||
-        text === "ترجمه اینجا نمایش داده می‌شود..."
-    ){
-
-        toast("اول یک متن را ترجمه کنید");
-        return;
-
-    }
-
-
-    if(!("speechSynthesis" in window)){
-
-        toast("مرورگر شما از تلفظ صوتی پشتیبانی نمی‌کند");
-        return;
-
-    }
-
-
-    window.speechSynthesis.cancel();
-
-
-    const target =
-        document.getElementById(
-            "targetLanguage"
-        ).value;
-
-
-    const languageMap = {
-
-        fa:"fa-IR",
-        en:"en-US",
-        tr:"tr-TR",
-        az:"az-AZ",
-        ar:"ar-SA",
-        de:"de-DE",
-        fr:"fr-FR",
-        es:"es-ES",
-        it:"it-IT",
-        ru:"ru-RU"
-
-    };
-
-
-    const utterance =
-        new SpeechSynthesisUtterance(text);
-
-
-    utterance.lang =
-        languageMap[target] || target;
-
-
-    utterance.rate = 0.85;
-    utterance.pitch = 1;
-
-
-    window.speechSynthesis.speak(
-        utterance
-    );
-
-}
-
-
-/* ==================================================
-   تشخیص صدا
-================================================== */
-
-function startVoiceInput(){
-
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-    if(!SpeechRecognition){
-
-        toast(
-            "مرورگر شما قابلیت تبدیل صدا به متن را ندارد. Chrome را امتحان کنید."
-        );
-
-        return;
-
-    }
-
-
-    const source =
-        document.getElementById(
-            "sourceLanguage"
-        ).value;
-
-
-    const recognition =
-        new SpeechRecognition();
-
-
-    const languageMap = {
-
-        fa:"fa-IR",
-        en:"en-US",
-        tr:"tr-TR",
-        az:"az-AZ",
-        ar:"ar-SA",
-        de:"de-DE",
-        fr:"fr-FR",
-        es:"es-ES",
-        it:"it-IT",
-        ru:"ru-RU"
-
-    };
-
-
-    recognition.lang =
-        languageMap[source] || source;
-
-
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-
-    document.getElementById(
-        "translatorStatus"
-    ).textContent =
-        "🎙️ در حال گوش دادن... صحبت کنید.";
-
-
-    recognition.start();
-
-
-    recognition.onresult =
-        function(event){
-
-            const spoken =
-                event.results[0][0].transcript;
-
-
-            document.getElementById(
-                "translateInput"
-            ).value =
-                spoken;
-
-
-            document.getElementById(
-                "translatorStatus"
-            ).textContent =
-                "✅ صدا به متن تبدیل شد.";
-
-        };
-
-
-    recognition.onerror =
-        function(){
-
-            document.getElementById(
-                "translatorStatus"
-            ).textContent =
-                "❌ دریافت صدا انجام نشد.";
-
-            toast("دریافت صدا انجام نشد");
-
-        };
-
-
-    recognition.onend =
-        function(){
-
-            if(
-                document.getElementById(
-                    "translatorStatus"
-                ).textContent ===
-                "🎙️ در حال گوش دادن... صحبت کنید."
-            ){
-
-                document.getElementById(
-                    "translatorStatus"
-                ).textContent =
-                    "ضبط صدا پایان یافت.";
-
-            }
-
-        };
-
-}
-
-
-/* ==================================================
-   پاک کردن ترجمه‌گر
-================================================== */
-
-function clearTranslator(){
-
-    document.getElementById(
-        "translateInput"
-    ).value = "";
-
-    document.getElementById(
-        "translateResult"
-    ).textContent =
-        "ترجمه اینجا نمایش داده می‌شود...";
-
-    document.getElementById(
-        "translatorStatus"
-    ).textContent =
-        "برای ترجمه، متن را وارد کنید.";
-
-    lastTranslation = "";
-
-}
-
-
-/* ==================================================
-   استفاده دوباره از ترجمه
-================================================== */
-
-function useResultAsInput(){
-
-    const result =
-        document.getElementById(
-            "translateResult"
-        ).textContent;
-
-
-    if(
-        !result ||
-        result ===
-        "ترجمه اینجا نمایش داده می‌شود..."
-    ){
-
-        toast("ترجمه‌ای وجود ندارد");
-        return;
-
-    }
-
-
-    const source =
-        document.getElementById(
-            "sourceLanguage"
-        );
-
-    const target =
-        document.getElementById(
-            "targetLanguage"
-        );
-
-
-    const oldSource =
-        source.value;
-
-
-    source.value =
-        target.value;
-
-    target.value =
-        oldSource;
-
-
-    document.getElementById(
-        "translateInput"
-    ).value = result;
-
-
-    document.getElementById(
-        "translateResult"
-    ).textContent =
-        "ترجمه اینجا نمایش داده می‌شود...";
-
-
-    toast("ترجمه برای ترجمه معکوس آماده شد");
-
-}
-
-
-/* ==================================================
-   کلیدهای صفحه‌کلید برای ماشین حساب اصلی
-================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event){
-
-        const activePage =
-            document.querySelector(
-                ".page.active"
-            );
-
-
-        if(
-            !activePage ||
-            activePage.id !==
-            "calculatorPage"
-        ){
-            return;
-        }
-
-
-        const allowed =
-            "0123456789+-*/().";
-
-
-        if(
-            allowed.includes(event.key)
-        ){
-
-            addMain(event.key);
-
-        }
-
-
-        else if(event.key === "Enter"){
-
-            event.preventDefault();
-            calculateMain();
-
-        }
-
-
-        else if(event.key === "Backspace"){
-
-            backspaceMain();
-
-        }
-
-
-        else if(event.key === "Escape"){
-
-            clearMain();
-
-        }
-
-    }
+/* ================= تاریخچه ماشین حساب ================= */
+
+function addHistory(x){
+let h=JSON.parse(localStorage.getItem('calculatorHistory')||'[]');
+h.unshift(x);
+
+localStorage.setItem(
+'calculatorHistory',
+JSON.stringify(h.slice(0,50))
 );
 
+showHistory()
+}
 
-/* ==================================================
-   شروع
-================================================== */
+function escapeHtml(s){
+return String(s).replace(/[&<>"']/g,m=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[m]))
+}
+
+function showHistory(){
+let h=JSON.parse(localStorage.getItem('calculatorHistory')||'[]');
+
+document.getElementById('history').innerHTML=h.length
+?h.map(x=>'<div class="history-item">'+escapeHtml(x)+'</div>').join('')
+:'<div class="empty">هنوز محاسبه‌ای انجام نشده است.</div>'
+}
+
+function clearHistory(){
+localStorage.removeItem('calculatorHistory');
+showHistory();
+toast('تاریخچه پاک شد')
+}
+
+/* ================= ترجمه ================= */
+
+const LANG_INFO={
+fa:{name:'فارسی',speech:'fa-IR'},
+en:{name:'انگلیسی',speech:'en-US'},
+de:{name:'آلمانی',speech:'de-DE'},
+fr:{name:'فرانسوی',speech:'fr-FR'},
+es:{name:'اسپانیایی',speech:'es-ES'},
+tr:{name:'ترکی',speech:'tr-TR'},
+ru:{name:'روسی',speech:'ru-RU'},
+ar:{name:'عربی',speech:'ar-SA'},
+it:{name:'ایتالیایی',speech:'it-IT'},
+az:{name:'آذری',speech:'az-AZ'},
+pt:{name:'پرتغالی',speech:'pt-PT'},
+nl:{name:'هلندی',speech:'nl-NL'},
+pl:{name:'لهستانی',speech:'pl-PL'}
+};
+
+function swapLangs(){
+let a=document.getElementById('fromLang').value;
+let b=document.getElementById('toLang').value;
+
+document.getElementById('fromLang').value=b;
+document.getElementById('toLang').value=a;
+
+let source=document.getElementById('sourceText').value;
+let result=document.getElementById('translationResult').textContent;
+
+if(result&&!result.includes('ترجمه اینجا')){
+document.getElementById('sourceText').value=result;
+document.getElementById('translationResult').textContent=source||'ترجمه اینجا نمایش داده می‌شود.';
+}
+
+let p=document.getElementById('pronunciationText').textContent;
+
+if(p&&p!=='—'){
+document.getElementById('pronunciationText').textContent=source||'—'
+}
+}
+
+async function translateOnline(){
+let text=document.getElementById('sourceText').value.trim();
+
+if(!text)return toast('ابتدا متن یا کلمه را وارد کنید');
+
+let from=document.getElementById('fromLang').value;
+let to=document.getElementById('toLang').value;
+
+if(from===to){
+document.getElementById('translationResult').textContent=text;
+document.getElementById('pronunciationText').textContent=text;
+saveTranslationHistory(text,text,from,to);
+if(text.split(/\s+/).length===1)lookupWord();
+return
+}
+
+let result=document.getElementById('translationResult');
+result.textContent='⏳ در حال ترجمه آنلاین...';
+
+try{
+let url=
+'https://api.mymemory.translated.net/get?q='+
+encodeURIComponent(text)+
+'&langpair='+
+encodeURIComponent(from+'|'+to);
+
+let r=await fetch(url);
+
+if(!r.ok)throw new Error('network');
+
+let data=await r.json();
+let out=data?.responseData?.translatedText;
+
+if(!out)throw new Error('empty');
+
+result.textContent=out;
+document.getElementById('pronunciationText').textContent=out;
+
+saveTranslationHistory(text,out,from,to);
+
+if(text.split(/\s+/).length===1){
+await lookupWord()
+}
+
+}catch(e){
+result.textContent=
+'ترجمه انجام نشد. اتصال اینترنت یا سرویس ترجمه را بررسی کنید.';
+
+document.getElementById('pronunciationText').textContent='—';
+
+toast('خطا در ترجمه آنلاین')
+}
+}
+
+function clearTranslation(){
+document.getElementById('sourceText').value='';
+document.getElementById('translationResult').textContent=
+'ترجمه اینجا نمایش داده می‌شود.';
+document.getElementById('pronunciationText').textContent='—';
+document.getElementById('dictionaryArea').innerHTML='';
+document.getElementById('flashcard').style.display='none'
+}
+
+async function copyTranslation(){
+let t=document.getElementById('translationResult').textContent;
+
+if(!t||t.includes('ترجمه اینجا'))
+return;
+
+try{
+await navigator.clipboard.writeText(t);
+toast('ترجمه کپی شد')
+}catch(e){
+toast('کپی انجام نشد')
+}
+}
+
+/* ================= تلفظ ================= */
+
+function speechLang(code){
+return LANG_INFO[code]?.speech||'en-US'
+}
+
+function speak(text,lang){
+if(!text)return toast('متنی برای پخش وجود ندارد');
+
+if(!('speechSynthesis'in window))
+return toast('مرورگر شما تلفظ صوتی را پشتیبانی نمی‌کند');
+
+speechSynthesis.cancel();
+
+let u=new SpeechSynthesisUtterance(text);
+u.lang=speechLang(lang);
+u.rate=.82;
+u.pitch=1;
+
+speechSynthesis.speak(u)
+}
+
+function speakTranslation(){
+let t=document.getElementById('translationResult').textContent;
+
+if(t.includes('ترجمه اینجا'))
+return;
+
+speak(t,document.getElementById('toLang').value)
+}
+
+function listenSource(){
+speak(
+document.getElementById('sourceText').value,
+document.getElementById('fromLang').value
+)
+}
+
+/* ================= صدا ================= */
+
+function startSpeech(){
+let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+if(!SR)
+return toast('تشخیص صدای این مرورگر پشتیبانی نمی‌شود');
+
+let r=new SR();
+
+r.lang=speechLang(document.getElementById('fromLang').value);
+r.interimResults=false;
+r.maxAlternatives=1;
+
+r.onstart=()=>{
+toast('🎙️ صحبت کنید...')
+};
+
+r.onresult=e=>{
+document.getElementById('sourceText').value=
+e.results[0][0].transcript;
+
+translateOnline()
+};
+
+r.onerror=()=>{
+toast('تشخیص صدا انجام نشد')
+};
+
+r.start()
+}
+
+/* ================= فرهنگ لغت هوشمند ================= */
+
+async function lookupWord(){
+let raw=document.getElementById('sourceText').value.trim();
+
+if(!raw)return;
+
+let from=document.getElementById('fromLang').value;
+let word=raw.split(/\s+/)[0];
+
+if(raw.split(/\s+/).length!==1)
+return;
+
+if(from!=='en'){
+document.getElementById('dictionaryArea').innerHTML=
+'<div class="dictionary-card"><h3>📚 اطلاعات واژه</h3><p style="line-height:2;margin-top:8px">برای فرهنگ لغت کامل، وارد کردن واژه انگلیسی بهترین نتیجه را می‌دهد. ترجمه و تلفظ برای زبان‌های دیگر همچنان فعال است.</p></div>';
+return
+}
+
+document.getElementById('dictionaryArea').innerHTML=
+'<div class="dictionary-card"><div style="text-align:center">⏳ در حال دریافت اطلاعات فرهنگ لغت...</div></div>';
+
+try{
+let url=
+'https://api.dictionaryapi.dev/api/v2/entries/en/'+
+encodeURIComponent(word);
+
+let r=await fetch(url);
+
+if(!r.ok)throw new Error('notfound');
+
+let data=await r.json();
+
+renderDictionary(data[0],word)
+
+}catch(e){
+document.getElementById('dictionaryArea').innerHTML=
+'<div class="dictionary-card"><h3>📖 فرهنگ لغت</h3><p style="line-height:2;margin-top:8px">برای این واژه اطلاعات فرهنگ لغت کامل پیدا نشد، اما ترجمه، تلفظ و امکانات دیگر همچنان در دسترس هستند.</p></div>'
+}
+}
+
+function renderDictionary(data,word){
+
+let html='<div class="dictionary-card">';
+
+html+=
+'<div class="word-title">'+
+escapeHtml(word)+
+'</div>';
+
+let phonetic='';
+
+if(data.phonetic)phonetic=data.phonetic;
+
+if(!phonetic&&data.phonetics){
+let p=data.phonetics.find(x=>x.text);
+if(p)phonetic=p.text
+}
+
+if(phonetic){
+html+=
+'<div class="info-grid">'+
+'<div class="info-item"><strong>🗣️ تلفظ:</strong><br>'+
+escapeHtml(phonetic)+
+'</div>'+
+'<div class="info-item"><strong>🔊 صدا:</strong><br>'+
+'<button class="pronounce" onclick="speak(\''+
+escapeJs(word)+
+'\',\'en\')">▶️ پخش تلفظ</button>'+
+'</div>'+
+'</div>'
+}
+
+let allMeanings=[];
+let seen=new Set();
+
+(data.meanings||[]).forEach(m=>{
+let part=m.partOfSpeech||'';
+let translatedPart=translatePartOfSpeech(part);
+
+(m.definitions||[]).forEach(d=>{
+let key=part+'|'+d.definition;
+
+if(!seen.has(key)){
+seen.add(key);
+
+allMeanings.push({
+part,
+translatedPart,
+definition:d.definition,
+example:d.example||''
+})
+}
+})
+});
+
+if(allMeanings.length){
+
+let grouped={};
+
+allMeanings.forEach(x=>{
+if(!grouped[x.part])grouped[x.part]=[];
+grouped[x.part].push(x)
+});
+
+html+='<h3 style="margin-top:16px;color:#15803d">📚 معنی‌های مختلف و کاربردها</h3>';
+
+Object.keys(grouped).forEach(part=>{
+html+=
+'<div class="part">'+
+escapeHtml(part)+
+' — '+
+escapeHtml(grouped[part][0].translatedPart)+
+'</div>';
+
+grouped[part].forEach((m,i)=>{
+
+html+=
+'<div class="meaning">'+
+'<div class="meaning-title">معنی '+(i+1)+'</div>'+
+'<div class="definition-en">'+
+escapeHtml(m.definition)+
+'</div>'+
+'<div class="definition-fa">🇮🇷 توضیح فارسی: '+
+escapeHtml(makePersianMeaning(m.definition,word))+
+'</div>';
+
+if(m.example){
+html+=
+'<div class="example">'+
+'📝 <strong>Example:</strong><br>'+
+escapeHtml(m.example)+
+'<div class="example-fa">🇮🇷 ترجمه نمونه: '+
+escapeHtml(roughExampleTranslation(m.example))+
+'</div>'+
+'</div>'
+}
+
+html+='</div>'
+})
+});
+
+}
+
+let synonyms=[];
+
+(data.meanings||[]).forEach(m=>{
+(m.synonyms||[]).forEach(s=>{
+if(!synonyms.includes(s))synonyms.push(s)
+});
+
+(m.definitions||[]).forEach(d=>{
+(d.synonyms||[]).forEach(s=>{
+if(!synonyms.includes(s))synonyms.push(s)
+})
+})
+});
+
+if(synonyms.length){
+html+=
+'<h3 style="margin-top:16px;color:#15803d">🔗 واژه‌های نزدیک</h3>'+
+'<div class="related">'+
+synonyms.slice(0,20).map(s=>
+'<span>'+escapeHtml(s)+'</span>'
+).join('')+
+'</div>'
+}
+
+html+=
+'<div class="learning-buttons">'+
+'<button class="favorite" onclick="saveFavorite(\''+
+escapeJs(word)+
+'\')">⭐ افزودن به لغات من</button>'+
+'<button onclick="createFlashcard(\''+
+escapeJs(word)+
+'\')">🧠 فلش‌کارت</button>'+
+'<button onclick="speak(\''+
+escapeJs(word)+
+'\',\'en\')">🔊 تلفظ</button>'+
+'</div>';
+
+html+='</div>';
+
+document.getElementById('dictionaryArea').innerHTML=html;
+
+createFlashcard(word)
+}
+
+function translatePartOfSpeech(p){
+const map={
+noun:'اسم',
+verb:'فعل',
+adjective:'صفت',
+adverb:'قید',
+pronoun:'ضمیر',
+preposition:'حرف اضافه',
+conjunction:'حرف ربط',
+interjection:'حرف ندا',
+determiner:'تعیین‌کننده',
+article:'حرف تعریف',
+auxiliary:'فعل کمکی'
+};
+
+return map[p]||p
+}
+
+function makePersianMeaning(def,word){
+const known={
+'ruler':'شخصی که یک کشور، پادشاهی یا منطقه را اداره یا رهبری می‌کند؛ همچنین می‌تواند به وسیله‌ای برای اندازه‌گیری طول و کشیدن خط راست اشاره کند.',
+'beautiful':'دارای ظاهر یا ویژگی‌هایی که زیبا و دلپذیر هستند.',
+'book':'مجموعه‌ای از صفحات نوشته یا چاپ‌شده که معمولاً به صورت یک اثر کامل منتشر می‌شود.',
+'apple':'میوه‌ای گرد و معمولاً قرمز، سبز یا زرد که روی درخت رشد می‌کند.'
+};
+
+if(known[word.toLowerCase()])
+return known[word.toLowerCase()];
+
+return 'توضیح فارسی این معنی: '+def
+}
+
+function roughExampleTranslation(example){
+return 'برای دیدن ترجمه دقیق این جمله، آن را در بخش ترجمه آنلاین وارد کنید.'
+}
+
+function escapeJs(s){
+return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+}
+
+/* ================= جمله‌سازی ================= */
+
+function createFlashcard(word){
+let result=document.getElementById('translationResult').textContent;
+
+if(!word)return;
+
+document.getElementById('flashcard').style.display='block';
+document.getElementById('flashcardWord').textContent=word;
+document.getElementById('flashcardAnswer').textContent=
+result&&!result.includes('ترجمه اینجا')
+?result
+:'معنی را حدس بزنید، سپس روی «نمایش معنی» بزنید.';
+
+document.getElementById('flashcard').dataset.show='word'
+}
+
+function flipFlashcard(){
+let f=document.getElementById('flashcard');
+let word=document.getElementById('flashcardWord').textContent;
+
+if(f.dataset.show==='word'){
+f.dataset.show='answer';
+document.getElementById('flashcardWord').textContent='💡 معنی';
+document.getElementById('flashcardAnswer').style.display='block'
+}else{
+f.dataset.show='word';
+document.getElementById('flashcardWord').textContent=word
+}
+}
+
+/* ================= لغات موردعلاقه ================= */
+
+function saveFavorite(word){
+if(!word)return;
+
+let list=JSON.parse(localStorage.getItem('favoriteWords')||'[]');
+
+if(!list.includes(word)){
+list.unshift(word);
+localStorage.setItem('favoriteWords',JSON.stringify(list.slice(0,100)));
+toast('⭐ به لغات موردعلاقه اضافه شد')
+}else{
+toast('این کلمه قبلاً ذخیره شده است')
+}
+
+showFavorites()
+}
+
+function showFavorites(){
+let list=JSON.parse(localStorage.getItem('favoriteWords')||'[]');
+
+document.getElementById('favoritesList').innerHTML=list.length
+?list.map(w=>
+'<div class="translation-item">'+
+'<strong dir="ltr">'+escapeHtml(w)+'</strong>'+
+'<button style="float:left;padding:7px 10px" onclick="speak(\''+
+escapeJs(w)+
+'\',\'en\')">🔊</button>'+
+'</div>'
+).join('')
+:'<div class="empty">هنوز لغتی ذخیره نشده است.</div>'
+}
+
+/* ================= تاریخچه ترجمه ================= */
+
+function saveTranslationHistory(source,result,from,to){
+let h=JSON.parse(localStorage.getItem('translationHistory')||'[]');
+
+h.unshift({
+source,
+result,
+from,
+to,
+time:new Date().toLocaleString('fa-IR')
+});
+
+localStorage.setItem(
+'translationHistory',
+JSON.stringify(h.slice(0,50))
+);
+
+showTranslationHistory()
+}
+
+function showTranslationHistory(){
+let h=JSON.parse(localStorage.getItem('translationHistory')||'[]');
+
+document.getElementById('translationHistory').innerHTML=h.length
+?h.map((x,i)=>
+'<div class="translation-item">'+
+'<div><strong>'+escapeHtml(x.source)+'</strong></div>'+
+'<div style="margin-top:5px">➡️ '+escapeHtml(x.result)+'</div>'+
+'<div class="small">'+
+escapeHtml(LANG_INFO[x.from]?.name||x.from)+
+' → '+
+escapeHtml(LANG_INFO[x.to]?.name||x.to)+
+' | '+
+escapeHtml(x.time)+
+'</div>'+
+'<button style="margin-top:7px;padding:7px 10px" onclick="useHistory('+i+')">استفاده</button>'+
+'</div>'
+).join('')
+:'<div class="empty">هنوز ترجمه‌ای ثبت نشده است.</div>'
+}
+
+function useHistory(i){
+let h=JSON.parse(localStorage.getItem('translationHistory')||'[]');
+let x=h[i];
+
+if(!x)return;
+
+document.getElementById('fromLang').value=x.from;
+document.getElementById('toLang').value=x.to;
+document.getElementById('sourceText').value=x.source;
+document.getElementById('translationResult').textContent=x.result;
+document.getElementById('pronunciationText').textContent=x.result;
+
+window.scrollTo({top:0,behavior:'smooth'})
+}
+
+function clearTranslationHistory(){
+localStorage.removeItem('translationHistory');
+showTranslationHistory();
+toast('تاریخچه ترجمه پاک شد')
+}
+
+/* ================= امتیازدهی Supabase ================= */
+
+/*
+این دو مقدار را با اطلاعات پروژه Supabase خودت جایگزین کن.
+
+SUPABASE_URL:
+https://YOUR-PROJECT.supabase.co
+
+SUPABASE_ANON_KEY:
+کلید anon/public پروژه Supabase
+*/
+
+const SUPABASE_URL='https://YOUR-PROJECT.supabase.co';
+const SUPABASE_ANON_KEY='YOUR_SUPABASE_ANON_KEY';
+
+let selectedRating=0;
+
+function setRating(n){
+selectedRating=n;
+
+document.querySelectorAll('.star').forEach(star=>{
+star.classList.toggle(
+'selected',
+Number(star.dataset.rating)<=n
+)
+});
+
+document.getElementById('ratingText').textContent=
+n+' از ۵ ستاره ⭐'
+}
+
+async function saveFeedback(){
+
+if(!selectedRating)
+return toast('لطفاً ابتدا امتیاز بدهید');
+
+let comment=document.getElementById('commentInput').value.trim();
+
+if(!comment)
+return toast('لطفاً نظر خود را بنویسید');
+
+if(
+SUPABASE_URL.includes('YOUR-PROJECT')||
+SUPABASE_ANON_KEY.includes('YOUR_SUPABASE')
+){
+document.getElementById('feedbackResult').textContent=
+'اتصال Supabase در کد تنظیم نشده است.';
+return
+}
+
+try{
+
+let response=await fetch(
+SUPABASE_URL+'/rest/v1/ratings',
+{
+method:'POST',
+headers:{
+'apikey':SUPABASE_ANON_KEY,
+'Authorization':'Bearer '+SUPABASE_ANON_KEY,
+'Content-Type':'application/json',
+'Prefer':'return=minimal'
+},
+body:JSON.stringify({
+rating:selectedRating,
+comment:comment
+})
+}
+);
+
+if(!response.ok){
+let errorText=await response.text();
+throw new Error(errorText)
+}
+
+document.getElementById('feedbackResult').textContent=
+'❤️ ممنون! امتیاز و نظر شما با موفقیت ثبت شد.';
+
+document.getElementById('commentInput').value='';
+
+selectedRating=0;
+
+document.querySelectorAll('.star').forEach(s=>
+s.classList.remove('selected')
+);
+
+document.getElementById('ratingText').textContent=
+'امتیاز خود را انتخاب کنید';
+
+loadPublicRatings();
+
+}catch(e){
+
+document.getElementById('feedbackResult').textContent=
+'ارسال انجام نشد. تنظیمات Supabase یا اتصال اینترنت را بررسی کنید.';
+
+}
+}
+
+async function loadPublicRatings(){
+
+if(
+SUPABASE_URL.includes('YOUR-PROJECT')||
+SUPABASE_ANON_KEY.includes('YOUR_SUPABASE')
+)return;
+
+try{
+
+let r=await fetch(
+SUPABASE_URL+
+'/rest/v1/ratings?select=rating,comment,created_at&order=created_at.desc&limit=30',
+{
+headers:{
+'apikey':SUPABASE_ANON_KEY,
+'Authorization':'Bearer '+SUPABASE_ANON_KEY
+}
+}
+);
+
+if(!r.ok)return;
+
+let data=await r.json();
+
+let box=document.getElementById('publicRatings');
+
+if(!data.length){
+box.innerHTML='<div class="empty">هنوز نظری ثبت نشده است.</div>';
+return
+}
+
+box.innerHTML=
+'<h3 style="margin:12px 0;color:#15803d">💬 نظرهای کاربران</h3>'+
+data.map(x=>
+'<div class="public-rating">'+
+'<div class="public-stars">'+
+'★'.repeat(Number(x.rating))+
+'☆'.repeat(5-Number(x.rating))+
+'</div>'+
+'<div style="line-height:1.9;margin-top:5px">'+
+escapeHtml(x.comment||'')+
+'</div>'+
+'</div>'
+).join('');
+
+}catch(e){}
+}
+
+/* ================= شروع ================= */
 
 showHistory();
+showFavorites();
+showTranslationHistory();
 
 updateFractionDisplay(1);
 updateFractionDisplay(2);
-
 changeInfo();
 powerInfo();
 gcdInfo();
 
-</script>
+loadPublicRatings();
 
+document.addEventListener('keydown',e=>{
+
+let calcVisible=
+!document.getElementById('calculatorMode').classList.contains('hidden');
+
+if(!calcVisible)return;
+
+if(/[0-9+\-*/().]/.test(e.key))
+addMain(e.key);
+else if(e.key==='Enter')
+calculateMain();
+else if(e.key==='Backspace')
+backspaceMain();
+else if(e.key==='Escape')
+clearMain();
+
+});
+
+</script>
 </body>
     </html>
