@@ -2,553 +2,597 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#8bc34a">
-<title>ماشین‌حساب پارسا</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#18a558">
+<title>ماشین حساب و مترجم حرفه‌ای | پارسا غفاری</title>
 
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#8bc34a;
-  --green2:#689f38;
-  --yellow:#fdd835;
-  --bg:#f5f8ef;
+  --green:#159957;
+  --green2:#0f7d46;
+  --yellow:#ffd43b;
+  --yellow2:#ffef9a;
+  --bg:#f2fff7;
   --card:#ffffff;
-  --text:#263238;
-  --muted:#607d8b;
-  --border:#dce6d2;
-  --danger:#e53935;
-  --shadow:0 8px 25px rgba(60,80,30,.12);
+  --text:#163025;
+  --muted:#64756d;
+  --border:#dcebe3;
+  --danger:#e74c3c;
+  --shadow:0 12px 35px rgba(21,153,87,.12);
 }
-
-*{
-  box-sizing:border-box;
-  font-family:Tahoma,Arial,sans-serif;
-}
-
-body{
-  margin:0;
-  background:linear-gradient(135deg,#f8fbea,#eef7df);
-  color:var(--text);
-  transition:.3s;
-}
-
 body.dark{
-  --bg:#151b12;
-  --card:#20291b;
-  --text:#f1f5ed;
-  --muted:#b5c1ad;
-  --border:#3c4a32;
-  background:#11150f;
+  --bg:#101814;
+  --card:#18231e;
+  --text:#effff5;
+  --muted:#a9bdb3;
+  --border:#2b3c34;
+  --shadow:0 12px 35px rgba(0,0,0,.3);
 }
-
-.container{
-  width:min(1050px,94%);
-  margin:auto;
+body{
+  font-family:Tahoma,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(255,212,59,.18),transparent 25%),
+    radial-gradient(circle at 90% 20%,rgba(21,153,87,.14),transparent 25%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:.25s;
 }
+button,input,textarea,select{font-family:inherit}
+button{cursor:pointer}
+.container{width:min(1150px,94%);margin:auto}
 
 header{
-  background:linear-gradient(135deg,var(--green),var(--yellow));
-  padding:20px 0;
-  box-shadow:var(--shadow);
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:100;
+  backdrop-filter:blur(16px);
+  background:rgba(255,255,255,.82);
+  border-bottom:1px solid var(--border);
+}
+body.dark header{background:rgba(16,24,20,.86)}
+.header-inner{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.logo{
+  font-size:20px;
+  font-weight:900;
+  color:var(--green);
+}
+.logo small{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap}
+.icon-btn,.home-btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:800;
+}
+.icon-btn:hover,.home-btn:hover{transform:translateY(-2px)}
+
+.hero{
+  margin:25px 0;
+  padding:30px;
+  border-radius:28px;
+  background:linear-gradient(135deg,var(--green),#21b96e);
+  color:#fff;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:230px;height:230px;
+  border-radius:50%;
+  background:rgba(255,212,59,.25);
+  left:-70px;top:-90px;
+}
+.hero h1{font-size:clamp(25px,5vw,43px);margin-bottom:12px;position:relative;z-index:1}
+.hero p{line-height:2;max-width:850px;position:relative;z-index:1}
+.hero .price{
+  display:inline-block;
+  margin-top:15px;
+  background:var(--yellow);
+  color:#18331f;
+  padding:10px 15px;
+  border-radius:13px;
+  font-weight:900;
 }
 
-.header-inner{
+.mode-screen{display:block}
+.mode-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px;
+  margin:28px 0;
+}
+.mode-card{
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:28px;
+  padding:38px 25px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  transition:.25s;
+}
+.mode-card:hover{transform:translateY(-6px)}
+.mode-card .big{font-size:55px;margin-bottom:15px}
+.mode-card h2{margin-bottom:8px}
+.mode-card p{color:var(--muted);line-height:1.9}
+.mode-card button{
+  margin-top:20px;
+  width:100%;
+  border:0;
+  border-radius:16px;
+  padding:14px;
+  background:linear-gradient(135deg,var(--green),#23b96d);
+  color:#fff;
+  font-weight:900;
+  font-size:16px;
+}
+.mode-card:nth-child(2) button{
+  background:linear-gradient(135deg,#e5b900,var(--yellow));
+  color:#24351c;
+}
+
+.app{display:none;padding-bottom:50px}
+.app.active{display:block}
+.topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:bold;
-}
-
-button,
-select,
-input,
-textarea{
-  font:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-  transition:.2s;
-}
-
-button:active{
-  transform:scale(.96);
-}
-
-.top-actions{
-  display:flex;
-  gap:8px;
+  gap:10px;
+  margin:22px 0;
   flex-wrap:wrap;
 }
-
-.top-btn{
-  background:rgba(255,255,255,.85);
-  color:#263238;
-  padding:10px 14px;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-.top-btn:hover{
-  background:#fff;
-}
-
-.intro{
-  background:var(--card);
-  margin:25px 0;
-  padding:22px;
-  border-radius:20px;
-  box-shadow:var(--shadow);
-  border:1px solid var(--border);
-  line-height:2;
-}
-
-.intro h2{
-  margin-top:0;
-  color:var(--green2);
-}
-
-.intro .price{
-  background:linear-gradient(90deg,var(--yellow),var(--green));
-  padding:10px 15px;
-  border-radius:12px;
-  display:inline-block;
-  font-weight:bold;
-}
-
-.heavy-sentence{
-  margin-top:18px;
-  padding:16px;
-  border-right:5px solid var(--green2);
-  background:rgba(139,195,74,.12);
-  border-radius:12px;
-  font-size:17px;
-  font-weight:bold;
-}
-
-.mode-box{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-  margin:25px 0;
-}
-
-.mode-btn{
-  padding:25px;
-  background:var(--card);
-  border:2px solid var(--border);
-  border-radius:20px;
-  box-shadow:var(--shadow);
-  font-size:20px;
-  font-weight:bold;
-  color:var(--text);
-}
-
-.mode-btn:hover{
-  border-color:var(--green);
-  transform:translateY(-3px);
-}
-
+.topbar h2{font-size:25px}
 .section{
   background:var(--card);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:22px;
   margin:20px 0;
-  padding:20px;
-  border-radius:20px;
   box-shadow:var(--shadow);
-  border:1px solid var(--border);
 }
-
-.section h2{
-  margin-top:0;
-  color:var(--green2);
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
 }
-
-.hidden{
-  display:none!important;
+.section-title h3{font-size:21px}
+.badge{
+  background:var(--yellow2);
+  color:#6d5900;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:900;
 }
+body.dark .badge{background:#4b431b;color:#ffe87b}
 
-input,
-textarea,
-select{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:var(--card);
-  color:var(--text);
-  outline:none;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(139,195,74,.15);
-}
-
-textarea{
-  min-height:130px;
-  resize:vertical;
-}
-
-.main-calculator{
-  max-width:500px;
-  margin:auto;
-}
-
-.calc-display{
-  background:#17210f;
-  color:#d9ff9e;
-  padding:18px;
-  border-radius:15px;
-  min-height:65px;
-  font-size:25px;
+.display{
+  background:#101814;
+  color:#eafff2;
+  border-radius:22px;
+  padding:20px;
+  min-height:110px;
+  margin-bottom:15px;
   overflow:auto;
+}
+.display .expression{
+  color:#a9c7b7;
+  min-height:24px;
   direction:ltr;
   text-align:left;
-  margin-bottom:12px;
+  word-break:break-all;
 }
-
-.calc-result{
-  background:rgba(139,195,74,.12);
-  padding:12px;
-  border-radius:12px;
-  margin-bottom:12px;
-  min-height:45px;
-  font-weight:bold;
+.display .answer{
+  font-size:32px;
+  font-weight:900;
   direction:ltr;
   text-align:left;
+  margin-top:8px;
+  word-break:break-all;
 }
-
 .calc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px;
+  gap:9px;
 }
-
 .calc-grid button{
-  padding:17px 5px;
-  border-radius:13px;
-  background:#edf4e4;
-  color:#263238;
-  font-size:18px;
-  font-weight:bold;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  min-height:58px;
+  border-radius:16px;
+  font-size:19px;
+  font-weight:900;
 }
-
-body.dark .calc-grid button{
-  background:#34402b;
+.calc-grid button:hover{background:var(--yellow);color:#24351c}
+.calc-grid .operator{background:#e8fff2;color:var(--green)}
+body.dark .calc-grid .operator{background:#1e392b}
+.calc-grid .equal{
+  background:var(--green);
   color:#fff;
 }
-
-.calc-grid button:hover{
-  background:var(--yellow);
-}
-
-.calc-grid .operator{
-  background:var(--green);
-}
-
 .calc-grid .danger{
-  background:#ef5350;
-  color:white;
+  background:#fff0ee;
+  color:var(--danger);
 }
+body.dark .calc-grid .danger{background:#3a201d}
 
-.calc-grid .wide{
-  grid-column:span 2;
-}
-
-.action-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
-.action{
-  background:var(--green);
-  padding:11px 16px;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-.action.secondary{
-  background:var(--yellow);
-}
-
-.action.danger{
-  background:#ef5350;
-  color:#fff;
-}
-
-label{
-  display:block;
-  margin:10px 0 6px;
-  font-weight:bold;
-}
-
-.two{
+.form-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+.field input,.field textarea,.field select{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:14px;
+  padding:13px;
+  outline:none;
+}
+.field textarea{min-height:130px;resize:vertical}
+.primary{
+  border:0;
+  background:linear-gradient(135deg,var(--green),#21b96e);
+  color:#fff;
+  border-radius:14px;
+  padding:13px 20px;
+  font-weight:900;
+}
+.secondary{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:14px;
+  padding:13px 20px;
+  font-weight:900;
 }
 
-.three{
+.percent-grid,.tool-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  gap:14px;
 }
-
-.fraction-box{
+.tool-card{
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:15px;
-  margin:10px 0;
+  border-radius:19px;
+  padding:17px;
+  background:var(--bg);
 }
-
-.fraction-row{
-  display:grid;
-  grid-template-columns:1fr 30px 1fr;
-  gap:8px;
-  align-items:center;
-}
-
-.fraction-line{
-  height:2px;
-  background:var(--text);
-  margin:5px 0;
-}
-
-.fraction-sign{
-  text-align:center;
-  font-size:25px;
-  font-weight:bold;
-}
-
-.steps{
-  background:rgba(139,195,74,.1);
-  padding:15px;
-  border-radius:12px;
-  line-height:2;
+.tool-card h4{margin-bottom:12px}
+.tool-card .result{
   margin-top:12px;
-}
-
-.result-box{
-  margin-top:15px;
-  padding:15px;
-  border-radius:14px;
-  background:rgba(253,216,53,.18);
-  font-size:18px;
-  font-weight:bold;
-  overflow-wrap:anywhere;
-}
-
-.back-home{
-  margin-bottom:15px;
-  background:var(--yellow);
-  padding:11px 18px;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-.history-item,
-.favorite-item{
-  background:rgba(139,195,74,.08);
   padding:12px;
   border-radius:12px;
-  margin:8px 0;
-  cursor:pointer;
-  border:1px solid var(--border);
+  background:var(--yellow2);
+  font-weight:900;
+  text-align:center;
 }
 
-.history-item:hover,
-.favorite-item:hover{
-  border-color:var(--green);
-}
-
-.translator-toolbar{
+.fraction-grid{
   display:grid;
-  grid-template-columns:1fr 60px 1fr;
-  gap:10px;
+  grid-template-columns:1fr auto 1fr auto 1fr;
   align-items:center;
+  gap:10px;
 }
+.fraction-box{
+  border:1px solid var(--border);
+  background:var(--bg);
+  padding:13px;
+  border-radius:18px;
+}
+.fraction-box h4{text-align:center;margin-bottom:9px}
+.frac-inputs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:6px;
+}
+.frac-inputs input{text-align:center}
+.frac-op{
+  font-size:25px;
+  font-weight:900;
+}
+.frac-result{
+  margin-top:15px;
+  padding:16px;
+  background:#e9fff1;
+  color:#126c3e;
+  border-radius:17px;
+  font-size:20px;
+  font-weight:900;
+  text-align:center;
+}
+body.dark .frac-result{background:#193c29;color:#9ff0be}
 
+.history-item{
+  border:1px solid var(--border);
+  padding:12px;
+  border-radius:13px;
+  margin-bottom:8px;
+  background:var(--bg);
+  direction:ltr;
+  text-align:left;
+}
+.empty{color:var(--muted);text-align:center;padding:25px}
+
+/* translator */
+.translate-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.lang-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.lang-row select{flex:1}
 .swap{
+  width:45px;
+  border:1px solid var(--border);
   background:var(--yellow);
-  border-radius:50%;
-  width:50px;
-  height:50px;
-  font-size:22px;
-  margin:auto;
+  border-radius:12px;
+  font-weight:900;
 }
-
+.translate-box{
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:14px;
+  background:var(--bg);
+}
+.translate-box textarea{
+  width:100%;
+  min-height:180px;
+  border:0;
+  outline:0;
+  resize:vertical;
+  background:transparent;
+  color:var(--text);
+  font-size:17px;
+}
 .translate-actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin:12px 0;
+  margin-top:12px;
 }
 
-.translate-result{
-  background:rgba(139,195,74,.1);
+.dictionary{
   border:1px solid var(--border);
-  border-radius:15px;
+  border-radius:20px;
   padding:18px;
-  min-height:80px;
-  font-size:20px;
-  line-height:2;
-  overflow-wrap:anywhere;
+  background:var(--bg);
 }
-
-.dict-card{
-  background:rgba(253,216,53,.1);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:18px;
+.word-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.word-title{font-size:28px;font-weight:900;direction:ltr;text-align:left}
+.pronunciation{color:var(--green);direction:ltr}
+.meaning-card{
   margin-top:15px;
-  line-height:2;
-}
-
-.dict-title{
-  font-size:23px;
-  font-weight:bold;
-  color:var(--green2);
-}
-
-.meaning{
-  margin:12px 0;
-  padding:12px;
   border-right:4px solid var(--green);
-  background:rgba(139,195,74,.08);
-  border-radius:10px;
+  padding:15px;
+  background:var(--card);
+  border-radius:15px;
 }
-
-.english-def{
-  direction:ltr;
-  text-align:left;
-  background:rgba(0,0,0,.04);
-  padding:8px;
-  border-radius:8px;
-}
-
-body.dark .english-def{
-  background:rgba(255,255,255,.05);
-}
-
-.fa-def{
-  padding:8px;
-}
-
+.meaning-card h4{margin-bottom:7px}
+.definition{direction:ltr;text-align:left;line-height:1.8}
+.persian-def{line-height:2;margin-top:8px}
 .example{
   direction:ltr;
   text-align:left;
-  margin-top:8px;
-  padding:8px;
-  background:rgba(0,0,0,.04);
-  border-radius:8px;
+  padding:10px;
+  background:var(--bg);
+  border-radius:10px;
+  margin-top:10px;
+  line-height:1.7;
 }
-
-body.dark .example{
-  background:rgba(255,255,255,.05);
-}
-
 .related{
   display:flex;
   flex-wrap:wrap;
   gap:7px;
   margin-top:10px;
 }
-
-.tag{
-  background:var(--green);
-  padding:5px 10px;
+.related span{
+  padding:6px 10px;
   border-radius:20px;
-  font-size:13px;
+  background:var(--yellow2);
+  color:#5d5000;
+  font-size:12px;
+  font-weight:800;
 }
 
-.speak-btn{
-  background:var(--yellow);
-  padding:8px 12px;
-  border-radius:10px;
-}
-
-.quote{
-  margin-top:20px;
-  padding:18px;
-  background:linear-gradient(135deg,rgba(139,195,74,.14),rgba(253,216,53,.15));
-  border-radius:15px;
-  font-size:18px;
+.sentence-box{
+  background:linear-gradient(135deg,#173d29,#0f261b);
+  color:#eafff1;
+  border-radius:20px;
+  padding:20px;
   line-height:2;
-  text-align:center;
-  font-weight:bold;
+  min-height:90px;
 }
+.sentence-box strong{color:var(--yellow)}
+
+.vocab-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.vocab-item{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  background:var(--bg);
+}
+
+/* reviews */
+.review-summary{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:25px;
+  align-items:center;
+}
+.average{
+  text-align:center;
+  padding:20px;
+  border-radius:22px;
+  background:linear-gradient(135deg,var(--green),#22b86e);
+  color:white;
+}
+.average .number{font-size:50px;font-weight:900}
+.stars{
+  color:#ffc400;
+  letter-spacing:2px;
+  direction:ltr;
+}
+.average .stars{font-size:22px}
+.bars{display:grid;gap:8px}
+.bar-row{
+  display:grid;
+  grid-template-columns:35px 1fr 40px;
+  align-items:center;
+  gap:8px;
+}
+.bar{
+  height:9px;
+  border-radius:20px;
+  background:var(--border);
+  overflow:hidden;
+}
+.bar i{
+  display:block;
+  height:100%;
+  background:var(--yellow);
+  width:0;
+}
+
+.rating-picker{
+  display:flex;
+  direction:ltr;
+  gap:3px;
+  margin:8px 0;
+}
+.rating-picker button{
+  border:0;
+  background:transparent;
+  color:#b7b7b7;
+  font-size:31px;
+  padding:0 3px;
+}
+.rating-picker button.active{color:#ffc400}
+
+.review-form{
+  margin-top:22px;
+  border-top:1px solid var(--border);
+  padding-top:20px;
+}
+.review-tools{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+.review-card{
+  border:1px solid var(--border);
+  background:var(--bg);
+  border-radius:18px;
+  padding:16px;
+  margin-top:12px;
+}
+.review-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+.reviewer{font-weight:900}
+.review-date{font-size:11px;color:var(--muted)}
+.review-text{margin-top:10px;line-height:2}
+.review-footer{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:12px;
+}
+.like-btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:10px;
+  padding:7px 10px;
+}
+.review-stars{font-size:17px}
 
 footer{
   text-align:center;
-  padding:30px 10px;
+  padding:35px 15px;
   color:var(--muted);
+  line-height:2;
+}
+footer strong{color:var(--green)}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#12251b;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:14px;
+  opacity:0;
+  transition:.3s;
+  z-index:999;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 
-.small{
-  color:var(--muted);
-  font-size:13px;
+@media(max-width:800px){
+  .mode-grid,.translate-layout,.review-summary{grid-template-columns:1fr}
+  .form-grid,.percent-grid,.tool-grid{grid-template-columns:1fr}
+  .fraction-grid{grid-template-columns:1fr}
+  .frac-op{text-align:center}
+  .vocab-list{grid-template-columns:1fr}
 }
-
-.rating-stars{
-  display:flex;
-  gap:5px;
-  direction:ltr;
-  margin:10px 0;
-}
-
-.star{
-  font-size:35px;
-  color:#bbb;
-  cursor:pointer;
-}
-
-.star.active{
-  color:#ffc107;
-}
-
-@media(max-width:700px){
-  .mode-box,
-  .two,
-  .translator-toolbar{
-    grid-template-columns:1fr;
-  }
-
-  .translator-toolbar .swap{
-    transform:rotate(90deg);
-  }
-
-  .three{
-    grid-template-columns:1fr;
-  }
-
-  .header-inner{
-    flex-direction:column;
-  }
-
-  .logo{
-    font-size:21px;
-  }
-
-  .intro{
-    padding:16px;
-  }
-
-  .section{
-    padding:15px;
-  }
+@media(max-width:520px){
+  .hero{padding:22px}
+  .section{padding:15px}
+  .calc-grid button{min-height:52px}
+  .header-inner{padding:7px 0}
+  .logo{font-size:16px}
 }
 </style>
 </head>
@@ -556,1870 +600,1477 @@ footer{
 <body>
 
 <header>
-<div class="container header-inner">
-<div class="logo">🧮 ماشین‌حساب پارسا</div>
+  <div class="container header-inner">
+    <div class="logo">
+      پارسا غفاری
+      <small>ماشین‌حساب و مترجم حرفه‌ای</small>
+    </div>
 
-<div class="top-actions">
-<button class="top-btn" onclick="goHome()">🏠 خانه</button>
-<button class="top-btn" onclick="toggleTheme()">🌙 حالت شب / روز</button>
-</div>
-</div>
+    <div class="header-actions">
+      <button class="home-btn" onclick="showHome()">🏠 خانه</button>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </div>
 </header>
 
 <main class="container">
 
-<section class="intro">
-<h2>سلام! 👋</h2>
-
-<p>
-من پارسا غفاری هستم و این اولین سایتی است که خودم طراحی و برنامه‌نویسی کرده‌ام.
-</p>
-
-<p>
-این سایت را برای یادگیری و تمرین طراحی کرده‌ام و در آن یک ماشین حساب چندکاره
-و یک ترجمه‌گر و فرهنگ لغت آنلاین ساخته‌ام.
-</p>
-
-<p>
-من این سایت را فقط چند ساعت است که ساخته‌ام و ممکن است در روزهای آینده
-مرتب در حال تغییر، بهتر شدن و پیشرفت آن باشم.
-</p>
-
-<p class="price">💻 سایت‌سازی در ۲ ساعت — فقط ۵۰٬۰۰۰ تومان</p>
-
-<p>تقدیم به پدر و مادرم ❤️</p>
-
-<div class="heavy-sentence" id="heavySentence"></div>
+<section class="hero">
+  <h1>ماشین‌حساب و مترجم حرفه‌ای</h1>
+  <p>
+    من پارسا غفاری هستم و این اولین سایتی است که خودم طراحی و برنامه‌نویسی کرده‌ام.
+    این سایت را برای یادگیری و تمرین طراحی کرده‌ام و در آن یک ماشین حساب چندکاره و
+    یک مترجم و فرهنگ لغت پیشرفته ساخته‌ام.
+  </p>
+  <p>
+    من این سایت را فقط چند ساعت است که ساخته‌ام و ممکن است در روزهای آینده مرتب
+    در حال تغییر، بهتر شدن و پیشرفت آن باشم.
+  </p>
+  <span class="price">💻 سایت‌سازی در ۲ ساعت — فقط ۵۰٬۰۰۰ تومان</span>
 </section>
 
-<section id="homeMode">
-<h2>چه کاری می‌خواهید انجام دهید؟</h2>
+<!-- HOME -->
+<section class="mode-screen" id="homeScreen">
+  <div class="mode-grid">
 
-<div class="mode-box">
-<button class="mode-btn" onclick="openCalculator()">
-🧮<br>
-ماشین‌حساب
-</button>
+    <div class="mode-card">
+      <div class="big">🧮</div>
+      <h2>ماشین‌حساب</h2>
+      <p>محاسبات چهار عمل اصلی، درصد، کسر، توان، ب.م.م، ک.م.م و تاریخچه.</p>
+      <button onclick="openApp('calculatorApp')">ورود به ماشین‌حساب</button>
+    </div>
 
-<button class="mode-btn" onclick="openTranslator()">
-🌐<br>
-ترجمه‌گر آنلاین
-</button>
-</div>
+    <div class="mode-card">
+      <div class="big">🌐</div>
+      <h2>ترجمه‌گر آنلاین</h2>
+      <p>ترجمه، دیکشنری، تلفظ، جمله‌سازی، واژگان و ابزارهای یادگیری زبان.</p>
+      <button onclick="openApp('translatorApp')">ورود به مترجم</button>
+    </div>
+
+  </div>
 </section>
 
 <!-- CALCULATOR -->
+<section class="app" id="calculatorApp">
 
-<section id="calculatorMode" class="hidden">
-
-<button class="back-home" onclick="goHome()">🏠 بازگشت به خانه</button>
+<div class="topbar">
+  <h2>🧮 ماشین‌حساب حرفه‌ای</h2>
+  <button class="secondary" onclick="showHome()">🏠 بازگشت</button>
+</div>
 
 <section class="section">
-<h2>🧮 ماشین‌حساب اصلی</h2>
+  <div class="section-title">
+    <h3>ماشین‌حساب اصلی</h3>
+    <span class="badge">چهار عمل اصلی + پرانتز</span>
+  </div>
 
-<div class="main-calculator">
+  <div class="display">
+    <div class="expression" id="calcExpression"></div>
+    <div class="answer" id="calcAnswer">0</div>
+  </div>
 
-<div id="calcDisplay" class="calc-display">0</div>
+  <div class="calc-grid">
+    <button class="danger" onclick="calcClear()">AC</button>
+    <button class="danger" onclick="calcBack()">⌫</button>
+    <button class="operator" onclick="calcInput('(')">(</button>
+    <button class="operator" onclick="calcInput(')')">)</button>
 
-<div id="calcResult" class="calc-result">
-نتیجه اینجا نمایش داده می‌شود
-</div>
+    <button onclick="calcInput('7')">7</button>
+    <button onclick="calcInput('8')">8</button>
+    <button onclick="calcInput('9')">9</button>
+    <button class="operator" onclick="calcInput('/')">÷</button>
 
-<div class="calc-grid">
+    <button onclick="calcInput('4')">4</button>
+    <button onclick="calcInput('5')">5</button>
+    <button onclick="calcInput('6')">6</button>
+    <button class="operator" onclick="calcInput('*')">×</button>
 
-<button class="danger" onclick="clearMain()">C</button>
-<button onclick="backspaceMain()">⌫</button>
-<button onclick="addMain('(')">(</button>
-<button onclick="addMain(')')">)</button>
+    <button onclick="calcInput('1')">1</button>
+    <button onclick="calcInput('2')">2</button>
+    <button onclick="calcInput('3')">3</button>
+    <button class="operator" onclick="calcInput('-')">−</button>
 
-<button onclick="addMain('7')">7</button>
-<button onclick="addMain('8')">8</button>
-<button onclick="addMain('9')">9</button>
-<button class="operator" onclick="addMain('/')">÷</button>
-
-<button onclick="addMain('4')">4</button>
-<button onclick="addMain('5')">5</button>
-<button onclick="addMain('6')">6</button>
-<button class="operator" onclick="addMain('*')">×</button>
-
-<button onclick="addMain('1')">1</button>
-<button onclick="addMain('2')">2</button>
-<button onclick="addMain('3')">3</button>
-<button class="operator" onclick="addMain('-')">−</button>
-
-<button onclick="addMain('0')">0</button>
-<button onclick="addMain('.')">.</button>
-<button onclick="addMain('**')">xʸ</button>
-<button class="operator" onclick="addMain('+')">+</button>
-
-<button onclick="addMain('Math.sqrt(')">√</button>
-<button onclick="addMain('Math.abs(')">|x|</button>
-<button onclick="toggleSign()">±</button>
-<button class="operator" onclick="calculateMain()">=</button>
-
-</div>
-
-<div class="action-row">
-<button class="action" onclick="copyResult()">📋 کپی نتیجه</button>
-<button class="action secondary" onclick="saveMainHistory()">💾 ذخیره</button>
-</div>
-
-</div>
+    <button onclick="calcInput('0')">0</button>
+    <button onclick="calcInput('.')">.</button>
+    <button class="equal" onclick="calculate()">=</button>
+    <button class="operator" onclick="calcInput('+')">+</button>
+  </div>
 </section>
 
 <section class="section">
-<h2>٪ درصد</h2>
+  <div class="section-title">
+    <h3>٪ درصد پیشرفته</h3>
+  </div>
 
-<div class="two">
-<div>
-<label>عدد اصلی</label>
-<input id="percentBase" type="number" placeholder="مثلاً 200">
-</div>
+  <div class="percent-grid">
 
-<div>
-<label>درصد</label>
-<input id="percentValue" type="number" placeholder="مثلاً 15">
-</div>
-</div>
+    <div class="tool-card">
+      <h4>درصدی از یک عدد</h4>
+      <div class="field">
+        <label>درصد</label>
+        <input id="p1" type="number" placeholder="مثلاً 20">
+      </div>
+      <div class="field" style="margin-top:8px">
+        <label>عدد</label>
+        <input id="p2" type="number" placeholder="مثلاً 500">
+      </div>
+      <button class="primary" style="margin-top:10px;width:100%" onclick="percentOf()">محاسبه</button>
+      <div class="result" id="percentResult1">نتیجه</div>
+    </div>
 
-<div class="action-row">
-<button class="action" onclick="percentOf()">درصدِ عدد</button>
-<button class="action" onclick="percentIncrease()">افزایش درصدی</button>
-<button class="action secondary" onclick="percentDecrease()">کاهش درصدی</button>
-</div>
+    <div class="tool-card">
+      <h4>درصد افزایش</h4>
+      <div class="field">
+        <label>عدد اولیه</label>
+        <input id="p3" type="number">
+      </div>
+      <div class="field" style="margin-top:8px">
+        <label>درصد افزایش</label>
+        <input id="p4" type="number">
+      </div>
+      <button class="primary" style="margin-top:10px;width:100%" onclick="percentIncrease()">محاسبه</button>
+      <div class="result" id="percentResult2">نتیجه</div>
+    </div>
 
-<div id="percentResult" class="result-box"></div>
+    <div class="tool-card">
+      <h4>درصد کاهش</h4>
+      <div class="field">
+        <label>عدد اولیه</label>
+        <input id="p5" type="number">
+      </div>
+      <div class="field" style="margin-top:8px">
+        <label>درصد کاهش</label>
+        <input id="p6" type="number">
+      </div>
+      <button class="primary" style="margin-top:10px;width:100%" onclick="percentDecrease()">محاسبه</button>
+      <div class="result" id="percentResult3">نتیجه</div>
+    </div>
+
+  </div>
 </section>
 
 <section class="section">
-<h2>🔢 کسرهای ترکیبی</h2>
+  <div class="section-title">
+    <h3>➗ ماشین‌حساب کسرها</h3>
+    <span class="badge">+ − × ÷</span>
+  </div>
 
-<p class="small">
-برای هر کسر، عدد صحیح، صورت و مخرج را وارد کنید.
-</p>
+  <div class="fraction-grid">
 
-<div class="fraction-box">
+    <div class="fraction-box">
+      <h4>کسر اول</h4>
+      <div class="frac-inputs">
+        <input id="f1w" type="number" placeholder="صحیح">
+        <input id="f1n" type="number" placeholder="صورت">
+        <input id="f1d" type="number" placeholder="مخرج">
+      </div>
+    </div>
 
-<h3>کسر اول</h3>
+    <select id="fractionOp" style="padding:14px;border-radius:14px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:20px;font-weight:900">
+      <option value="+">+</option>
+      <option value="-">−</option>
+      <option value="*">×</option>
+      <option value="/">÷</option>
+    </select>
 
-<div class="three">
-<div>
-<label>عدد صحیح</label>
-<input id="f1w" type="number" value="0">
-</div>
+    <div class="fraction-box">
+      <h4>کسر دوم</h4>
+      <div class="frac-inputs">
+        <input id="f2w" type="number" placeholder="صحیح">
+        <input id="f2n" type="number" placeholder="صورت">
+        <input id="f2d" type="number" placeholder="مخرج">
+      </div>
+    </div>
 
-<div>
-<label>صورت</label>
-<input id="f1n" type="number" value="1">
-</div>
+    <button class="primary" onclick="fractionCalculate()">=</button>
 
-<div>
-<label>مخرج</label>
-<input id="f1d" type="number" value="2">
-</div>
-</div>
+    <div class="fraction-box">
+      <h4>نتیجه</h4>
+      <div id="fractionResult" style="text-align:center;font-weight:900;padding:12px">—</div>
+    </div>
 
-</div>
+  </div>
 
-<div style="text-align:center;font-size:25px;margin:10px">عملیات</div>
-
-<select id="fractionOp">
-<option value="+">+</option>
-<option value="-">−</option>
-<option value="*">×</option>
-<option value="/">÷</option>
-</select>
-
-<div class="fraction-box">
-
-<h3>کسر دوم</h3>
-
-<div class="three">
-<div>
-<label>عدد صحیح</label>
-<input id="f2w" type="number" value="0">
-</div>
-
-<div>
-<label>صورت</label>
-<input id="f2n" type="number" value="1">
-</div>
-
-<div>
-<label>مخرج</label>
-<input id="f2d" type="number" value="3">
-</div>
-</div>
-
-</div>
-
-<button class="action" onclick="calculateFraction()">محاسبه کسر</button>
-
-<div id="fractionResult" class="result-box"></div>
-<div id="fractionSteps" class="steps"></div>
-
+  <div class="frac-result" id="fractionResult2">نتیجه کسر اینجا نمایش داده می‌شود</div>
 </section>
 
 <section class="section">
-<h2>🔺 توان</h2>
+  <div class="section-title"><h3>⚡ توان</h3></div>
 
-<div class="two">
-<input id="powerBase" type="number" placeholder="پایه">
-<input id="powerExp" type="number" placeholder="توان">
-</div>
+  <div class="form-grid">
+    <div class="field">
+      <label>عدد پایه</label>
+      <input id="powerBase" type="number" placeholder="مثلاً 2">
+    </div>
+    <div class="field">
+      <label>توان</label>
+      <input id="powerExp" type="number" placeholder="مثلاً 8">
+    </div>
+  </div>
 
-<button class="action" onclick="calculatePower()">محاسبه</button>
-
-<div id="powerResult" class="result-box"></div>
+  <button class="primary" style="margin-top:12px" onclick="powerCalc()">محاسبه توان</button>
+  <div class="frac-result" id="powerResult">—</div>
 </section>
 
 <section class="section">
-<h2>🔢 ب.م.م و ک.م.م</h2>
+  <div class="section-title"><h3>🔢 ب.م.م و ک.م.م</h3></div>
 
-<p class="small">
-اعداد را با کاما جدا کنید؛ مثلاً: 12,18,24
-</p>
+  <div class="form-grid">
+    <div class="field">
+      <label>عدد اول</label>
+      <input id="gcdA" type="number">
+    </div>
+    <div class="field">
+      <label>عدد دوم</label>
+      <input id="gcdB" type="number">
+    </div>
+  </div>
 
-<input id="numbersInput" placeholder="12,18,24">
-
-<button class="action" onclick="calculateGcdLcm()">محاسبه</button>
-
-<div id="gcdResult" class="result-box"></div>
+  <button class="primary" style="margin-top:12px" onclick="gcdLcmCalc()">محاسبه</button>
+  <div class="frac-result" id="gcdResult">—</div>
 </section>
 
 <section class="section">
-<h2>📜 تاریخچه محاسبات</h2>
+  <div class="section-title">
+    <h3>🕘 تاریخچه محاسبات</h3>
+    <button class="secondary" onclick="clearHistory()">پاک کردن</button>
+  </div>
+  <div id="historyList"></div>
+</section>
 
-<div id="calculatorHistory"></div>
+<!-- REVIEWS CALCULATOR -->
+<section class="section" id="calculatorReviews">
+  <div class="section-title">
+    <h3>⭐ نظرات و امتیاز کاربران</h3>
+    <span class="badge">بدون نیاز به ایمیل</span>
+  </div>
 
-<button class="action danger" onclick="clearCalculatorHistory()">
-پاک کردن تاریخچه
-</button>
+  <div class="review-summary">
+    <div class="average">
+      <div class="number" id="calcAvg">0.0</div>
+      <div class="stars" id="calcAvgStars">☆☆☆☆☆</div>
+      <div id="calcCount">0 نظر</div>
+    </div>
+
+    <div class="bars" id="calcBars"></div>
+  </div>
+
+  <div class="review-form">
+    <h4>نظر خودت را ثبت کن</h4>
+
+    <div class="field" style="margin-top:12px">
+      <label>نام یا اسم دلخواه</label>
+      <input id="calcReviewName" maxlength="50" placeholder="مثلاً پارسا">
+    </div>
+
+    <label style="display:block;margin-top:12px;font-weight:900">امتیاز</label>
+    <div class="rating-picker" id="calcRatingPicker">
+      <button onclick="chooseRating('calc',1)">★</button>
+      <button onclick="chooseRating('calc',2)">★</button>
+      <button onclick="chooseRating('calc',3)">★</button>
+      <button onclick="chooseRating('calc',4)">★</button>
+      <button onclick="chooseRating('calc',5)">★</button>
+    </div>
+
+    <div class="field">
+      <label>نظر</label>
+      <textarea id="calcReviewComment" maxlength="1000" placeholder="نظرت درباره سایت را بنویس..."></textarea>
+    </div>
+
+    <button class="primary" style="margin-top:12px" onclick="submitReview('calc')">
+      ⭐ ثبت امتیاز و نظر
+    </button>
+  </div>
+
+  <div class="review-tools">
+    <h4>نظرهای کاربران</h4>
+    <select id="calcReviewSort" onchange="renderReviews('calc')" style="padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text)">
+      <option value="new">جدیدترین</option>
+      <option value="old">قدیمی‌ترین</option>
+      <option value="high">بیشترین امتیاز</option>
+      <option value="low">کمترین امتیاز</option>
+    </select>
+  </div>
+
+  <div id="calcReviewsList"></div>
 </section>
 
 </section>
 
 <!-- TRANSLATOR -->
+<section class="app" id="translatorApp">
 
-<section id="translatorMode" class="hidden">
-
-<button class="back-home" onclick="goHome()">🏠 بازگشت به خانه</button>
+<div class="topbar">
+  <h2>🌐 مترجم و فرهنگ لغت هوشمند</h2>
+  <button class="secondary" onclick="showHome()">🏠 بازگشت</button>
+</div>
 
 <section class="section">
+  <div class="section-title">
+    <h3>ترجمه آنلاین</h3>
+    <span class="badge">ترجمه + تلفظ + یادگیری</span>
+  </div>
 
-<h2>🌐 ترجمه‌گر آنلاین + فرهنگ لغت</h2>
+  <div class="translate-layout">
 
-<div class="translator-toolbar">
+    <div class="translate-box">
+      <div class="lang-row">
+        <select id="sourceLang">
+          <option value="fa">🇮🇷 فارسی</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="az">🇦🇿 Azərbaycan</option>
+        </select>
 
-<select id="fromLang">
-<option value="fa">🇮🇷 فارسی</option>
-<option value="en">🇬🇧 English</option>
-<option value="de">🇩🇪 Deutsch</option>
-<option value="fr">🇫🇷 Français</option>
-<option value="es">🇪🇸 Español</option>
-<option value="tr">🇹🇷 Türkçe</option>
-<option value="ru">🇷🇺 Русский</option>
-<option value="ar">🇸🇦 العربية</option>
-<option value="it">🇮🇹 Italiano</option>
-<option value="az">🇦🇿 Azərbaycan</option>
-</select>
+        <button class="swap" onclick="swapLanguages()">⇄</button>
 
-<button class="swap" onclick="swapLangs()">⇄</button>
+        <select id="targetLang">
+          <option value="en">🇬🇧 English</option>
+          <option value="fa">🇮🇷 فارسی</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="az">🇦🇿 Azərbaycan</option>
+        </select>
+      </div>
 
-<select id="toLang">
-<option value="en">🇬🇧 English</option>
-<option value="fa">🇮🇷 فارسی</option>
-<option value="de">🇩🇪 Deutsch</option>
-<option value="fr">🇫🇷 Français</option>
-<option value="es">🇪🇸 Español</option>
-<option value="tr">🇹🇷 Türkçe</option>
-<option value="ru">🇷🇺 Русский</option>
-<option value="ar">🇸🇦 العربية</option>
-<option value="it">🇮🇹 Italiano</option>
-<option value="az">🇦🇿 Azərbaycan</option>
-</select>
+      <textarea id="sourceText" placeholder="متن یا کلمه را وارد کن..."></textarea>
 
-</div>
+      <div class="translate-actions">
+        <button class="primary" onclick="translateText()">🌐 ترجمه</button>
+        <button class="secondary" onclick="startVoice()">🎤 صحبت کردن</button>
+        <button class="secondary" onclick="clearTranslator()">🗑 پاک کردن</button>
+      </div>
+    </div>
 
-<label>متن موردنظر</label>
+    <div class="translate-box">
+      <div class="lang-row">
+        <select id="resultLang" disabled>
+          <option>نتیجه ترجمه</option>
+        </select>
+      </div>
 
-<textarea id="translateInput"
-placeholder="مثلاً بنویس: سیب یا I like learning English"></textarea>
+      <textarea id="translatedText" readonly placeholder="نتیجه اینجا نمایش داده می‌شود..."></textarea>
 
-<div class="translate-actions">
+      <div class="translate-actions">
+        <button class="primary" onclick="speakTranslation()">🔊 تلفظ</button>
+        <button class="secondary" onclick="copyTranslation()">📋 کپی</button>
+        <button class="secondary" onclick="saveVocabulary()">⭐ ذخیره واژه</button>
+      </div>
+    </div>
 
-<button class="action" onclick="startSpeech()">
-🎤 صحبت کردن
-</button>
-
-<button class="action" onclick="translateOnline()">
-🌐 ترجمه آنلاین
-</button>
-
-<button class="action secondary" onclick="speakTranslation()">
-🔊 تلفظ
-</button>
-
-<button class="action secondary" onclick="copyTranslation()">
-📋 کپی
-</button>
-
-<button class="action danger" onclick="clearTranslator()">
-🗑 پاک کردن
-</button>
-
-</div>
-
-<div id="translationResult" class="translate-result">
-نتیجه ترجمه اینجا نمایش داده می‌شود.
-</div>
-
+  </div>
 </section>
 
 <section class="section">
+  <div class="section-title">
+    <h3>📖 فرهنگ لغت هوشمند</h3>
+    <span class="badge">معنی‌های مختلف + مثال + نوع کلمه</span>
+  </div>
 
-<h2>📚 فرهنگ لغت پیشرفته</h2>
-
-<div id="dictionaryBox">
-<p class="small">
-اگر یک کلمه انگلیسی وارد کنید، اطلاعات فرهنگ لغت آن نیز نمایش داده می‌شود.
-</p>
-</div>
-
+  <div class="dictionary" id="dictionaryBox">
+    <div class="empty">یک کلمه انگلیسی وارد کن و ترجمه را بزن تا اطلاعات فرهنگ لغت نمایش داده شود.</div>
+  </div>
 </section>
 
 <section class="section">
-
-<h2>⭐ دفترچه واژگان</h2>
-
-<button class="action" onclick="addFavorite()">
-⭐ افزودن کلمه به علاقه‌مندی‌ها
-</button>
-
-<div id="favorites"></div>
-
+  <div class="section-title">
+    <h3>🧠 جمله سنگین امروز</h3>
+    <button class="secondary" onclick="newHeavySentence()">جمله جدید</button>
+  </div>
+  <div class="sentence-box" id="heavySentence"></div>
 </section>
 
 <section class="section">
-
-<h2>📖 تاریخچه ترجمه‌ها</h2>
-
-<div id="translationHistory"></div>
-
-<button class="action danger" onclick="clearTranslationHistory()">
-پاک کردن تاریخچه
-</button>
-
+  <div class="section-title">
+    <h3>📚 دفتر واژگان من</h3>
+    <button class="secondary" onclick="clearVocabulary()">پاک کردن</button>
+  </div>
+  <div class="vocab-list" id="vocabList"></div>
 </section>
 
-<div class="quote" id="heavyTranslatorSentence"></div>
+<section class="section">
+  <div class="section-title"><h3>🕘 تاریخچه ترجمه</h3></div>
+  <div id="translationHistory"></div>
+</section>
+
+<!-- REVIEWS TRANSLATOR -->
+<section class="section" id="translatorReviews">
+  <div class="section-title">
+    <h3>⭐ نظرات و امتیاز کاربران</h3>
+    <span class="badge">بدون نیاز به ایمیل</span>
+  </div>
+
+  <div class="review-summary">
+    <div class="average">
+      <div class="number" id="transAvg">0.0</div>
+      <div class="stars" id="transAvgStars">☆☆☆☆☆</div>
+      <div id="transCount">0 نظر</div>
+    </div>
+
+    <div class="bars" id="transBars"></div>
+  </div>
+
+  <div class="review-form">
+    <h4>نظر خودت را ثبت کن</h4>
+
+    <div class="field" style="margin-top:12px">
+      <label>نام یا اسم دلخواه</label>
+      <input id="transReviewName" maxlength="50" placeholder="مثلاً پارسا">
+    </div>
+
+    <label style="display:block;margin-top:12px;font-weight:900">امتیاز</label>
+    <div class="rating-picker" id="transRatingPicker">
+      <button onclick="chooseRating('trans',1)">★</button>
+      <button onclick="chooseRating('trans',2)">★</button>
+      <button onclick="chooseRating('trans',3)">★</button>
+      <button onclick="chooseRating('trans',4)">★</button>
+      <button onclick="chooseRating('trans',5)">★</button>
+    </div>
+
+    <div class="field">
+      <label>نظر</label>
+      <textarea id="transReviewComment" maxlength="1000" placeholder="نظرت درباره مترجم را بنویس..."></textarea>
+    </div>
+
+    <button class="primary" style="margin-top:12px" onclick="submitReview('trans')">
+      ⭐ ثبت امتیاز و نظر
+    </button>
+  </div>
+
+  <div class="review-tools">
+    <h4>نظرهای کاربران</h4>
+    <select id="transReviewSort" onchange="renderReviews('trans')" style="padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text)">
+      <option value="new">جدیدترین</option>
+      <option value="old">قدیمی‌ترین</option>
+      <option value="high">بیشترین امتیاز</option>
+      <option value="low">کمترین امتیاز</option>
+    </select>
+  </div>
+
+  <div id="transReviewsList"></div>
+</section>
 
 </section>
 
 </main>
 
 <footer>
-ماشین حساب حرفه‌ای — ساخته شده توسط پارسا غفاری ❤️
+  <strong>ماشین حساب حرفه‌ای و مترجم هوشمند</strong><br>
+  ساخته شده توسط پارسا غفاری ❤️<br>
+  تقدیم به پدر و مادرم ❤️
 </footer>
 
-<script>
+<div class="toast" id="toast"></div>
 
-/* =========================
-   حالت شب و روز
-========================= */
+<script>
+/* =========================================================
+   SUPABASE
+   ========================================================= */
+
+const SUPABASE_URL = "https://eunafqgydksupdricphm.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Px9RmIBLuW5votbcZfCifQ_9QCCSxnc";
+const REVIEWS_TABLE = "ratings";
+
+let reviews = [];
+let selectedRatings = {
+  calc: 5,
+  trans: 5
+};
+
+/* =========================================================
+   عمومی
+   ========================================================= */
+
+function toast(message){
+  const t=document.getElementById("toast");
+  t.textContent=message;
+  t.classList.add("show");
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>t.classList.remove("show"),2600);
+}
+
+function escapeHtml(str){
+  return String(str ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function showHome(){
+  document.getElementById("homeScreen").style.display="block";
+  document.querySelectorAll(".app").forEach(x=>x.classList.remove("active"));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openApp(id){
+  document.getElementById("homeScreen").style.display="none";
+  document.querySelectorAll(".app").forEach(x=>x.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 
 function toggleTheme(){
   document.body.classList.toggle("dark");
   localStorage.setItem(
-    "darkMode",
-    document.body.classList.contains("dark")
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
   );
+  document.getElementById("themeBtn").textContent =
+    document.body.classList.contains("dark") ? "☀️" : "🌙";
 }
 
-if(localStorage.getItem("darkMode")==="true"){
+if(localStorage.getItem("theme")==="dark"){
   document.body.classList.add("dark");
+  document.getElementById("themeBtn").textContent="☀️";
 }
 
-
-/* =========================
-   صفحه اصلی
-========================= */
-
-function goHome(){
-  document.getElementById("homeMode").classList.remove("hidden");
-  document.getElementById("calculatorMode").classList.add("hidden");
-  document.getElementById("translatorMode").classList.add("hidden");
-}
-
-function openCalculator(){
-  document.getElementById("homeMode").classList.add("hidden");
-  document.getElementById("calculatorMode").classList.remove("hidden");
-  document.getElementById("translatorMode").classList.add("hidden");
-}
-
-function openTranslator(){
-  document.getElementById("homeMode").classList.add("hidden");
-  document.getElementById("calculatorMode").classList.add("hidden");
-  document.getElementById("translatorMode").classList.remove("hidden");
-}
-
-
-/* =========================
-   جمله سنگین متغیر
-========================= */
-
-const heavySentences=[
-"آدمی را نه فقط آنچه می‌داند، بلکه انتخاب‌هایی که در لحظه‌های سخت انجام می‌دهد، می‌سازد.",
-"گاهی بزرگ‌ترین تغییرات زندگی، از تصمیم‌های کوچکی شروع می‌شوند که هیچ‌کس جز خودت آن‌ها را نمی‌بیند.",
-"دانستن آغاز راه است؛ ارزش واقعی زمانی شکل می‌گیرد که دانسته‌هایت را به عمل تبدیل کنی.",
-"آینده چیزی نیست که فقط منتظرش بمانی؛ بخشی از آن با انتخاب‌های امروزت ساخته می‌شود.",
-"آدمی زمانی رشد می‌کند که بتواند میان چیزی که آسان است و چیزی که درست است، آگاهانه انتخاب کند.",
-"هر چیزی که امروز برای یادگرفتنش تلاش می‌کنی، ممکن است روزی به بخشی از قدرت تو تبدیل شود.",
-"گاهی مسیر سخت نیست؛ این ناآشنایی ما با مسیر است که آن را سخت به نظر می‌رساند.",
-"آنچه انسان را جلو می‌برد، کامل بودن نیست؛ ادامه دادن، یاد گرفتن و اصلاح کردن است.",
-"بعضی پاسخ‌ها با فکر کردن پیدا نمی‌شوند؛ باید قدمی برداشت تا سؤال شکل واقعی خودش را نشان دهد.",
-"زمان برای همه یکسان می‌گذرد، اما چیزی که از آن می‌سازیم برای هرکس متفاوت است."
-];
-
-function newHeavySentence(){
-
-  let last=Number(localStorage.getItem("lastHeavySentence"));
-
-  let index=Math.floor(Math.random()*heavySentences.length);
-
-  if(heavySentences.length>1){
-    while(index===last){
-      index=Math.floor(Math.random()*heavySentences.length);
-    }
-  }
-
-  localStorage.setItem("lastHeavySentence",index);
-
-  document.getElementById("heavySentence").textContent=
-    "💭 "+heavySentences[index];
-
-  document.getElementById("heavyTranslatorSentence").textContent=
-    "💭 "+heavySentences[index];
-}
-
-newHeavySentence();
-
-setInterval(newHeavySentence,45000);
-
-
-/* =========================
-   ماشین حساب اصلی
-========================= */
+/* =========================================================
+   CALCULATOR
+   ========================================================= */
 
 let calcExpression="";
 
-function updateDisplay(){
-  document.getElementById("calcDisplay").textContent=
-    calcExpression || "0";
+function calcInput(value){
+  calcExpression += value;
+  document.getElementById("calcExpression").textContent=calcExpression;
+  document.getElementById("calcAnswer").textContent=calcExpression || "0";
 }
 
-function addMain(value){
-
-  if(calcExpression==="0"){
-    calcExpression="";
-  }
-
-  calcExpression+=value;
-  updateDisplay();
-}
-
-function clearMain(){
+function calcClear(){
   calcExpression="";
-  document.getElementById("calcResult").textContent=
-    "نتیجه اینجا نمایش داده می‌شود";
-  updateDisplay();
+  document.getElementById("calcExpression").textContent="";
+  document.getElementById("calcAnswer").textContent="0";
 }
 
-function backspaceMain(){
+function calcBack(){
   calcExpression=calcExpression.slice(0,-1);
-  updateDisplay();
+  document.getElementById("calcExpression").textContent=calcExpression;
+  document.getElementById("calcAnswer").textContent=calcExpression || "0";
 }
 
-function calculateMain(){
-
-  if(!calcExpression.trim()) return;
+function calculate(){
+  if(!calcExpression)return;
 
   try{
-
-    let safe=calcExpression;
-
-    if(!/^[0-9+\-*/().\sMathsqrtabs]+$/.test(safe)){
-      throw new Error("عبارت نامعتبر");
+    if(!/^[0-9+\-*/().\s]+$/.test(calcExpression)){
+      throw new Error("invalid");
     }
 
-    let result=Function(
-      '"use strict"; return ('+safe+')'
-    )();
+    const result=Function('"use strict";return ('+calcExpression+')')();
 
-    if(!Number.isFinite(result)){
-      throw new Error("خطا");
-    }
+    if(!Number.isFinite(result))throw new Error("invalid");
 
-    document.getElementById("calcResult").textContent=
-      "نتیجه: "+result;
-
-    saveHistoryItem(calcExpression,result);
-
-  }catch(e){
-
-    document.getElementById("calcResult").textContent=
-      "❌ عبارت نامعتبر است";
+    document.getElementById("calcAnswer").textContent=formatNumber(result);
+    addHistory(calcExpression+" = "+formatNumber(result));
+  }catch{
+    document.getElementById("calcAnswer").textContent="خطا";
   }
 }
 
-function toggleSign(){
-
-  if(!calcExpression) return;
-
-  if(calcExpression.startsWith("-(") &&
-     calcExpression.endsWith(")")){
-
-    calcExpression=calcExpression.slice(2,-1);
-
-  }else{
-
-    calcExpression="-("+calcExpression+")";
-
-  }
-
-  updateDisplay();
+function formatNumber(n){
+  if(Number.isInteger(n))return n.toLocaleString("en-US");
+  return Number(n.toFixed(10)).toLocaleString("en-US");
 }
 
-function copyResult(){
-
-  const text=
-    document.getElementById("calcResult").textContent
-      .replace("نتیجه: ","");
-
-  navigator.clipboard.writeText(text);
-
-}
-
-function saveMainHistory(){
-
-  if(!calcExpression) return;
-
-  try{
-
-    let result=Function(
-      '"use strict"; return ('+calcExpression+')'
-    )();
-
-    saveHistoryItem(calcExpression,result);
-
-  }catch(e){}
-
-}
-
-
-/* =========================
-   کیبورد ماشین حساب
-========================= */
-
-document.addEventListener("keydown",function(e){
-
-  const calc=
-    document.getElementById("calculatorMode");
-
-  if(calc.classList.contains("hidden")) return;
-
-  if(/^[0-9.+\-*/()]$/.test(e.key)){
-
-    addMain(e.key);
-
-  }else if(e.key==="Enter" || e.key==="="){
-
-    e.preventDefault();
-    calculateMain();
-
+document.addEventListener("keydown",e=>{
+  const allowed="0123456789+-*/().";
+  if(allowed.includes(e.key)){
+    calcInput(e.key);
+  }else if(e.key==="Enter"){
+    calculate();
   }else if(e.key==="Backspace"){
-
-    backspaceMain();
-
+    calcBack();
   }else if(e.key==="Escape"){
-
-    clearMain();
-
+    calcClear();
   }
-
 });
 
-
-/* =========================
-   تاریخچه ماشین حساب
-========================= */
-
-function getCalcHistory(){
-  return JSON.parse(
-    localStorage.getItem("calculatorHistory") || "[]"
-  );
+function addHistory(text){
+  let h=JSON.parse(localStorage.getItem("calcHistory")||"[]");
+  h.unshift(text);
+  h=h.slice(0,50);
+  localStorage.setItem("calcHistory",JSON.stringify(h));
+  renderHistory();
 }
 
-function saveHistoryItem(expression,result){
+function renderHistory(){
+  const box=document.getElementById("historyList");
+  const h=JSON.parse(localStorage.getItem("calcHistory")||"[]");
 
-  let history=getCalcHistory();
-
-  history.unshift({
-    expression,
-    result,
-    time:new Date().toLocaleString("fa-IR")
-  });
-
-  history=history.slice(0,50);
-
-  localStorage.setItem(
-    "calculatorHistory",
-    JSON.stringify(history)
-  );
-
-  showCalculatorHistory();
-}
-
-function showCalculatorHistory(){
-
-  const box=
-    document.getElementById("calculatorHistory");
-
-  let history=getCalcHistory();
-
-  if(!history.length){
-
-    box.innerHTML=
-      '<p class="small">هنوز محاسبه‌ای ذخیره نشده است.</p>';
-
+  if(!h.length){
+    box.innerHTML='<div class="empty">هنوز محاسبه‌ای انجام نشده است.</div>';
     return;
   }
 
-  box.innerHTML=history.map((item,index)=>`
-
-    <div class="history-item"
-         onclick="useHistory(${index})">
-
-      <strong>${escapeHtml(item.expression)}</strong>
-      =
-      <strong>${escapeHtml(String(item.result))}</strong>
-
-      <div class="small">${item.time}</div>
-
-    </div>
-
+  box.innerHTML=h.map(x=>`
+    <div class="history-item">${escapeHtml(x)}</div>
   `).join("");
 }
 
-function useHistory(index){
-
-  let history=getCalcHistory();
-
-  if(!history[index]) return;
-
-  calcExpression=history[index].expression;
-
-  updateDisplay();
-
+function clearHistory(){
+  localStorage.removeItem("calcHistory");
+  renderHistory();
 }
 
-function clearCalculatorHistory(){
+renderHistory();
 
-  localStorage.removeItem("calculatorHistory");
-
-  showCalculatorHistory();
-}
-
-showCalculatorHistory();
-
-
-/* =========================
+/* =========================================================
    درصد
-========================= */
+   ========================================================= */
 
-function getNumber(id){
-
-  return Number(document.getElementById(id).value);
+function num(id){
+  return parseFloat(document.getElementById(id).value);
 }
 
 function percentOf(){
-
-  const base=getNumber("percentBase");
-  const percent=getNumber("percentValue");
-
-  const result=base*percent/100;
-
-  document.getElementById("percentResult").innerHTML=
-    `${percent}% از ${base} = <strong>${result}</strong>`;
+  const a=num("p1"),b=num("p2");
+  if(isNaN(a)||isNaN(b))return toast("اعداد را کامل وارد کن.");
+  document.getElementById("percentResult1").textContent=formatNumber(a*b/100);
 }
 
 function percentIncrease(){
-
-  const base=getNumber("percentBase");
-  const percent=getNumber("percentValue");
-
-  const result=base+(base*percent/100);
-
-  document.getElementById("percentResult").innerHTML=
-    `${base} با افزایش ${percent}% = <strong>${result}</strong>`;
+  const a=num("p3"),b=num("p4");
+  if(isNaN(a)||isNaN(b))return toast("اعداد را کامل وارد کن.");
+  document.getElementById("percentResult2").textContent=formatNumber(a*(1+b/100));
 }
 
 function percentDecrease(){
-
-  const base=getNumber("percentBase");
-  const percent=getNumber("percentValue");
-
-  const result=base-(base*percent/100);
-
-  document.getElementById("percentResult").innerHTML=
-    `${base} با کاهش ${percent}% = <strong>${result}</strong>`;
+  const a=num("p5"),b=num("p6");
+  if(isNaN(a)||isNaN(b))return toast("اعداد را کامل وارد کن.");
+  document.getElementById("percentResult3").textContent=formatNumber(a*(1-b/100));
 }
 
-
-/* =========================
+/* =========================================================
    کسر
-========================= */
+   ========================================================= */
 
 function gcd(a,b){
-
   a=Math.abs(a);
   b=Math.abs(b);
-
   while(b){
-    let t=b;
-    b=a%b;
-    a=t;
+    let t=a%b;
+    a=b;
+    b=t;
   }
-
-  return a;
+  return a||1;
 }
 
-function lcm(a,b){
-
-  if(a===0 || b===0) return 0;
-
-  return Math.abs(a*b)/gcd(a,b);
-}
-
-function mixedToImproper(w,n,d){
-
-  if(d===0) throw new Error("مخرج صفر است");
+function fractionToImproper(w,n,d){
+  if(!d || d===0)throw new Error("مخرج صفر است");
 
   let sign=w<0?-1:1;
-
-  w=Math.abs(w);
+  w=Math.abs(w||0);
+  n=Math.abs(n||0);
 
   return {
-    numerator:sign*(w*d+Math.abs(n)),
-    denominator:d
+    n:sign*(w*Math.abs(d)+n),
+    d:Math.abs(d)
   };
 }
 
 function simplifyFraction(n,d){
-
-  if(d===0) throw new Error("مخرج صفر است");
-
-  if(d<0){
-    n=-n;
-    d=-d;
-  }
-
-  let g=gcd(n,d);
-
-  return {
-    n:n/g,
-    d:d/g
-  };
+  if(d<0){n=-n;d=-d}
+  const g=gcd(n,d);
+  return {n:n/g,d:d/g};
 }
 
-function fractionToMixed(n,d){
+function mixedString(n,d){
+  if(d===0)return "خطا";
 
-  let sign=n<0?-1:1;
+  const s=simplifyFraction(n,d);
+  n=s.n;
+  d=s.d;
 
-  n=Math.abs(n);
+  if(n===0)return "0";
 
-  let whole=Math.floor(n/d);
-  let rem=n%d;
+  const sign=n<0?"−":"";
+  const abs=Math.abs(n);
 
-  whole*=sign;
+  if(abs<d)return sign+abs+"/"+d;
 
-  return {
-    whole,
-    numerator:rem,
-    denominator:d
-  };
+  const whole=Math.floor(abs/d);
+  const rem=abs%d;
+
+  if(rem===0)return sign+whole;
+  if(whole===0)return sign+rem+"/"+d;
+
+  return sign+whole+" "+rem+"/"+d;
 }
 
-function mixedText(f){
+function readFraction(prefix){
+  const w=parseInt(document.getElementById(prefix+"w").value)||0;
+  const n=parseInt(document.getElementById(prefix+"n").value)||0;
+  const d=parseInt(document.getElementById(prefix+"d").value)||1;
 
-  if(f.numerator===0){
-    return String(f.whole);
-  }
-
-  if(f.whole===0){
-    return `${f.numerator}/${f.denominator}`;
-  }
-
-  return `${f.whole} ${f.numerator}/${f.denominator}`;
+  return fractionToImproper(w,n,d);
 }
 
-function calculateFraction(){
-
+function fractionCalculate(){
   try{
-
-    const a=mixedToImproper(
-      Number(document.getElementById("f1w").value),
-      Number(document.getElementById("f1n").value),
-      Number(document.getElementById("f1d").value)
-    );
-
-    const b=mixedToImproper(
-      Number(document.getElementById("f2w").value),
-      Number(document.getElementById("f2n").value),
-      Number(document.getElementById("f2d").value)
-    );
-
+    const a=readFraction("f1");
+    const b=readFraction("f2");
     const op=document.getElementById("fractionOp").value;
 
     let n,d;
 
     if(op==="+"){
-
-      n=a.numerator*b.denominator+
-        b.numerator*a.denominator;
-
-      d=a.denominator*b.denominator;
-
+      n=a.n*b.d+b.n*a.d;
+      d=a.d*b.d;
     }else if(op==="-"){
-
-      n=a.numerator*b.denominator-
-        b.numerator*a.denominator;
-
-      d=a.denominator*b.denominator;
-
+      n=a.n*b.d-b.n*a.d;
+      d=a.d*b.d;
     }else if(op==="*"){
-
-      n=a.numerator*b.numerator;
-      d=a.denominator*b.denominator;
-
+      n=a.n*b.n;
+      d=a.d*b.d;
     }else{
-
-      if(b.numerator===0)
-        throw new Error("تقسیم بر صفر");
-
-      n=a.numerator*b.denominator;
-      d=a.denominator*b.numerator;
-
+      if(b.n===0)throw new Error("تقسیم بر صفر");
+      n=a.n*b.d;
+      d=a.d*b.n;
     }
 
-    const simplified=simplifyFraction(n,d);
+    const result=mixedString(n,d);
 
-    const mixed=fractionToMixed(
-      simplified.n,
-      simplified.d
-    );
-
-    document.getElementById("fractionResult").innerHTML=
-      `نتیجه: <strong>${mixedText(mixed)}</strong>`;
-
-    document.getElementById("fractionSteps").innerHTML=`
-
-      <strong>مراحل:</strong>
-
-      <br>
-
-      کسر اول:
-      ${a.numerator}/${a.denominator}
-
-      <br>
-
-      کسر دوم:
-      ${b.numerator}/${b.denominator}
-
-      <br>
-
-      عملیات:
-      ${a.numerator}/${a.denominator}
-      ${op}
-      ${b.numerator}/${b.denominator}
-
-      <br>
-
-      کسر ساده‌شده:
-      ${simplified.n}/${simplified.d}
-
-      <br>
-
-      جواب ترکیبی:
-      ${mixedText(mixed)}
-
-    `;
+    document.getElementById("fractionResult").textContent=result;
+    document.getElementById("fractionResult2").textContent=
+      "نتیجه: "+result;
 
   }catch(e){
-
-    document.getElementById("fractionResult").textContent=
-      "❌ لطفاً مقادیر صحیح وارد کنید.";
-
-    document.getElementById("fractionSteps").textContent=
-      "";
-
+    document.getElementById("fractionResult2").textContent="خطا: "+e.message;
   }
 }
 
-
-/* =========================
+/* =========================================================
    توان
-========================= */
+   ========================================================= */
 
-function calculatePower(){
+function powerCalc(){
+  const a=num("powerBase");
+  const b=num("powerExp");
 
-  const base=getNumber("powerBase");
-  const exp=getNumber("powerExp");
+  if(isNaN(a)||isNaN(b))return toast("عدد و توان را وارد کن.");
 
-  const result=Math.pow(base,exp);
-
-  document.getElementById("powerResult").innerHTML=
-    `${base}<sup>${exp}</sup> = <strong>${result}</strong>`;
+  const r=Math.pow(a,b);
+  document.getElementById("powerResult").textContent=formatNumber(r);
 }
 
+/* =========================================================
+   GCD / LCM
+   ========================================================= */
 
-/* =========================
-   ب.م.م و ک.م.م
-========================= */
+function gcdLcmCalc(){
+  const a=parseInt(document.getElementById("gcdA").value);
+  const b=parseInt(document.getElementById("gcdB").value);
 
-function calculateGcdLcm(){
+  if(isNaN(a)||isNaN(b))return toast("دو عدد را وارد کن.");
 
-  const nums=document
-    .getElementById("numbersInput")
-    .value
-    .split(",")
-    .map(x=>Number(x.trim()))
-    .filter(x=>Number.isFinite(x));
+  const g=gcd(a,b);
+  const l=Math.abs(a*b)/g;
 
-  if(!nums.length){
-
-    document.getElementById("gcdResult").textContent=
-      "❌ عدد وارد کنید.";
-
-    return;
-  }
-
-  let g=Math.abs(nums[0]);
-  let l=Math.abs(nums[0]);
-
-  for(let i=1;i<nums.length;i++){
-
-    g=gcd(g,nums[i]);
-    l=lcm(l,nums[i]);
-
-  }
-
-  document.getElementById("gcdResult").innerHTML=`
-
-    ب.م.م:
-    <strong>${g}</strong>
-
-    <br>
-
-    ک.م.م:
-    <strong>${l}</strong>
-
-  `;
+  document.getElementById("gcdResult").textContent=
+    "ب.م.م = "+g+"  |  ک.م.م = "+l;
 }
 
-
-/* =========================
-   ترجمه آنلاین
-========================= */
-
-async function translateOnline(){
-
-  const text=
-    document.getElementById("translateInput").value.trim();
-
-  const from=
-    document.getElementById("fromLang").value;
-
-  const to=
-    document.getElementById("toLang").value;
-
-  const resultBox=
-    document.getElementById("translationResult");
-
-  if(!text){
-
-    resultBox.textContent=
-      "❌ لطفاً متن وارد کنید.";
-
-    return;
-  }
-
-  if(from===to){
-
-    resultBox.textContent=text;
-
-    saveTranslationHistory(
-      text,
-      text,
-      from,
-      to
-    );
-
-    return;
-  }
-
-  resultBox.innerHTML=
-    "⏳ در حال ترجمه...";
-
-  try{
-
-    const url=
-      "https://api.mymemory.translated.net/get?q="+
-      encodeURIComponent(text)+
-      "&langpair="+
-      encodeURIComponent(from+"|"+to);
-
-    const response=await fetch(url);
-
-    const data=await response.json();
-
-    const translated=
-      data?.responseData?.translatedText;
-
-    if(!translated)
-      throw new Error("ترجمه پیدا نشد");
-
-    resultBox.innerHTML=
-      escapeHtml(translated);
-
-    saveTranslationHistory(
-      text,
-      translated,
-      from,
-      to
-    );
-
-    /*
-      اگر کلمه انگلیسی باشد،
-      اطلاعات فرهنگ لغت نیز نمایش داده می‌شود.
-    */
-
-    if(from==="en" &&
-       /^[A-Za-z]+$/.test(text.trim())){
-
-      loadDictionary(text.trim());
-
-    }else if(to==="en" &&
-             /^[A-Za-z]+$/.test(translated.trim())){
-
-      loadDictionary(translated.trim());
-
-    }
-
-  }catch(e){
-
-    resultBox.innerHTML=
-      "❌ ترجمه انجام نشد. لطفاً اتصال اینترنت را بررسی کنید.";
-
-  }
-}
-
-
-/* =========================
-   ترجمه متن فرهنگ لغت
-========================= */
-
-async function translateDictionaryText(text){
-
-  try{
-
-    const url=
-      "https://api.mymemory.translated.net/get?q="+
-      encodeURIComponent(text)+
-      "&langpair=en|fa";
-
-    const response=await fetch(url);
-
-    const data=await response.json();
-
-    return data?.responseData?.translatedText || "ترجمه موجود نیست";
-
-  }catch(e){
-
-    return "ترجمه فارسی در دسترس نیست.";
-
-  }
-}
-
-
-/* =========================
-   فرهنگ لغت
-========================= */
-
-async function loadDictionary(word){
-
-  const box=
-    document.getElementById("dictionaryBox");
-
-  box.innerHTML=
-    "⏳ در حال دریافت اطلاعات فرهنگ لغت...";
-
-  try{
-
-    const response=
-      await fetch(
-        "https://api.dictionaryapi.dev/api/v2/entries/en/"+
-        encodeURIComponent(word)
-      );
-
-    if(!response.ok)
-      throw new Error("not found");
-
-    const data=await response.json();
-
-    renderDictionary(data);
-
-  }catch(e){
-
-    /*
-      برای بعضی کلمات رایج که API اطلاعات کافی ندارد،
-      یک فرهنگ لغت داخلی ساده هم داریم.
-    */
-
-    const local=localDictionary[word.toLowerCase()];
-
-    if(local){
-
-      renderLocalDictionary(word,local);
-
-    }else{
-
-      box.innerHTML=
-        "❌ اطلاعات فرهنگ لغت برای این کلمه پیدا نشد.";
-
-    }
-
-  }
-}
-
-
-/* فرهنگ لغت داخلی برای مثال‌های مهم */
-
-const localDictionary={
-
-  ruler:[
-    {
-      part:"noun",
-      definition:"A person who governs a country or people.",
-      meaning:"حاکم، فرمانروا، زمامدار",
-      example:"The ruler governed the country for many years.",
-      exampleFa:"آن فرمانروا سال‌ها بر کشور حکومت کرد.",
-      related:[
-        "head of state",
-        "leader",
-        "monarch",
-        "sovereign"
-      ]
-    },
-    {
-      part:"noun",
-      definition:"A straight tool used for measuring length or drawing straight lines.",
-      meaning:"خط‌کش",
-      example:"Use a ruler to draw a straight line.",
-      exampleFa:"برای کشیدن یک خط صاف از خط‌کش استفاده کن.",
-      related:[
-        "measuring tool",
-        "scale",
-        "straightedge"
-      ]
-    },
-    {
-      part:"noun",
-      definition:"A person who controls or leads a group or organization.",
-      meaning:"رهبر یا اداره‌کننده یک گروه",
-      example:"He became the ruler of the organization.",
-      exampleFa:"او اداره‌کننده آن سازمان شد.",
-      related:[
-        "leader",
-        "head",
-        "figurehead"
-      ]
-    }
-  ]
-
+/* =========================================================
+   TRANSLATOR
+   ========================================================= */
+
+const langNames={
+  fa:"فارسی",
+  en:"English",
+  de:"Deutsch",
+  fr:"Français",
+  es:"Español",
+  tr:"Türkçe",
+  ru:"Русский",
+  ar:"العربية",
+  it:"Italiano",
+  az:"Azərbaycan"
 };
 
+function swapLanguages(){
+  const s=document.getElementById("sourceLang");
+  const t=document.getElementById("targetLang");
 
-async function renderDictionary(data){
+  const old=s.value;
+  s.value=t.value;
+  t.value=old;
 
-  const box=
-    document.getElementById("dictionaryBox");
+  const text=document.getElementById("sourceText").value;
+  const result=document.getElementById("translatedText").value;
 
-  const entry=data[0];
-
-  if(!entry){
-
-    box.innerHTML=
-      "اطلاعاتی پیدا نشد.";
-
-    return;
-  }
-
-  let html=`
-
-    <div class="dict-card">
-
-      <div class="dict-title">
-        ${escapeHtml(entry.word || "")}
-      </div>
-
-      <div>
-        🔊 تلفظ:
-        <button class="speak-btn"
-          onclick="speakWord('${escapeJs(entry.word || "")}')">
-          پخش تلفظ
-        </button>
-      </div>
-
-  `;
-
-  let meanings=[];
-
-  for(const meaning of entry.meanings || []){
-
-    for(const def of meaning.definitions || []){
-
-      meanings.push({
-        part:meaning.partOfSpeech || "",
-        definition:def.definition || "",
-        example:def.example || "",
-        synonyms:def.synonyms || []
-      });
-
-    }
-
-  }
-
-  for(let i=0;i<meanings.length;i++){
-
-    const m=meanings[i];
-
-    const faDef=
-      await translateDictionaryText(m.definition);
-
-    let faExample="";
-
-    if(m.example){
-
-      faExample=
-        await translateDictionaryText(m.example);
-
-    }
-
-    html+=`
-
-      <div class="meaning">
-
-        <strong>معنی ${i+1}</strong>
-
-        <br>
-
-        🏷 نوع کلمه:
-        <strong>${escapeHtml(m.part)}</strong>
-
-        <br><br>
-
-        🇬🇧 English definition:
-
-        <div class="english-def">
-          ${escapeHtml(m.definition)}
-        </div>
-
-        <div class="fa-def">
-          🇮🇷 معنی فارسی:
-          <strong>${escapeHtml(faDef)}</strong>
-        </div>
-
-        ${
-          m.example
-          ?
-          `
-          <br>
-          📝 Example:
-
-          <div class="example">
-            ${escapeHtml(m.example)}
-          </div>
-
-          <div class="fa-def">
-            🇮🇷 ترجمه مثال:
-            ${escapeHtml(faExample)}
-          </div>
-          `
-          :
-          ""
-        }
-
-        ${
-          m.synonyms?.length
-          ?
-          `
-          <div class="related">
-            ${m.synonyms.slice(0,8).map(x=>
-              `<span class="tag">${escapeHtml(x)}</span>`
-            ).join("")}
-          </div>
-          `
-          :
-          ""
-        }
-
-      </div>
-
-    `;
-
-  }
-
-  html+=`
-
-    </div>
-
-  `;
-
-  box.innerHTML=html;
+  document.getElementById("sourceText").value=result;
+  document.getElementById("translatedText").value=text;
 }
 
+async function translateText(){
+  const text=document.getElementById("sourceText").value.trim();
+  const from=document.getElementById("sourceLang").value;
+  const to=document.getElementById("targetLang").value;
 
-/* فرهنگ لغت داخلی */
+  if(!text)return toast("اول متن یا کلمه را وارد کن.");
 
-function renderLocalDictionary(word,items){
+  const output=document.getElementById("translatedText");
+  output.value="در حال ترجمه...";
 
-  const box=
-    document.getElementById("dictionaryBox");
+  try{
+    const url=
+      "https://api.mymemory.translated.net/get?q="+
+      encodeURIComponent(text)+
+      "&langpair="+from+"|"+to;
 
-  let html=`
+    const res=await fetch(url);
+    const data=await res.json();
 
-    <div class="dict-card">
+    const translated=
+      data?.responseData?.translatedText || "ترجمه‌ای پیدا نشد.";
 
-      <div class="dict-title">
-        ${escapeHtml(word)}
-      </div>
+    output.value=translated;
 
-      <button class="speak-btn"
-        onclick="speakWord('${escapeJs(word)}')">
-        🔊 پخش تلفظ
-      </button>
-
-  `;
-
-  items.forEach((item,index)=>{
-
-    html+=`
-
-      <div class="meaning">
-
-        <strong>معنی ${index+1}</strong>
-
-        <br>
-
-        🏷 نوع کلمه:
-        <strong>${escapeHtml(item.part)}</strong>
-
-        <br><br>
-
-        🇬🇧 English definition:
-
-        <div class="english-def">
-          ${escapeHtml(item.definition)}
-        </div>
-
-        <div class="fa-def">
-          🇮🇷 معنی فارسی:
-          <strong>${escapeHtml(item.meaning)}</strong>
-        </div>
-
-        <div class="example">
-          ${escapeHtml(item.example)}
-        </div>
-
-        <div class="fa-def">
-          🇮🇷 ترجمه:
-          ${escapeHtml(item.exampleFa)}
-        </div>
-
-        <div class="related">
-
-          ${item.related.map(x=>
-            `<span class="tag">${escapeHtml(x)}</span>`
-          ).join("")}
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-  html+=`</div>`;
-
-  box.innerHTML=html;
-}
-
-
-/* =========================
-   علاقه‌مندی‌ها
-========================= */
-
-function getFavorites(){
-
-  return JSON.parse(
-    localStorage.getItem("favorites") || "[]"
-  );
-
-}
-
-function addFavorite(){
-
-  const input=
-    document.getElementById("translateInput")
-      .value.trim();
-
-  const result=
-    document.getElementById("translationResult")
-      .textContent.trim();
-
-  const word=
-    input || result;
-
-  if(!word){
-
-    alert("ابتدا یک کلمه یا عبارت وارد کنید.");
-    return;
-
-  }
-
-  let favorites=getFavorites();
-
-  if(!favorites.some(x=>x.word.toLowerCase()===word.toLowerCase())){
-
-    favorites.unshift({
-      word,
-      time:new Date().toLocaleString("fa-IR")
+    saveTranslationHistory({
+      source:text,
+      result:translated,
+      from,
+      to
     });
 
-    favorites=favorites.slice(0,100);
+    if(from==="en" && text.split(/\s+/).length<=3){
+      loadDictionary(text);
+    }
 
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(favorites)
-    );
-
+  }catch{
+    output.value="خطا در ترجمه. دوباره امتحان کن.";
   }
-
-  showFavorites();
 }
 
-function showFavorites(){
-
-  const box=
-    document.getElementById("favorites");
-
-  const favorites=getFavorites();
-
-  if(!favorites.length){
-
-    box.innerHTML=
-      '<p class="small">هنوز کلمه‌ای ذخیره نشده است.</p>';
-
-    return;
-
-  }
-
-  box.innerHTML=favorites.map((x,i)=>`
-
-    <div class="favorite-item"
-         onclick="useFavorite(${i})">
-
-      ⭐ ${escapeHtml(x.word)}
-
-      <div class="small">
-        ${x.time}
-      </div>
-
-    </div>
-
-  `).join("");
-
+function clearTranslator(){
+  document.getElementById("sourceText").value="";
+  document.getElementById("translatedText").value="";
+  document.getElementById("dictionaryBox").innerHTML=
+    '<div class="empty">یک کلمه انگلیسی وارد کن و ترجمه را بزن.</div>';
 }
 
-function useFavorite(i){
-
-  const favorites=getFavorites();
-
-  if(!favorites[i]) return;
-
-  document.getElementById("translateInput").value=
-    favorites[i].word;
-
-  if(/^[A-Za-z]+$/.test(favorites[i].word.trim())){
-
-    loadDictionary(favorites[i].word.trim());
-
-  }
-
+function copyTranslation(){
+  const text=document.getElementById("translatedText").value;
+  if(!text)return;
+  navigator.clipboard.writeText(text)
+    .then(()=>toast("ترجمه کپی شد."));
 }
-
-showFavorites();
-
-
-/* =========================
-   تاریخچه ترجمه
-========================= */
-
-function getTranslationHistory(){
-
-  return JSON.parse(
-    localStorage.getItem("translationHistory") || "[]"
-  );
-
-}
-
-function saveTranslationHistory(text,out,from,to){
-
-  let history=getTranslationHistory();
-
-  history.unshift({
-    text,
-    out,
-    from,
-    to,
-    time:new Date().toLocaleString("fa-IR")
-  });
-
-  history=history.slice(0,50);
-
-  localStorage.setItem(
-    "translationHistory",
-    JSON.stringify(history)
-  );
-
-  showTranslationHistory();
-
-}
-
-function showTranslationHistory(){
-
-  const box=
-    document.getElementById("translationHistory");
-
-  const history=getTranslationHistory();
-
-  if(!history.length){
-
-    box.innerHTML=
-      '<p class="small">هنوز ترجمه‌ای ذخیره نشده است.</p>';
-
-    return;
-
-  }
-
-  box.innerHTML=history.map((x,i)=>`
-
-    <div class="history-item"
-         onclick="openTranslationHistory(${i})">
-
-      <strong>${escapeHtml(x.text)}</strong>
-
-      <br>
-
-      ➜ ${escapeHtml(x.out)}
-
-      <div class="small">
-        ${escapeHtml(x.from)}
-        →
-        ${escapeHtml(x.to)}
-        | ${x.time}
-      </div>
-
-    </div>
-
-  `).join("");
-
-}
-
-function openTranslationHistory(i){
-
-  const history=getTranslationHistory();
-
-  const item=history[i];
-
-  if(!item) return;
-
-  document.getElementById("fromLang").value=
-    item.from;
-
-  document.getElementById("toLang").value=
-    item.to;
-
-  document.getElementById("translateInput").value=
-    item.text;
-
-  document.getElementById("translationResult").textContent=
-    item.out;
-
-  if(item.from==="en" &&
-     /^[A-Za-z]+$/.test(item.text.trim())){
-
-    loadDictionary(item.text.trim());
-
-  }
-
-}
-
-function clearTranslationHistory(){
-
-  localStorage.removeItem("translationHistory");
-
-  showTranslationHistory();
-
-}
-
-showTranslationHistory();
-
-
-/* =========================
-   تعویض زبان
-========================= */
-
-function swapLangs(){
-
-  const from=
-    document.getElementById("fromLang");
-
-  const to=
-    document.getElementById("toLang");
-
-  const temp=from.value;
-
-  from.value=to.value;
-  to.value=temp;
-
-  const input=
-    document.getElementById("translateInput");
-
-  const result=
-    document.getElementById("translationResult");
-
-  const tempText=input.value;
-
-  input.value=
-    result.textContent==="نتیجه ترجمه اینجا نمایش داده می‌شود"
-    ? ""
-    : result.textContent;
-
-  result.textContent=
-    tempText || "نتیجه ترجمه اینجا نمایش داده می‌شود";
-
-}
-
-
-/* =========================
-   تلفظ
-========================= */
 
 function speakTranslation(){
+  const text=document.getElementById("translatedText").value;
+  if(!text)return;
 
-  const text=
-    document.getElementById("translationResult")
-      .textContent.trim();
-
-  if(!text) return;
-
-  const lang=
-    document.getElementById("toLang").value;
-
-  const utterance=
-    new SpeechSynthesisUtterance(text);
-
-  utterance.lang=
-    lang==="fa" ? "fa-IR" :
-    lang==="en" ? "en-US" :
-    lang==="de" ? "de-DE" :
-    lang==="fr" ? "fr-FR" :
-    lang==="es" ? "es-ES" :
-    lang==="tr" ? "tr-TR" :
-    lang==="ru" ? "ru-RU" :
-    lang==="ar" ? "ar-SA" :
-    lang==="it" ? "it-IT" :
-    lang==="az" ? "az-AZ" :
-    "en-US";
-
+  const utter=new SpeechSynthesisUtterance(text);
+  utter.lang=document.getElementById("targetLang").value;
   speechSynthesis.cancel();
-  speechSynthesis.speak(utterance);
-
+  speechSynthesis.speak(utter);
 }
 
-function speakWord(word){
+function startVoice(){
+  const SpeechRecognition=
+    window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  const utterance=
-    new SpeechSynthesisUtterance(word);
-
-  utterance.lang="en-US";
-
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utterance);
-
-}
-
-
-/* =========================
-   تشخیص صدا
-========================= */
-
-function startSpeech(){
-
-  const Recognition=
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if(!Recognition){
-
-    alert(
-      "مرورگر شما از تشخیص صدا پشتیبانی نمی‌کند."
-    );
-
-    return;
-
+  if(!SpeechRecognition){
+    return toast("مرورگر شما از ورود صوتی پشتیبانی نمی‌کند.");
   }
 
-  const recognition=new Recognition();
-
-  const lang=
-    document.getElementById("fromLang").value;
-
-  recognition.lang=
-    lang==="fa" ? "fa-IR" :
-    lang==="en" ? "en-US" :
-    lang==="de" ? "de-DE" :
-    lang==="fr" ? "fr-FR" :
-    lang==="es" ? "es-ES" :
-    lang==="tr" ? "tr-TR" :
-    lang==="ru" ? "ru-RU" :
-    lang==="ar" ? "ar-SA" :
-    lang==="it" ? "it-IT" :
-    lang==="az" ? "az-AZ" :
-    "en-US";
+  const recognition=new SpeechRecognition();
+  recognition.lang=document.getElementById("sourceLang").value==="fa"
+    ?"fa-IR"
+    :"en-US";
 
   recognition.interimResults=false;
-  recognition.continuous=false;
+  recognition.maxAlternatives=1;
 
-  recognition.onstart=function(){
+  toast("🎤 صحبت کن...");
 
-    document.getElementById("translateInput").placeholder=
-      "🎤 در حال گوش دادن...";
-
+  recognition.onresult=e=>{
+    document.getElementById("sourceText").value=
+      e.results[0][0].transcript;
   };
 
-  recognition.onresult=function(event){
-
-    const text=
-      event.results[0][0].transcript;
-
-    document.getElementById("translateInput").value=text;
-
-  };
-
-  recognition.onerror=function(){
-
-    document.getElementById("translateInput").placeholder=
-      "متن موردنظر را وارد کنید...";
-
-  };
-
-  recognition.onend=function(){
-
-    document.getElementById("translateInput").placeholder=
-      "مثلاً بنویس: سیب یا I like learning English";
-
+  recognition.onerror=()=>{
+    toast("ورودی صوتی انجام نشد.");
   };
 
   recognition.start();
-
 }
 
+/* =========================================================
+   DICTIONARY
+   ========================================================= */
 
-/* =========================
-   کپی ترجمه
-========================= */
+async function loadDictionary(word){
+  word=word.trim().toLowerCase();
 
-function copyTranslation(){
+  const box=document.getElementById("dictionaryBox");
+  box.innerHTML='<div class="empty">در حال پیدا کردن معنی‌های مختلف...</div>';
 
-  const text=
-    document.getElementById("translationResult")
-      .textContent.trim();
+  try{
+    const res=await fetch(
+      "https://api.dictionaryapi.dev/api/v2/entries/en/"+encodeURIComponent(word)
+    );
 
-  if(!text) return;
+    if(!res.ok)throw new Error();
 
-  navigator.clipboard.writeText(text);
+    const data=await res.json();
+    const item=data[0];
 
+    let html=`
+      <div class="word-head">
+        <div>
+          <div class="word-title">${escapeHtml(item.word)}</div>
+          <div class="pronunciation">
+            ${escapeHtml(item.phonetic || "")}
+          </div>
+        </div>
+
+        <button class="secondary"
+          onclick="speakWord('${escapeHtml(item.word).replaceAll("'","")}')">
+          🔊 تلفظ
+        </button>
+      </div>
+    `;
+
+    for(const meaning of (item.meanings||[])){
+      html+=`
+        <div class="meaning-card">
+          <h4>نوع کلمه: ${escapeHtml(meaning.partOfSpeech || "نامشخص")}</h4>
+      `;
+
+      for(const d of (meaning.definitions||[]).slice(0,5)){
+        let persian="در حال ترجمه معنی...";
+
+        html+=`
+          <div style="margin-top:12px">
+            <div class="definition">
+              <strong>English definition:</strong><br>
+              ${escapeHtml(d.definition)}
+            </div>
+
+            <div class="persian-def" data-definition="${encodeURIComponent(d.definition)}">
+              <strong>معنی فارسی:</strong> ${persian}
+            </div>
+
+            ${
+              d.example
+              ? `<div class="example">
+                  <strong>Example:</strong><br>
+                  ${escapeHtml(d.example)}
+                  <div class="persian-example">ترجمه جمله در حال آماده‌سازی...</div>
+                 </div>`
+              : ""
+            }
+          </div>
+        `;
+      }
+
+      html+=`</div>`;
+    }
+
+    if(item.meanings?.length){
+      html+=`
+        <div class="meaning-card">
+          <h4>🔗 واژه‌های مرتبط</h4>
+          <div class="related">
+            ${(item.meanings||[])
+              .flatMap(x=>x.synonyms||[])
+              .slice(0,15)
+              .map(x=>`<span>${escapeHtml(x)}</span>`)
+              .join("") || "<span>اطلاعات مرتبط موجود نیست</span>"}
+          </div>
+        </div>
+      `;
+    }
+
+    box.innerHTML=html;
+
+    translateDictionaryParts();
+
+  }catch{
+    box.innerHTML=`
+      <div class="empty">
+        برای این کلمه اطلاعات فرهنگ لغت پیدا نشد.
+      </div>
+    `;
+  }
 }
 
+async function translateDictionaryParts(){
+  const definitions=
+    document.querySelectorAll("[data-definition]");
 
-/* =========================
-   پاک کردن مترجم
-========================= */
+  for(const el of definitions){
+    const text=decodeURIComponent(el.dataset.definition);
 
-function clearTranslator(){
+    try{
+      const res=await fetch(
+        "https://api.mymemory.translated.net/get?q="+
+        encodeURIComponent(text)+
+        "&langpair=en|fa"
+      );
 
-  document.getElementById("translateInput").value="";
+      const data=await res.json();
 
-  document.getElementById("translationResult").textContent=
-    "نتیجه ترجمه اینجا نمایش داده می‌شود.";
+      el.innerHTML=
+        "<strong>معنی فارسی:</strong> "+
+        escapeHtml(data?.responseData?.translatedText || "—");
 
-  document.getElementById("dictionaryBox").innerHTML=
-    '<p class="small">اگر یک کلمه انگلیسی وارد کنید، اطلاعات فرهنگ لغت آن نیز نمایش داده می‌شود.</p>';
+    }catch{
+      el.innerHTML="<strong>معنی فارسی:</strong> —";
+    }
+  }
 
+  const examples=document.querySelectorAll(".example");
+
+  for(const ex of examples){
+    const first=ex.childNodes[2];
+
+    if(!first)continue;
+
+    const english=first.textContent.trim();
+
+    if(!english)continue;
+
+    try{
+      const res=await fetch(
+        "https://api.mymemory.translated.net/get?q="+
+        encodeURIComponent(english)+
+        "&langpair=en|fa"
+      );
+
+      const data=await res.json();
+
+      const target=ex.querySelector(".persian-example");
+
+      if(target){
+        target.textContent=
+          "ترجمه فارسی: "+
+          (data?.responseData?.translatedText || "—");
+      }
+
+    }catch{}
+  }
 }
 
-
-/* =========================
-   امنیت نمایش متن
-========================= */
-
-function escapeHtml(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
+function speakWord(word){
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang="en-US";
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
 }
 
-function escapeJs(value){
+/* =========================================================
+   VOCABULARY
+   ========================================================= */
 
-  return String(value)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,'\\"')
-    .replace(/\n/g,"\\n")
-    .replace(/\r/g,"");
+function saveVocabulary(){
+  const word=document.getElementById("sourceText").value.trim();
+  const translation=document.getElementById("translatedText").value.trim();
 
+  if(!word || !translation)return toast("اول یک ترجمه انجام بده.");
+
+  let list=JSON.parse(localStorage.getItem("vocabulary")||"[]");
+
+  if(!list.some(x=>x.word===word && x.translation===translation)){
+    list.unshift({word,translation});
+    list=list.slice(0,100);
+    localStorage.setItem("vocabulary",JSON.stringify(list));
+  }
+
+  renderVocabulary();
+  toast("⭐ به دفتر واژگان اضافه شد.");
 }
 
+function renderVocabulary(){
+  const box=document.getElementById("vocabList");
+  const list=JSON.parse(localStorage.getItem("vocabulary")||"[]");
 
-/* =========================
-   شروع سایت
-========================= */
+  if(!list.length){
+    box.innerHTML='<div class="empty">هنوز واژه‌ای ذخیره نکرده‌ای.</div>';
+    return;
+  }
 
-showCalculatorHistory();
-showTranslationHistory();
-showFavorites();
+  box.innerHTML=list.map(x=>`
+    <div class="vocab-item">
+      <strong dir="ltr">${escapeHtml(x.word)}</strong>
+      <br>
+      <span>${escapeHtml(x.translation)}</span>
+    </div>
+  `).join("");
+}
+
+function clearVocabulary(){
+  localStorage.removeItem("vocabulary");
+  renderVocabulary();
+}
+
+renderVocabulary();
+
+/* =========================================================
+   TRANSLATION HISTORY
+   ========================================================= */
+
+function saveTranslationHistory(item){
+  let list=JSON.parse(localStorage.getItem("translationHistory")||"[]");
+
+  list.unshift(item);
+  list=list.slice(0,30);
+
+  localStorage.setItem("translationHistory",JSON.stringify(list));
+  renderTranslationHistory();
+}
+
+function renderTranslationHistory(){
+  const box=document.getElementById("translationHistory");
+  const list=JSON.parse(localStorage.getItem("translationHistory")||"[]");
+
+  if(!list.length){
+    box.innerHTML='<div class="empty">تاریخچه‌ای وجود ندارد.</div>';
+    return;
+  }
+
+  box.innerHTML=list.map(x=>`
+    <div class="history-item">
+      ${escapeHtml(x.source)}
+      &nbsp; → &nbsp;
+      ${escapeHtml(x.result)}
+    </div>
+  `).join("");
+}
+
+renderTranslationHistory();
+
+/* =========================================================
+   جملات سنگین
+   ========================================================= */
+
+const heavySentences=[
+  "گاهی انسان برای رسیدن به پاسخ درست، باید مدتی با پرسش‌های سخت زندگی کند.",
+  "هر تصمیم کوچک می‌تواند مسیر فردا را تغییر دهد، حتی اگر امروز نتیجه‌اش دیده نشود.",
+  "دانش زمانی قدرت واقعی پیدا می‌کند که انسان بتواند آن را در زمان درست به کار ببرد.",
+  "بعضی مسیرها دشوارند، نه به این دلیل که اشتباه‌اند، بلکه چون برای رشد کردن طراحی شده‌اند.",
+  "آینده معمولاً با یک تصمیم بزرگ ساخته نمی‌شود؛ مجموعه‌ای از انتخاب‌های کوچک آن را شکل می‌دهد.",
+  "کسی که از اشتباه کردن فرار می‌کند، بخشی از فرصت یادگیری خود را نیز از دست می‌دهد.",
+  "تفاوت میان دانستن و فهمیدن، زمانی آشکار می‌شود که مجبور شوی دانسته‌هایت را به کار بگیری.",
+  "گاهی سکوت بیشتر از پاسخ دادن به انسان فرصت می‌دهد تا مسئله را دقیق‌تر ببیند.",
+  "هیچ مهارتی یک‌شبه ساخته نمی‌شود؛ تکرار، صبر و اصلاح اشتباهات آن را شکل می‌دهند.",
+  "آنچه امروز برایت دشوار است، ممکن است بعد از تمرین کافی به یکی از توانایی‌های طبیعی تو تبدیل شود."
+];
+
+function newHeavySentence(){
+  let last=localStorage.getItem("lastHeavySentence");
+  let choices=heavySentences.filter(x=>x!==last);
+
+  const sentence=
+    choices[Math.floor(Math.random()*choices.length)];
+
+  localStorage.setItem("lastHeavySentence",sentence);
+
+  document.getElementById("heavySentence").innerHTML=
+    "💭 "+escapeHtml(sentence);
+}
+
 newHeavySentence();
+setInterval(newHeavySentence,45000);
 
+/* =========================================================
+   REVIEWS - SUPABASE
+   ========================================================= */
+
+async function supabaseRequest(path,options={}){
+  const response=await fetch(
+    SUPABASE_URL+"/rest/v1/"+path,
+    {
+      ...options,
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer "+SUPABASE_KEY,
+        "Content-Type":"application/json",
+        ...(options.headers||{})
+      }
+    }
+  );
+
+  if(!response.ok){
+    const text=await response.text();
+    throw new Error(text || "Supabase error");
+  }
+
+  if(response.status===204)return null;
+
+  return response.json();
+}
+
+async function loadReviews(){
+  try{
+    reviews=await supabaseRequest(
+      REVIEWS_TABLE+
+      "?select=*&order=created_at.desc",
+      {method:"GET"}
+    );
+
+    if(!Array.isArray(reviews))reviews=[];
+
+  }catch(error){
+    console.error("Supabase:",error);
+
+    reviews=JSON.parse(
+      localStorage.getItem("localReviews")||"[]"
+    );
+  }
+
+  renderReviews("calc");
+  renderReviews("trans");
+}
+
+function getReviewName(r){
+  return r.name || r.username || r.user_name || "کاربر";
+}
+
+function getReviewComment(r){
+  return r.comment || "";
+}
+
+function getReviewRating(r){
+  return Number(r.rating)||0;
+}
+
+function getReviewDate(r){
+  if(!r.created_at)return "";
+  try{
+    return new Date(r.created_at).toLocaleDateString("fa-IR");
+  }catch{
+    return "";
+  }
+}
+
+function starsHTML(rating){
+  let s="";
+  for(let i=1;i<=5;i++){
+    s+=i<=rating?"★":"☆";
+  }
+  return s;
+}
+
+function chooseRating(type,rating){
+  selectedRatings[type]=rating;
+
+  const id=type==="calc"
+    ?"calcRatingPicker"
+    :"transRatingPicker";
+
+  document.querySelectorAll("#"+id+" button")
+    .forEach((b,i)=>{
+      b.classList.toggle("active",i<rating);
+    });
+}
+
+chooseRating("calc",5);
+chooseRating("trans",5);
+
+async function submitReview(type){
+
+  const prefix=type==="calc"?"calc":"trans";
+
+  const name=document.getElementById(prefix+"ReviewName").value.trim();
+  const comment=document.getElementById(prefix+"ReviewComment").value.trim();
+  const rating=selectedRatings[type];
+
+  if(!name){
+    return toast("نام یا اسم دلخواهت را وارد کن.");
+  }
+
+  if(!comment){
+    return toast("لطفاً نظرت را بنویس.");
+  }
+
+  if(!rating){
+    return toast("یک امتیاز انتخاب کن.");
+  }
+
+  const review={
+    name:name,
+    comment:comment,
+    rating:rating
+  };
+
+  try{
+
+    await supabaseRequest(
+      REVIEWS_TABLE,
+      {
+        method:"POST",
+        headers:{
+          "Prefer":"return=representation"
+        },
+        body:JSON.stringify(review)
+      }
+    );
+
+    toast("✅ نظر و امتیازت با موفقیت ثبت شد.");
+
+    document.getElementById(prefix+"ReviewName").value="";
+    document.getElementById(prefix+"ReviewComment").value="";
+
+    await loadReviews();
+
+  }catch(error){
+
+    console.error(error);
+
+    /*
+      اگر اتصال موقتاً مشکل داشته باشد،
+      نظر در مرورگر هم نگه داشته می‌شود.
+    */
+
+    let local=JSON.parse(
+      localStorage.getItem("localReviews")||"[]"
+    );
+
+    local.unshift({
+      ...review,
+      id:"local-"+Date.now(),
+      created_at:new Date().toISOString()
+    });
+
+    localStorage.setItem(
+      "localReviews",
+      JSON.stringify(local)
+    );
+
+    reviews=local;
+
+    renderReviews("calc");
+    renderReviews("trans");
+
+    toast("نظر در دستگاه ذخیره شد؛ اتصال Supabase را بررسی کن.");
+  }
+}
+
+function renderReviews(type){
+
+  const prefix=type==="calc"?"calc":"trans";
+  const listId=prefix+"ReviewsList";
+
+  const sortValue=
+    document.getElementById(prefix+"ReviewSort").value;
+
+  let arr=[...reviews];
+
+  if(sortValue==="old"){
+    arr.reverse();
+  }
+
+  if(sortValue==="high"){
+    arr.sort((a,b)=>getReviewRating(b)-getReviewRating(a));
+  }
+
+  if(sortValue==="low"){
+    arr.sort((a,b)=>getReviewRating(a)-getReviewRating(b));
+  }
+
+  const total=arr.length;
+
+  let avg=0;
+
+  if(total){
+    avg=arr.reduce(
+      (sum,r)=>sum+getReviewRating(r),0
+    )/total;
+  }
+
+  document.getElementById(prefix+"Avg").textContent=
+    avg.toFixed(1);
+
+  document.getElementById(prefix+"AvgStars").textContent=
+    starsHTML(Math.round(avg));
+
+  document.getElementById(prefix+"Count").textContent=
+    total+" نظر";
+
+  const bars=document.getElementById(prefix+"Bars");
+
+  bars.innerHTML=[5,4,3,2,1].map(star=>{
+    const count=arr.filter(
+      r=>getReviewRating(r)===star
+    ).length;
+
+    const percent=total
+      ? (count/total)*100
+      : 0;
+
+    return `
+      <div class="bar-row">
+        <strong>${star}★</strong>
+        <div class="bar"><i style="width:${percent}%"></i></div>
+        <span>${count}</span>
+      </div>
+    `;
+  }).join("");
+
+  const list=document.getElementById(listId);
+
+  if(!arr.length){
+    list.innerHTML=
+      '<div class="empty">هنوز نظری ثبت نشده است.</div>';
+    return;
+  }
+
+  list.innerHTML=arr.map((r,index)=>{
+
+    const name=getReviewName(r);
+    const comment=getReviewComment(r);
+    const rating=getReviewRating(r);
+    const date=getReviewDate(r);
+
+    return `
+      <div class="review-card">
+        <div class="review-head">
+          <div>
+            <div class="reviewer">
+              👤 ${escapeHtml(name)}
+            </div>
+            <div class="review-date">
+              ${escapeHtml(date)}
+            </div>
+          </div>
+
+          <div class="review-stars">
+            ${starsHTML(rating)}
+          </div>
+        </div>
+
+        <div class="review-text">
+          ${escapeHtml(comment)}
+        </div>
+      </div>
+    `;
+
+  }).join("");
+}
+
+loadReviews();
+
+/* =========================================================
+   هر چند وقت یک‌بار نظرات تازه را بررسی کن
+   ========================================================= */
+
+setInterval(loadReviews,30000);
 </script>
 
 </body>
-    </html>
+        </html>
